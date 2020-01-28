@@ -1,0 +1,5 @@
+name: latex
+channels:
+  - defaults
+prefix: /home/feynman/.asdf/installs/python/miniconda3-4.3.30/envs/latex
+

@@ -1,0 +1,385 @@
+\lecture{1}{2020-01-21}{Backround material}
+
+\subsection{Ferguson distributions / Dirichlet processes}
+
+\begin{definition}[Gamma distribution]
+  Random variable $X$ supported on $(0,\infty)$ has \emph{Gamma distribution}
+  with shape $\alpha > 0$ and inverse scale / rate $\beta > 0$, written $X \sim
+  \Gam(\alpha, \beta)$ if it has density
+  \begin{align}
+    f_X(t) &= \ind\{t \in (0,\infty)\} \frac{\beta^{\alpha} t^{\alpha - 1} e^{-\beta t}}{\Gamma(\alpha)}
+  \end{align}
+  where $\Gamma(t) = \int_0^\infty u^{t-1} e^{-u} du$ is the Gamma function
+  defined for all $\Re t > 0$ and analytically continued to $\bC \setminus \{ n \in \bZ : n < 0 \}$
+  \end{definition}
+
+  \begin{proposition}[Gamma closed under summation]
+    \label{prop:gamma-closed-sum}
+    If $Y \sim \Gam(\alpha, \beta)$
+    and $Z \sim \Gam(\gamma, \beta)$ are independent,
+    then $Y+Z \sim \Gamma(\alpha + \gamma, \beta)$.
+  \end{proposition}
+
+  \begin{proof}
+    \begin{align*}
+      f_{Y+Z}(t)
+      &= \int_0^t f_Y(u) f_Z(t-u) du \\
+      &= \frac{1}{\Gamma(\alpha) \Gamma(\gamma)} \beta^{\alpha + \gamma} e^{-\beta t}
+      \int_0^t u^{\alpha - 1} (t-u)^{\gamma - 1} du \\
+      &= \frac{1}{\Gamma(\alpha) \Gamma(\gamma)} \beta^{\alpha + \gamma} e^{-\beta t}
+      \int_0^1 (t v)^{\alpha - 1} (t-(t v))^{\gamma - 1} t dv \\
+      &= \frac{1}{\Gamma(\alpha) \Gamma(\gamma)} \beta^{\alpha + \gamma} e^{-\beta t}
+      t^{\alpha + \gamma - 1} B(\alpha, \gamma)
+    \end{align*}
+    where
+    $B(x,y) = \int_0^1 t^{x-1} (1 - t)^{y-1} dt = \frac{\Gamma(x) \Gamma(y)}{\Gamma(x+y)}$
+    is the beta function
+  \end{proof}
+
+  A closely related distribution obtained from concatenating Gamma random
+  variables into a vector and then normalizing the sum to $1$ is the Dirichlet
+  distribution.
+
+  \begin{definition}[Dirichlet distribution]
+    Let $\valpha \in (0,\infty)^K$. Random (probability) vector
+    $X$ taking values on the $K-1$-dimensional probability simplex
+    $\Delta^{K-1} = \{ \vx \in [0,1]^K : \sum_i x_i = 1\}$
+    has \emph{Dirichlet distribution} of order $K$ and concentration parameters
+    $\valpha$, denoted $X \sim \Dir(\valpha)$, if it has density
+    \[
+      f_X(\vx) = \ind\{\vx \in \Delta\}
+      \underbrace{%
+        \frac{
+          \Gamma\left(\sum_{i=1}^K \alpha_i\right)
+          }{
+          \prod_{i=1}^K \Gamma(\alpha_i)
+      }}_{\eqqcolon B(\valpha)^{-1}} \prod_{i=1}^K x_i^{\alpha_i - 1}
+    \]
+  \end{definition}
+
+  \begin{proposition}[Constructing Dirichlet from Gammas]
+    \label{prop:dirichlet-from-gamma}
+    Let $X_1, \ldots, X_n$ be independent $\Gam(\alpha_i, \beta)$
+    distributed, $S_n = \sum_{i=1}^n X_i$.
+    Then $(V_i)_i = (X_i / S_n)_i \sim \Dir(\valpha)$.
+  \end{proposition}
+
+  \begin{proof}
+    $S_n \sim \Gamma(\sum_i^n \alpha_i, \beta)$ by \cref{prop:gamma-closed-sum}
+    and for $\vv \in \Delta^{n-1}$, we have
+    \begin{align*}
+      f_V(\vv)
+      &= \int_0^\infty
+      f_{X}\left(s v_1, \ldots, s v_{n-1}, s v_n\right)
+      f_{S_n}(s) ds \\
+      &= \int_0^\infty e^{-\sum_{i=1}^{n} s v_i}
+      \left( \prod_{i=1}^{n}
+        \frac{ (s  v_i)^{\alpha_i - 1}}{\Gamma(\alpha_i)}
+      \right)
+      \frac{ s^{\sum_i^n \alpha_i - 1} e^{- s}}{\Gamma(\sum_i^n \alpha_i)} ds \\
+      &= \frac{1}{\prod_{1}^n \Gamma(\alpha_i)}
+      \prod_{i=1}^{n} v_i^{\alpha_i - 1}
+      \int_0^\infty e^{-s \cancelto{1}{\sum_1^{n} v_i}} s^{\left(\sum_1^{n} \alpha_i\right) - 1} ds \\
+      &= \frac{\Gamma(\sum_{i=1}^n \alpha_i)}{\prod_{1}^n \Gamma(\alpha_i)}
+      \prod_{i=1}^{n} v_i^{\alpha_i - 1}
+  \end{align*}
+\end{proof}
+
+Similar to \myref{prop:gamma-closed-sum}, where adding two Gammas yielded
+another Gamma where the parameters were added, Dirichlet distributions
+enjoy a similar kind of closure: ``clumping'' coordinate axes together
+(described below) yields another Dirichlet distribution where the
+parameters of the clumped axes are summed together.
+
+\begin{proposition}[Dirichlet clumping property]
+  Suppose $X \sim \Dir(\alpha_1, \ldots, \alpha_{n})$.
+  For any $r \leq n$, let $V_i = X_i$ for $i \in [r]$
+  and let $V_{r+1} = \sum_{j=r+1}^n X_j$.
+  Then $V \sim \Dir(\alpha_1, \ldots, \alpha_{r}, \sum_{j=r+1}^n \alpha_j)$.
+\end{proposition}
+
+\begin{proof}
+  By induction, it suffices to show this for $r = n-2$. Notice
+  \begin{align*}
+    f(v_1, \ldots, v_r, s)
+    &= B(\valpha)^{-1} \left(\prod_{i=1}^{n-1} v_i^{\alpha_i - 1}\right)
+    \int \ind\left\{
+      x_{n-1} + x_n = s
+    \right\} x_{n-1}^{\alpha_{n-1} - 1} x_n^{\alpha_n - 1}
+    dx_{n-1} dx_n \\
+    &= B(\valpha)^{-1} \left(\prod_{i=1}^{n-1} v_i^{\alpha_i - 1}\right)
+    \int_0^s u^{\alpha_{n-1} - 1} (s-u)^{\alpha_n - 1} du \\
+    &= B(\valpha)^{-1} \left(\prod_{i=1}^{n-1} v_i^{\alpha_i - 1}\right)
+    s^{\alpha_{n-1} + \alpha_n - 1} B(\alpha_{n-1}, \alpha_n)
+  \end{align*}
+  Since $\frac{B(\alpha_{n-1}, \alpha_n)}{B(\valpha)} = \frac{\Gamma(\sum_1^n \alpha_i)}{\Gamma(\alpha_{n-1} + \alpha_n) \prod_1^{n-2} \Gamma(\alpha_i)}$, we are done.
+\end{proof}
+
+Iterating this result over coordinate axes other than the last $n-r$,
+we see that ``clumping together'' entries in a Dirichlet
+random vector yields another Dirichlet random vector with parameters also
+``clumped together.'' Concretely, for any mapping $\phi : [n+1] \to [m+1]$ if
+$U_j = \sum_{\phi(i) = j} V_i$ then $U$ has Dirichlet distribution with
+parameters $\gamma_j = \sum_{\phi(i) = j} \alpha_i$.
+
+Generalizing this clumping property is the motivation for \emph{Ferguson
+Distributions}~\citep{ferguson1973}.
+
+\begin{definition}[Ferguson / Dirichlet process distribution]
+  Let $\mu$ be a finite positive Borel measure on complete separable metric
+  space $E$.
+  A random probability measure $\mu^*$ on $E$ (i.e.\ a stochastic process
+  indexed by a $\sigma$-algebra on $E$) has \emph{Ferguson distribution with
+  parameter $\mu$} if for every finite partition $(B_i)_{i \in [r]}$ of $E$ the
+  random vector 
+  \[
+    (\mu^*(B_i))_{i \in [r]} \sim \Dir(\mu(B_1), \ldots, \mu(B_r))
+  \]
+\end{definition}
+
+\begin{lemma}[Preservation of Ferguson under pushforward]
+  Let $\mu^*$ be Ferguson with parameter $\mu$
+  and $\phi : E \to F$ measurable.
+  Then the pushforward $\mu^* \circ \phi^{-1}$ is a random
+  probability measure on $F$ that has Ferguson distribution
+  with parameter $\mu \circ \phi^{-1}$.
+\end{lemma}
+
+\begin{proof}
+  For $(B_i)_{i \in [r]}$ a finite partition of $F$,
+  $(\phi^{-1}(B_i))_i$ is a finite partition of $E$.
+  Since $\mu^*$ is Ferguson
+  \[
+    (\mu^*(\phi^{-1}(B_i)))_i
+    \sim \Dir( (\mu(\phi^{-1}(B_i)))_i)
+  \]
+  Hence $\mu^* \circ \phi^{-1}$ is Ferguson with parameter
+  $\mu \circ \phi^{-1}$.
+\end{proof}
+
+Next, we turn to an important class of a Ferguson distributions
+arising from generalizing the P\'olya urn.
+
+\begin{definition}[Polya sequence]
+  A sequence $(X_n)_{n \in \bN}$ with values in $E$ is
+  a \emph{Polya sequence with parameter $\mu$} if
+  for all $B \subset E$.
+  \begin{align*}
+    \Pr[X_1 \in B] &= \mu(B) / \mu(E) \\
+    \Pr[X_{n+1} \in B \mid X_1, \ldots, X_n] &= \mu_n(B) / \mu_n(E)
+  \end{align*}
+  where $\mu_n = \mu + \sum_{i=1}^n \delta_{X_i}$.
+\end{definition}
+
+\begin{remark}
+  When $E$ is finite (e.g. a set of colors for the balls), $(X_n)$ represents
+  the result of successive draws from an urn with initially $\mu(x)$ balls of
+  color $x \in E$ and after each draw a ball of the same color as the one drawn
+  is added back to give an urn with color distribution $\mu_{n+1}(x)$.
+\end{remark}
+
+\cite{blackwell1973} gives the following result connecting P\'olya sequences
+and Ferguson distributions.
+
+\begin{theorem}[Polya Urn Schemes]
+  Let $(X_n)$ be a Polya sequence with parameter $\mu$. Then:
+  \begin{enumerate}
+    \item $m_n = \mu_n / \mu_n(E)$ converges almost surely to
+      a limiting discrete measure $\mu^*$
+    \item $\mu^*$ has Ferguson distribution with parameter $\mu$
+    \item Given $\mu^*$, $(X_i)_{i \geq 1}$ are independent with
+      distribution $\mu^*$
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  First consider $E$ finite and let $\mu^*$ and $\{X_i\}$
+  be random variables whose joint distribution satisfies (2.)
+  and (3.).
+  Let $\pi_n$ be empirical distribution of $(X_i)_{i \in [n]}$.
+  $X_i \simiid \mu^*$, so by SLLN $\pi_n \asto \mu^*$ and since
+  \begin{align}
+    m_n = \frac{\mu + n \pi_n}{\mu(E) + n}
+  \end{align}
+  (1.) follows.
+
+  It remains to show $(X_n)$ is a Polya sequence with parameter $\mu$, i.e.
+  \begin{align}
+    \label{eq:polya-seq-meas}
+    \Pr[A] = \prod_x \mu(x)^{[n(x)]} / \mu(E)^{[n]}
+  \end{align}
+  where $A = \{X_i = x_i\}_{i}$, $n(x) = \#\{i : x_i = x\}$,
+  and the rising factorial $a^{[k]} = a (a+1) \cdots (a+k-1)$.
+  Notice
+  \begin{align}
+    \Pr[A]
+    = \bE\left[
+      \Pr[A \mid \mu^*]
+    \right]
+    = \bE\left[
+      \prod_x \mu^*(x)^{n(x)}
+    \right]
+  \end{align}
+  Since $\mu^*$ is Ferguson, viewing $E = \sqcup_{x \in E} \{x\}$
+  as a partition we have
+  $(\mu^*(x))_{x \in E} \sim \Dir((\mu(x))_{x \in E})$
+  so the RHS is the $(n(x))_{x \in E}$ moment of the Dirichlet distribution,
+  which is equal to
+  \begin{align}
+    \bE\left[
+      \prod_x \mu^*(x)^{n(x)}
+    \right]
+    &= \frac{\Gamma(\mu(E))}{\Gamma(\mu(E) + n)}
+    \prod_{x} \frac{\Gamma(\mu(x) + n(x))}{\Gamma(\mu(x))}
+    = \frac{1}{\mu(E)^{[n]}} \prod_x \mu(x)^{[n(x)]}
+  \end{align}
+  as required by \cref{eq:polya-seq-meas}.
+
+  General $E$ follows from approximation argument.
+\end{proof}
+
+We leave the discreteness part of (1.) as an exercise, noting that
+similar to how Dirichlets can be defined as a set of independent
+Gammas normalized by their sum (\myref{prop:dirichlet-from-gamma})
+we would expect the Dirichlet process / Ferguson random measures
+to be definable as a gamma process with independent ``increments''
+divided by their sum.
+
+\begin{exercise}
+  Prove every Ferguson random measure is discrete.
+  (Hint: argue using moments).
+\end{exercise}
+
+
+\begin{remark}
+  If $(X_n)$ a Polya sequence, then it
+  is a mixture of iid sequences, and is exchangeable i.e.
+  $(X_i) \deq (X_{\sigma(i)})$ (see \cref{eq:polya-seq-meas})
+\end{remark}
+
+\subsection{Construction of Haar Measure}
+
+For a finite group $G$, the measure $\mu(g) = \frac{1}{\# G}$ is
+left and right translation invariant i.e. $\mu(gA) = \mu(A) = \mu(Ag)$.
+
+In fact, all compact groups have unique translation invariant measure
+called the Haar measure. For example $Z_{ij} \simiid N(0,1)$ for $i,j \in [n]$
+and $X$ the Gram-Schmidt orthonormalizataino of the rows of $Z$.
+Then $X U \deq U X$ for all $U \in O(n)$, so $X$ has Haar measure
+on compact group $O(n)$.
+
+\begin{definition}
+  A \emph{topological vector space} (TVS) is a vector space equipped with
+  a topology such that vector space operations are jointly
+  continuous.
+\end{definition}
+
+\begin{example}
+  $\bR^n$ with standard topology, any Banach space.
+\end{example}
+
+\begin{definition}
+  A family $\mathfrak{G}$ of linear transformations on TVS
+  $\mathfrak{X}$ is \emph{equicontinuous on subset $K \subset \mathfrak{X}$}
+  if for every neighborhood $V$ of the origin, there exists a neighborhood
+  $U$ of the origin such that
+  \begin{align}
+    \forall k_1, k_2 \in K: k_1 - k_2 \in U \implies \mathfrak{G}(k_1 - k_2) \subset V
+  \end{align}
+  That is, $T(k_1 - k_2) \in V$ for all $T \in \mathfrak{G}$.
+\end{definition}
+
+\begin{definition}
+  A \emph{locally convex topological vector space} (LCTVS) is a TVS
+  with a local base of absolutely convex absorbing sets at the origin.
+\end{definition}
+
+To construct Haar measure for any compact group, we will need a fix point
+theorem due to Kakutani.
+
+\begin{theorem}[Kakutani Fix Point Theorem]
+  \label{thm:kakutani}
+  $K$ compact convex subset of LCTVS $\mathfrak{X}$,
+  $\mathfrak{G}$ group of linear transforms equicontinuous on $K$
+  and such that $\mathfrak{G}(K) \subset K$,
+  then $\exists p \in K$ such that
+  \begin{align}
+    \mathfrak{G}(p) = \{p\}
+  \end{align}
+\end{theorem}
+
+\begin{proof}
+  \begin{itemize}
+    \item By Zorn's lemma applied to chains $(K_\lambda)_{\lambda}$ (note $K_a \subset K_b$
+      for $a < b$), $\exists$ minimal $K_1 \subset K$
+      such that $K_1 \neq \emptyset$ and $\mathfrak{G}(K_1) \subset K_1$.
+
+    \item If $K_1$ is a single point, then proof is complete.
+    \item Otherwise, by minimality the compact (becacuse $-$ is continuous)
+      set $K_1 - K_1$ contains a point other than the origin, so
+      exists $V \in N(0)$ such that $\bar{V} \not\supset K_1 - K_1$.
+    \item For some $\lvert \alpha \rvert \leq 1$, there is a convex
+      neighborhood $V_1 \in N(0)$ such that $\alpha V_1 \subset V$.
+    \item By equicontinuity of $\mathfrak{G}$ on $K \supset K_1$, there is
+      $U_1 \in N(0)$ such that for $k_1, k_2 \in K$ and
+      $k_1 - k_2 \in U_1$ we have $\mathfrak{G}(k_1 - k_2) \subset V_1$>
+    \item Because $T \in \mathfrak{G}$ is invertible
+      ($\mathfrak{G}$ is a group), $T$ maps open sets
+      to open sets and $T(A \cap B) = TA \cap TB$ for sets $A, B$.
+    \item Since $T$ is linear, for any $A$
+      \begin{align}
+        T \conv(A) &= \conv(TA)
+      \end{align}
+    \item So
+      \[
+        U_2
+        \coloneqq \conv(\mathfrak{G} U_1 \cap (K_1 - K_1)) \\
+        = \conv(\mathfrak{G}(U_1 \cap (K_1 - K_1))) \subset V
+      \]
+      is relatively open in $K_1 - K_1$ and satisfies
+      $\mathfrak{G} U_2 = U_2 \not\supset K_1 - K_1$.
+    \item By continuity, $\mathfrak{G} U_2 = \overline{\mathfrak{G} U_2}$.
+    \item Let $\delta = \inf \{ a : a > 0, a U_2 \supset K-1 - K_1 \} \geq 1$,
+      by compactness $\delta < \infty$. Let $U \coloneqq \delta U_2$.
+    \item For each $\eps \in (0,1)$
+      \[
+        (1+\eps) U \supset K_1 - K_1 \not\subset (1-\eps) \overline{U}
+      \]
+    \item Because $(1 - 1/4n) \bar{U} \not\supset K_1 - K_1$, we have
+      $K_2 \neq K-1$.
+    \item $K_2$ is closed and convex
+    \item Further, since $T(a \bar{U}) \subset a \bar{U}$ for $T \in
+      \mathfrak{G}$, we have
+      \[
+        T(a\bar{U} + k)
+        \subset a \bar{U} + T k
+        \qquad \mathrm{for all}~T \in \mathfrak{G}, k \in K_1
+      \]
+    \item Recalling $T K_1 \subset K_1$ for $T \in \mathfrak{G}$
+      and that $\mathfrak{G}$ is a group, we find that
+      $T K_1 = K_1 \mathfrak{G} K_2 = $ \todo{Finish}
+      a contradiction
+  \end{itemize}
+\end{proof}
+
+\begin{figure}[ht]
+  \centering
+  \incfig{1-21-1}
+  \caption{Sketch of proof of Kakutani's theorem}
+\end{figure}
+
+\begin{theorem}[Existence of Haar Measure]
+  \label{thm:haar-measure}
+  $G$ compact group, $\cC(G)$ continuous maps $G \to \bR$.
+  Then there is a unique linear form $m : \cC(G) \to \bR$ such that
+  \begin{enumerate}
+    \item $m(f) \geq 0$ for $f \geq 0$ (positive)
+    \item $m(\ind) = 1$ (normalized)
+    \item $m(\prescript{}{s}{f}) = m(f)$ where
+      $\prescript{}{s}{f}(g) = f(s^{-1} g)$
+      for $s,g \in G$ (left invariant)
+    \item $m(f_s) = m(f)$ where $f_s(g) = f(gs)$ (right invariant)
+  \end{enumerate}
+\end{theorem}
+
+

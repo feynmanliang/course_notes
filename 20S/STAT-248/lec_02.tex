@@ -1,0 +1,67 @@
+\lecture{2}{2020-01-22}{}
+
+Last time:
+\begin{itemize}
+  \item Want to model $y_i \in \bR^{K}$ for $i \in \bN$
+  \item Introduced Vector autoregressive  model (VAR)
+\end{itemize}
+
+VAR(p)
+\begin{align}
+  \vy_t &= \vec{\nu} + \mA \vy_{t-1} + \mA_2 \vy_{t-1}
+  + \cdots + \mA_p \vy_{t-p} + \underbrace{\vz_t}_{\text{white noise}}
+\end{align}
+
+AR(p)
+\begin{align}
+  y_t &= \nu + \alpha_1 y_{t-1} + \alpha_2 y_{t-1}
+  + \cdots + \alpha_p y_{t-p} + z_t
+\end{align}
+
+\begin{definition}
+  $\{y_t\}_{t \in \bZ}$ is (weak, wide-sense, second-order) \emph{stationary}
+  if $(y_{t_i})_{i=1}^k$ and $(y_{t_i - h})_{i=1}^k$ have the same mean and
+  covariances for any $\{t_i\}_{i=1}^k$ and $h$.
+\end{definition}
+
+Equivalently:
+\begin{itemize}
+  \item $\bE y_t$ is independent of $t$
+  \item $\Cov(\vy_t)$ doese not depend on $t$
+  \item $\Cov(\vy_t, \vy_{t-h})$ only depends on $h$
+\end{itemize}
+
+\begin{definition}
+  \emph{Strong stationarity} means $(\vy_{t_i})_{i=1}^k$
+  and $(\vy_{t_i - h})_{i=1}^k$ are equal in distribution.
+\end{definition}
+
+\begin{definition}[Cross-covariance/correlation function]
+  Suppose $\{\vy_t, t \in \bZ\}$ is stationary.
+  The \emph{cross-covariance function}
+  \begin{align}
+    \Gamma_{\vy}(h) &= \Cov(\vy_t, \vy_{t-h})
+  \end{align}
+  It is a $K \times K$ matrix, not generally symmetric since
+  $\Gamma_y(h)^\top = \Gamma_y (-h)$
+
+  The \emph{cross-correlation function}
+  \begin{align}
+    (R_y(h))_{i,j}
+    &= \Corr(y_{i,t}, y_{j,t-h})
+    = \frac{\Gamma_y(h)_{ij}}{\sqrt{\Gamma_y(0)_{ii} \Gamma_y(0)_{jj}}}
+  \end{align}
+  As matrices, let $D = \diag(\sqrt{\Var y_{1t}}, \sqrt{\Var y_{2t}}, \ldots)$.
+  Then $R_y(h) = D^{-1} \Gamma_y(h) D^{-1}$.
+\end{definition}
+
+\textbf{Question}: For what $\vec{\nu}$, $\mA_i$ is the VAR(p) model stationary?
+
+Let us first look at the AR(1) case:
+\[
+  y_t
+  = \nu + \alpha y_{t-1} + z_t
+\]
+It turns out: stationary solution exists iff $\lvert \alpha \rvert = 1$.
+
+
