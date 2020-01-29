@@ -1,4 +1,4 @@
-\lecture{1}{2020-01-21}{}
+\lecture{1}{2020-01-21}{Backround material}
 
 \subsection{Ferguson distributions / Dirichlet processes}
 
@@ -157,12 +157,8 @@ Distributions}~\citep{ferguson1973}.
   $\mu \circ \phi^{-1}$.
 \end{proof}
 
-\subsubsection{Connection to Polya urns}
-
-Next, we turn to an important relation between Ferguson distributions and
-a generalized P\'olya urn.
-Our presentation draws from material originally in
-\cite{blackwell1973}.
+Next, we turn to an important class of a Ferguson distributions
+arising from generalizing the P\'olya urn.
 
 \begin{definition}[Polya sequence]
   A sequence $(X_n)_{n \in \bN}$ with values in $E$ is
@@ -197,9 +193,11 @@ and Ferguson distributions.
 \end{theorem}
 
 \begin{proof}
-  First consider $E$ finite and let $\mu^*$ and $\{X_i\}$
+  First consider $E$ finite.
+  Let $\mu^*$ and $\{X_i\}$
   be random variables whose joint distribution satisfies (2.)
   and (3.).
+
   Let $\pi_n$ be empirical distribution of $(X_i)_{i \in [n]}$.
   $X_i \simiid \mu^*$, so by SLLN $\pi_n \asto \mu^*$ and since
   \begin{align}
@@ -207,14 +205,17 @@ and Ferguson distributions.
   \end{align}
   (1.) follows.
 
-  It remains to show $(X_n)$ is a Polya sequence with parameter $\mu$, i.e.
+  To complete the proof, we show equality in distribution of $\{X_i\}$
+  with a Poly\'a-$\mu$ sequence.
+  This amounts to showing
   \begin{align}
     \label{eq:polya-seq-meas}
     \Pr[A] = \prod_x \mu(x)^{[n(x)]} / \mu(E)^{[n]}
   \end{align}
-  where $A = \{X_i = x_i\}_{i}$, $n(x) = \#\{i : x_i = x\}$,
+  where $A = \{X_i = x_i\}_{i} \in \{0,1\}^n$ and
+  $n(x) = \#\{i : x_i = x\}$,
   and the rising factorial $a^{[k]} = a (a+1) \cdots (a+k-1)$.
-  Notice
+  By the tower rule and $\{X_i\}$ IID
   \begin{align}
     \Pr[A]
     = \bE\left[
@@ -230,6 +231,7 @@ and Ferguson distributions.
   so the RHS is the $(n(x))_{x \in E}$ moment of the Dirichlet distribution,
   which is equal to
   \begin{align}
+    \label{eq:dirichlet-moment}
     \bE\left[
       \prod_x \mu^*(x)^{n(x)}
     \right]
@@ -239,8 +241,13 @@ and Ferguson distributions.
   \end{align}
   as required by \cref{eq:polya-seq-meas}.
 
+
+
   General $E$ follows from approximation argument.
 \end{proof}
+
+Notice that the Dirichlet moment comparison in \cref{eq:dirichlet-moment} was
+the key step relating $\mu$ to $\mu^*$.
 
 We leave the discreteness part of (1.) as an exercise, noting that
 similar to how Dirichlets can be defined as a set of independent
@@ -256,21 +263,30 @@ divided by their sum.
 
 
 \begin{remark}
-  If $(X_n)$ a Polya sequence, then it
-  is a mixture of iid sequences, and is exchangeable i.e.
-  $(X_i) \deq (X_{\sigma(i)})$ (see \cref{eq:polya-seq-meas})
+  If $(X_i)$ is a Polya sequence, then
+  it is a mixture of IID sequences (each
+  drawn from $\mu^*$) with mixture weights given by the Ferguson distribution
+  on $\mu^*$. Hence, $(X_i)$ is exchangeable i.e.\ $(X_i) \deq (X_{\sigma(i)})$
+  This is already apparent in \cref{eq:polya-seq-meas}, and more generally
+  de Finetti's theorem guarantees that \emph{any} exchangeable sequence
+  is a mixture of IID sequences.
 \end{remark}
 
-\subsection{Invariant measures and Kakutani's Theorem}
+\subsection{Construction of Haar Measure}
 
 For a finite group $G$, the measure $\mu(g) = \frac{1}{\# G}$ is
-left and right translation invariant i.e. $\mu(gA) = \mu(A) = \mu(Ag)$.
+left and right translation invariant i.e. $\mu(gA) = \mu(A) = \mu(Ag)$
+for all $A \subset G$..
+As we will prove, all compact groups have unique translation invariant measure,
+called the Haar measure.
 
-In fact, all compact groups have unique translation invariant measure
-called the Haar measure. For example $Z_{ij} \simiid N(0,1)$ for $i,j \in [n]$
-and $X$ the Gram-Schmidt orthonormalizataino of the rows of $Z$.
-Then $X U \deq U X$ for all $U \in O(n)$, so $X$ has Haar measure
-on compact group $O(n)$.
+\begin{example}
+  Let $Z_{ij} \simiid N(0,1)$ for $i,j \in [n]$ and $X$ the Gram-Schmidt
+  orthonormalization of the rows of $Z$.  By rotation invariance of $Z$, we can
+  show $X U \deq U X$ for all $U \in O(n)$, so $X$ has Haar measure on the
+  compact (Lie) group $O(n)$.
+\end{example}
+
 
 \begin{definition}
   A \emph{topological vector space} (TVS) is a vector space equipped with
@@ -285,18 +301,33 @@ on compact group $O(n)$.
 \begin{definition}
   \label{def:equicontinuous}
   A family $\mathfrak{G}$ of linear transformations on TVS
-  $\mathfrak{X}$ is \emph{equicontinuous on subset $K \subset \mathfrak{X}$}
+  $\mathfrak{X}$ is \emph{(uniformly) equicontinuous on subset $K \subset \mathfrak{X}$}
   if for every neighborhood $V$ of the origin, there exists a neighborhood
   $U$ of the origin such that
-  \begin{align}
+  \begin{align*}
     \forall k_1, k_2 \in K: k_1 - k_2 \in U \implies \mathfrak{G}(k_1 - k_2) \subset V
-  \end{align}
+  \end{align*}
   That is, $T(k_1 - k_2) \in V$ for all $T \in \mathfrak{G}$.
 \end{definition}
 
+\begin{remark}
+  Whereas ``uniform'' is used in analysis to generalize the $U$ neighborhood of
+  continuity (e.g.\ the $\delta$ in $\eps$-$\delta$ definition of continuity)
+  from at a particular $x_0 \in \fX$ to $\forall x \in \fX$, ``equi'' is used
+  to generalize from a single $f \in \cC(\fX)$ to a family $\fG \subset
+  \cC(\fX)$.
+\end{remark}
+
+\cutthmoff
 \begin{definition}
   A \emph{locally convex topological vector space} (LCTVS) is a TVS
   with a local base of absolutely convex absorbing sets at the origin.
+\end{definition}
+\cutthmon
+
+\begin{definition}[In-Class]
+  A \emph{locally convex topological vector space} (LCTVS) is a TVS
+  such that the topology has a base consisting of convex sets.
 \end{definition}
 
 To construct Haar measure for any compact group, we will need a fix point
@@ -314,44 +345,86 @@ theorem due to Kakutani.
 \end{theorem}
 
 \begin{proof}
-  \begin{itemize}
-    \item By Zorn's lemma applied to chains $(K_\lambda)_{\lambda}$ (note $K_a \subset K_b$
-      for $a < b$), $\exists$ minimal $K_1 \subset K$
-      such that $K_1 \neq \emptyset$ and $\mathfrak{G}(K_1) \subset K_1$.
+  By Zorn's lemma (consider inclusion chains of sets satisfying these
+  properties, exploiting stability under uncountable intersection),
+  there is some minimal compact convex $K_1 \subset K$ such that $K_1 \neq
+  \emptyset$ and $\mathfrak{G}(K_1) \subset K_1$.
 
-    \item If $K_1$ is a single point, then proof is complete.
-    \item Otherwise, by minimality the compact (becacuse $-$ is continuous)
-      set $K_1 - K_1$ contains a point other than the origin, so
-      exists $V \in N(0)$ such that $\bar{V} \not\supset K_1 - K_1$.
-    \item For some $\lvert \alpha \rvert \leq 1$, there is a convex
-      neighborhood $V_1 \in N(0)$ such that $\alpha V_1 \subset V$.
+  Since we are done if $K_1 = \{p\}$ is a singleton, assume otherwise.
+  We will contradict minimality of $K_1$ by constructing $K_2 \subsetneq K_1$
+  such that $K_2 \neq \emptyset$ and $\fG K_2 \subset K_2$.
+
+  We first exploit equicontinuity to construct
+  a minimal convex cover $U$ of $K_1 - K_1$
+  such that $T(a U) = U$ for $T \in \fG$ and $a \in \bR$
+  as well as $(1 - \eps) \bar{U} \not\supset K_1 - K_1$.
+  \begin{itemize}
+    \item
+      By assumption, $K_1 - K_1$ (Minkowski sum) contains a point other than
+      the origin, so there exists a neighborhood $V \ni 0$ such that
+      $\bar{V} \not\supset K_1 - K_1$.
+    \item Again using $\fX$ LCTVS, for some $\lvert \alpha \rvert \leq 1$,
+      there is a convex neighborhood $V_1 \ni 0$ such that $\alpha V_1
+      \subset V$.
     \item By equicontinuity of $\mathfrak{G}$ on $K \supset K_1$, there is
       $U_1 \in N(0)$ such that for $k_1, k_2 \in K$ and
-      $k_1 - k_2 \in U_1$ we have $\mathfrak{G}(k_1 - k_2) \subset V_1$>
-    \item Because $T \in \mathfrak{G}$ is invertible
-      ($\mathfrak{G}$ is a group), $T$ maps open sets
-      to open sets and $T(A \cap B) = TA \cap TB$ for sets $A, B$.
-    \item Since $T$ is linear, for any $A$
-      \begin{align}
-        T \conv(A) &= \conv(TA)
-      \end{align}
-    \item So
+      $k_1 - k_2 \in U_1$ we have $\mathfrak{G}(k_1 - k_2) \subset V_1$.
+    \item Let
       \[
         U_2
         \coloneqq \conv(\mathfrak{G} U_1 \cap (K_1 - K_1)) \\
         = \conv(\mathfrak{G}(U_1 \cap (K_1 - K_1))) \subset V
       \]
+      $U_2$
       is relatively open in $K_1 - K_1$ and satisfies
-      $\mathfrak{G} U_2 = U_2 \not\supset K_1 - K_1$.
+      $\mathfrak{G} U_2 = U_2 \not\supset K_1 - K_1$
+      because:
+      \begin{itemize}
+        \item $T \in \mathfrak{G}$ is invertible ($\mathfrak{G}$ is a group)
+          hence $T$ maps open sets to open sets and $T(A \cap
+          B) = TA \cap TB$ for sets $A, B$.
+        \item Since $T$ is linear, for any $A$
+          \begin{align}
+            T \conv(A) &= \conv(TA)
+          \end{align}
+        \item Since $\fG$ is a group, $\fG \fG A = \fG A$.
+      \end{itemize}
     \item By continuity, $\mathfrak{G} U_2 = \overline{\mathfrak{G} U_2}$.
-    \item Let $\delta = \inf \{ a : a > 0, a U_2 \supset K-1 - K_1 \} \geq 1$,
+    \item Let $\delta = \inf \{ a : a > 0, a U_2 \supset K_1 - K_1 \} \geq 1$,
       by compactness $\delta < \infty$. Let $U \coloneqq \delta U_2$.
-    \item For each $\eps \in (0,1)$
+    \item For any $\eps \in (0,1)$, note
       \[
         (1+\eps) U \supset K_1 - K_1 \not\subset (1-\eps) \overline{U}
       \]
-    \item Because $(1 - 1/4n) \bar{U} \not\supset K_1 - K_1$, we have
-      $K_2 \neq K-1$.
+  \end{itemize}
+
+  Next, we use compactness of $K_1$ to get a center $p$ which is within
+  $(1 - \eps) \bar{U}$ of all of $K_1$. Combined with
+  $(1 - \eps) \bar{U} \not\supset K_1 - K_1$, we can define
+  $K_2 \subset\neq K_1$ with the desired properties.
+  \begin{itemize}
+    \item For the relatively open cover $\{2^{-1} U + k\}_{k \in K_1}$ of
+      $K_1$, let $\{k_i\}_{i=1}^n$ index a finite subcover and define (the
+      center)
+      $p = \frac{1}{n} \sum_{i=1}^n k_i$.
+      Then for all $k \in K_1$, $k_i - k \in 2^{-1} U$ for some $i \in [n]$ and
+      since $k_j - k \in (1 + \eps) U$ for all $j \neq i$ we have
+      \[
+        p \in \frac{1}{n} (2^{-1} U + (n-1) (1+\eps) U) + k
+      \]
+      Setting $\eps = \frac{1}{4(n-1)}$ we get $p \in (1 - \frac{1}{4n}) U + k$
+      for each $k \in K_1$, i.e. every point in $K_1$ is within $(1 - \frac{1}{4 n} )U$
+      of the ``center'' $p$.
+    \item Let
+      \[
+        K_2 = K_1 \cap \bigcap_{k \in K_1} \left(
+          \left(
+            1 - \frac{1}{4n}
+          \right) \bar{U} + k
+        \right) \neq \emptyset
+      \]
+    \item Because $(1 - \frac{1}{4n} ) \bar{U} \not\supset K_1 - K_1$, we have
+      $K_2 \subsetneq K_1$.
     \item $K_2$ is closed and convex
     \item Further, since $T(a \bar{U}) \subset a \bar{U}$ for $T \in
       \mathfrak{G}$, we have
@@ -362,13 +435,8 @@ theorem due to Kakutani.
       \]
     \item Recalling $T K_1 \subset K_1$ for $T \in \mathfrak{G}$
       and that $\mathfrak{G}$ is a group, we find that
-      $T K_1 = K_1 \mathfrak{G} K_2 = $ \todo{Finish}
+      $T K_1 = K_1$ and $\mathfrak{G} K_2 \subset K_2$,
+      contradicting minimality of $K_1$.
       a contradiction
   \end{itemize}
 \end{proof}
-
-\begin{figure}[ht]
-  \centering
-  \incfig{1-21-1}
-  \caption{Sketch of proof of Kakutani's theorem}
-\end{figure}

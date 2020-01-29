@@ -17,7 +17,7 @@
 
 
 % Don't indent paragraphs, leave some space between them
-\usepackage{parskip}
+% \usepackage{parskip}
 
 % Hide page number when page is empty
 \usepackage{emptypage}
@@ -182,7 +182,6 @@
   \LetLtxMacro\endproof\amsendproof
 }
 
-
 \declaretheorem[thmbox=M]{theorem}
 \declaretheorem[thmbox=M,sibling=theorem]{proposition}
 \declaretheorem[thmbox=M,sibling=theorem]{lemma}
@@ -198,6 +197,12 @@
 ]{example}
 \declaretheorem[style=remark,sibling=theorem]{remark}
 \declaretheorem[style=remark,sibling=theorem]{exercise}
+
+% use \cutthm{off,on} to prevent page breaks within thmbox
+\makeatletter
+\newcommand{\cutthmoff}{\thmbox@cutfalse}
+\newcommand{\cutthmon}{\thmbox@cuttrue}
+\makeatother
 
 % End env with a small diamond (just like proof environments end with a small square)
 % \usepackage{etoolbox}
