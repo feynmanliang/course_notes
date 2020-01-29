@@ -54,15 +54,19 @@ must be the projection of the law of $X_G$.
   measurable!
 \end{exercise}
 
+\todo{Underfull vbox}
 \begin{example}[Continuum of IID r.v.s]
   Given any consistent family of FDDs, we can construct an infinite sequence of
   IIDs $(X_i)$ with any prescribed law $F$.
 
-  $\omega \in [0,1] \to (X_1(\omega), X_2(\omega), \ldots)$.
-  The binary expansion of $\omega = \sum_{n=1}^\infty X_n(\omega) 2^{-n}$.
+  Let $\omega \in [0,1] \to (X_1(\omega), X_2(\omega), \ldots)$ be
+  the binary expansion of $\omega = \sum_{n=1}^\infty X_n(\omega) 2^{-n}$.
 
   We can construct infintely many IID uniforms on $[0,1]$ by setting
-  $U_1 = \sum_{i \geq 1} X_{2^i} 2^{-i}$, $U_2 = \sum_{i \geq 1} X_{3^i} 2^{-i}$,
+  \begin{align*}
+    U_1 &= \sum_{i \geq 1} X_{2^i} 2^{-i}\\
+    U_2 &= \sum_{i \geq 1} X_{3^i} 2^{-i}
+  \end{align*}
   continuing with other powers of primes to maintain independence.
   Then use inverse CDF to construct arbitrary law.
 \end{example}

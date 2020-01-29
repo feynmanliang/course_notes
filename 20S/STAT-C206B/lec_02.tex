@@ -1,131 +1,184 @@
-\lecture{2}{2020-01-23}{Measure theory continued}
+\lecture{2}{2020-01-23}{Measure theory}
 
-Today we will start off by completing the construction of the
-Haar measure. All metric spaces are Hausdorff.
+Throughout our discussion, all topological spaces are assumed Hausdorff
+unless explicitly noted otherwise.
 
-Recall that \myref{thm:kakutani} requires equicontinuity of a set of continuous
-maps. The following result gives an alternative characterization of
-equicontinuity.
+\subsection{Construction of Haar measure}
 
-\begin{theorem}[Generalization of Arzela-Ascoli]
-  \label{thm:arzela-ascoli}
-  Let $X$ be a compact topological space.
-  A subset of function $F \subset \cC(X)$ is relatively compact in topology
-  induced by uniform norm $\iff$ $F$ is equicontinuous and pointwise
-  bounded.
+\begin{definition}
+  A \emph{topological group} is a group equipped with a topology
+  such that the group operations $(g, h) \mapsto gh$ and $g \mapsto g^{-1}$
+  are continuous.
+\end{definition}
+
+\begin{theorem}[Existence of Haar Measure]
+  \label{thm:haar-measure}
+  Let $G$ be a compact topological group and $\cC(G)$ the set of continuous
+  maps $G \to \bR$.
+  Then there is a unique linear form $m : \cC(G) \to \bR$ such that
+  \begin{enumerate}
+    \item $m(f) \geq 0$ for $f \geq 0$ (positive)
+    \item $m(\ind) = 1$ (normalized)
+    \item $m(\prescript{}{s}{f}) = m(f)$ where
+      $\prescript{}{s}{f}(g) = f(s^{-1} g)$
+      for $s,g \in G$ (left invariant)
+    \item $m(f_s) = m(f)$ where $f_s(g) = f(gs)$ (right invariant)
+  \end{enumerate}
+  $m$ is called the \emph{Haar measure} on $G$.
 \end{theorem}
 
-$f \mapsto \prescript{}{s}{f}$ linear transform of $\cC(G)$,
-$\|\prescript{}{s}{f} - \prescript{}{s}{g}\| = \|f - g\|$,
-$G$ acts as a group of isometries on $\cC(G)$. In particular,
-this group is equicontinuous.
+We will need the following theorem to relate compactness
+with equicontinuity:
+\begin{theorem}[Generalization of Arzela-Ascoli]
+  \label{thm:arzela-ascoli}
+  Let $X$ be a compact Hausdorff space.
+  A subset of $\bR$-valued continuous functions $F \subset \cC(X)$
+  is relatively compact in topology
+  induced by uniform norm $\|\cdot\|_\infty$
+  $\iff$ $F$ is equicontinuous and pointwise bounded.
+\end{theorem}
 
 \begin{proof}[Proof of \cref{thm:haar-measure}]
-  Fix $f \in \cC(G)$. Let $\cC_f$ denote the convex hull of all left
-  translates of $f$. Elements $g \in \cC_f$ are finite sums of form
+  Fix $f \in \cC(G)$ and let $\cC_f$ denote the convex hull of all left
+  translates of $f$, i.e. $g \in \cC_f$ are finite sums of form
   \[
-    g(x) = \sum_{\mathrm{finite}} a_i f(s_i x), \qquad a_i > 0, \sum_{\mathrm{finite}} a_i = 1
+    g(x) = \sum_{\mathrm{finite}} a_i f(s_i x), \qquad a_i > 0, \sum_{\mathrm{finite}} a_i = 1, s_i \in G
   \]
-  Clearly $\|g\|_\infty = \max\{\lvert g(x)\rvert : x \in G\} \leq \|f\|_\infty$, thus
-  sets of the form $\cC_f(x) = \{g(x) : g \in \cC_f\}$ are bounded.
+  Clearly $\|g\|_\infty \leq \|f\|_\infty < \infty$, thus $\cC_f(x) = \{g(x) : g \in
+  \cC_f\}$ is bounded for all $x \in G$ hence $\cC_f$ is pointwise bounded.
 
-  Since $G$ is compact, $f$ is uniformly continuous hence for $\eps > 0$
-  there exists a neighborhood $V = V_\eps$ of the identity $e \in G$ such that
+  As $f$ is a continuous function on compact $G$, it is uniformly continuous
+  hence for $\eps > 0$ there exists a neighborhood $V_\eps$ of the identity
+  $e \in G$ such that
   \[
-    y^{-1} x \in V \implies \lvert f(x) - f(y) \rvert \leq \eps
+    y^{-1} x \in V_\eps \implies \lvert f(x) - f(y) \rvert \leq \eps
   \]
-  Since $(s^{-1} y)^{-1} s^{-1} x = y^{-1} x$, we also have \todo{}.
+  Since $(s^{-1} y)^{-1} s^{-1} x = y^{-1} x$, we also have
+  \[
+    y^{-1} x \in V_\eps \implies \lvert \pre{s}{f}(y) - \pre{s}f(x) \rvert < \eps
+  \]
+  Since $g \in \cC_f$ are convex combinations of $\pre{s}{f}$,
+  by the triangle inequality
+  \[
+    y^{-1} x \in V_\eps \implies \lvert g(y) - g(x) \rvert < \eps
+  \]
+  As this works for any $g \in \cC_f$, we have that $\cC_f$ is equicontinuous.
 
-  By \myref{thm:arzela-ascoli},
-  $\cC_f$ relatively compact in $\cC(G)$, so its
-  closure $K_f = \overline{\cC_f}$ is compact convex.
-  $G$ acts by left translation on $\cC(G)$ and leaves $\cC_f$ invariant,
-  hence $K_f$ invariant as well. By \myref{thm:kakutani}, there is a fixed
+  By \myref{thm:arzela-ascoli}, $\cC_f$ is relatively compact in $\cC(G)$,
+  so its closure $K_f \coloneqq \overline{\cC_f}$ is compact (and still convex).
+
+  Consider $G$ acting on $\cC(G)$ by left translation $f \mapsto
+  \prescript{}{s}{f}$. Notice $G \cC_f \subset \cC_f$ (as $\cC_f$ already
+  contains all finite convex combinations of all left translations of $f$) and
+  hence $G K_f \subset K_f$ as well.
+
+  Furthermore,
+  $\|\prescript{}{s}{f} - \prescript{}{s}{g}\|_\infty = \|f - g\|_\infty$
+  so $G$ acts as a group of isometries on $\cC(G)$.
+  In particular, this group is equicontinuous (with the same $U = V$
+  in \cref{def:equicontinuous}).
+
+  Taking $\fG = G$ and $K = K_f$ in \myref{thm:kakutani}, there is a fixed
   point $g \in K_f$ of this action of $G$ on $K_f$ which satisfies
   \[
     \pre{s}{g} = g \; (\forall s \in G)
     \quad\implies\quad
     g(s^{-1}) = \pre{s}g(e) = g(e) = c\; (\forall s \in G)
   \]
-  for some constant $c$.
+  for some constant $c \in \bR$ (which we will later use to
+  define $m(f) \coloneqq c$).
 
-  By definition of $K_f$, for any $\eps > 0$ there is
-  $\{s_1, \ldots, s_n\} \subset G$ and $a_i > 0$ such that
-  \[
+  We first show there is only one constant function in $K_f$, so the fix
+  point $G g = \{g\} = \{c \ind\}$ is unique and $m(f) = c$ is well defined.
+  For any constant function $c \ind \in K_f$ and $\eps > 0$, we can
+  (because $K_f = \overline{\cC_f}$) find $\{s_1, \ldots, s_n\} \subset G$
+  and $a_i > 0$ such that
+  \begin{align}
+    \label{eq:combo-close-to-constant}
     \sum_{i=1}^n a_i = 1,
     \quad \text{and}\quad \left\lvert c - \sum_{i=1}^n a_i f(s_i x) \right\rvert < \eps
     \qquad (\forall x \in G)
-  \]
-  We first show there is only one constant function in $K_f$, so the fix
-  point $g \in K_f$ is unique.
+  \end{align}
+  for any $\eps > 0$.
 
-  Start with same construction as before expect now use right translations of
-  $f$ (i.e. using the opposite group $G'$ of $G$, or the function $f' =
+  Similarly, consider the same construction as before expect now use right
+  translations of $f$ (i.e. using the opposite group $G'$ of $G$, or the function $f' =
   f(x^{-1})$, obtaining relatively compact set $\cC_f'$ with compact convex
-  closure $K_f'$ containing constant function $c'$).
-
+  closure $K_f'$ with fix point $g' = c' \ind$).
+  Approximating $c' \ind$ using $\cC_f'$, we have
+  \begin{align}
+    \left\lvert c' - \sum_j b_j f(x t_j) \right\rvert < \eps
+    \qquad(\text{for some $t_j \in G$, $b_j > 0$ with $\sum_j b_j = 1$})
+  \end{align}
   \begin{note}{Opposite group}
     The opposite group $g'$ of the group $G$ is the group that
     coincides with $G$ as a set but has group operation
     $(x,y) \mapsto y^{-1} x^{-1}$
   \end{note}
-  It will be enough to show $c=c'$, since all constants $c \in K_f$ must be
-  equal to one chosen constant $c' \in K_f'$ and conversely.
-
-  By construction, exists finite combination of right translates close
-  to $c'$ i.e.
-  \begin{align}
-    \label{eq:combo-close-to-constant}
-    \lvert c' - \sum_j b_j f(x t_j) \rvert < \eps
-    \qquad(\text{for some $t_j \in G$, $b_j > 0$ with $\sum_j b_j = 1$})
-  \end{align}
-  Multiply by $a_i$ and put $x = s_i$ to get
-  \[
-    \lvert c' a_i - \sum_j a_i b_j f(s_i t_j) \rvert < \eps a_i
-  \]
   Summing over $i$
   \[
-    \lvert c' - \sum_{i, j} a_i b_j f(s_i t_j) \rvert
-    = \lvert c' \sum_i a_i - \sum_{i,j} a_i b_j f(s_i t_j) \rvert
+    \left\lvert c' - \sum_{i, j} a_i b_j f(s_i t_j) \right\rvert
     < \eps \sum_i a_i
     = \eps
   \]
   Operating symmetrically on \cref{eq:combo-close-to-constant}
-  (mult by $b_j$, $x = t_j$) \todo{finish}
+  (multiply by $b_i$ and put $x = t_i$) shows
+  \[
+    \left\lvert c - \sum_{i, j} a_i b_j f(s_i t_j) \right\rvert
+    < \eps
+  \]
+  Together, we have $\lvert c' - c \rvert < 2 \eps$ so taking $\eps \to 0$
+  shows $c' = c$. Since $c \ind \in K_f$ was an arbitrary constant function,
+  we have that the constant function in $K_f$ is actually unique and so
+  the function $m(f) \coloneqq c \in K_f$ is well defined. Moreover,
+  $m(f) \ind$ is the \emph{only} constant function which can be arbitrary
+  well approximated by convex combinations of left or right translates
+  of $f$.
 
   The following properties are obvious:
   \begin{itemize}
-    \item $m(\ind)= 1$ since $K_f = \{1\}$ for $f=1$
+    \item $m(\ind)= 1$ since $K_f = \{1\}$ for $f=\ind$
     \item $m(f) \geq 0$ if $f \geq 0$
+    \item $m(\pre{s}{f}) = m(f) = m(f_s)$ (since $K_{\pre{s}{f}} = K_f$,
+      $K'_f = K'_{f_s}$, and uniqueness of $m(f) \ind$ being the only
+      constant function approximable by both $K_f$ and $K_f'$)
     \item $m(a f) = a m(f)$ for any $a \in \bR$ (since $K_{af} = K_f$)
-    \item $m(\pre{s}{f}) = m(f) = m(f_s)$ (by uniqueness)
   \end{itemize}
-  It remains to show that $m$ is additive (hence linear). Take $f,g \in \cC(G)$
-  and start with \cref{eq:combo-close-to-constant} with $c = m(f)$, further
-  letting $h(x) = \sum_i a_i g(s_i x)$. Since $h \in \cC_g$, we have $\cC_h
-  \subset \cC_g$ hence $K_h \subset K_g$. But $K_g$ contains only one constant
-  so in fact $m(h) = m(g)$.
 
-  We can write
+  To show $m$ is linear, it suffices (due to the last bullet above) to show
+  that $m$ is additive. Fix $f,g \in \cC(G)$. Approximate $m(f)$
+  using $K_f$ to get
+  \begin{align}
+    \label{eq:approx-mf-using-Kf}
+    \left\lvert m(f) - \sum_{\mathrm{finite}} a_i f(s_i x) \right\rvert
+  \end{align}
+  Define $h(x) = \sum_{\mathrm{finite}} a_i g(s_i x)$ using the same $a_i$
+  and $s_i$ and approximate $m(h)$ using $\cC_h$ to get
   \[
-    \lvert m(h) - \sum b_j h(t_j x) \rvert < \eps
+    \left\lvert m(h) - \sum_{\mathrm{finite}} b_j h(t_j x) \right\rvert < \eps
   \]
-  for finitely many $t_j \in G$ and $b_j > 0$, $\sum_j b_j = 1$.
-
-  Using this definition of $h$ and $m(h) = m(g)$ gives
+  Since $h \in \cC_g$, we have $\cC_h
+  \subset \cC_g$ hence $K_h \subset K_g$. But $m(g) \ind \in K_g$ is the only
+  constant function so $m(h) = m(g)$ and (after expanding the definition of $h$)
+  we have
   \[
-    \lvert m(g) - \sum_{i,j} a_i b_j g(s_i t_j x) \rvert < \eps
+    \left\lvert m(g) - \sum_{i,j < \infty} a_i b_j g(s_i t_j x) \right\rvert < \eps
   \]
-  However, multiplying \cref{eq:combo-close-to-constant} by $b_j$
-  and replacing $x$ \todo{}, adding (9) and (10) gives
+  On the other hand, multiplying \cref{eq:approx-mf-using-Kf} by $b_j$
+  replacing $x$ with $t_j x$, summing over $j$, and finally adding with
+  the above ineqeuality gives
   \[
     \lvert m(f) + m(g) - \sum_{i,j} a_i b_j (f + g) (s_i t_j x) \rvert < 2 \eps
   \]
   Thus $m(f) + m(g) \in K_{f+g}$, establishing additivity.
-  Note that the only constant in $K_{f+g}$ is \todo{???}.
+  Note that the only constant in $K_{f+g}$ is $(m(f) + m(g))\ind$.
 \end{proof}
 
-We now want to head towards some integration against probability measures.
+\subsection{Facts from topology}
+
+We now want to head towards some integration against probability measures
+defined on spaces more abstract than $\bR^n$.
+
 
 \begin{definition}
   A topological space $X$ is \emph{normal} if for any disjoint closed
@@ -142,77 +195,194 @@ We now want to head towards some integration against probability measures.
 \end{figure}
 
 \begin{definition}
-  $X$ is \emph{completely regular} if for all $y \in X$ and
-  every closed $Z \subset X \setminus \{y\}$ there exists
-  $f : X \to [0,1]$ continuous such that $f(y) = 0$ and $f(z) = 1$
-  for all $z in Z$.
+  $X$ is \emph{completely regular} (\emph{Tychonoff} if $X$ is also Hausdorff)
+  if for all $y \in X$ and every closed $Z \subset X \setminus \{y\}$ there
+  exists $f : X \to [0,1]$ continuous such that $f(y) = 0$ and $f(z) = 1$ for
+  all $z \in Z$.
+  We say $y$ and $Z$ are separated by a (Urysohn) function.
 \end{definition}
 
-\begin{lemma}[Urysohn]
+\begin{corollary}[Urysohn's Lemma]
   Every normal space is completely regular.
+\end{corollary}
+
+\begin{lemma}
+  A compact (Hausdorff) space is normal hence completely regular.
 \end{lemma}
 
-\begin{definition}
-  $m$ a set function on $X$ with values in $[0,+\infty]$
-  such that $m(\emptyset) = 0$.
-  $A \subset X$ is \emph{Carath\'eodory measurable} wrt
-  $m$ (Carath\'eodory $m$-measurable) if, for every $E \subset X$
-  we have
+\begin{proof}
+  Fix disjoint closed $Y$ and $Z$ and let $y \in Y$.
+  Consider the open cover of $Z$ given by $\{ V_{y,z} : z \in Z \}$
+  where each $V_{y,z} \in N(z)$ is disjoint from some $U_{y,z} \in N(y)$
+  (existence ensured by Hausdorff). By compactness,
+  there exists a finite subcover $\{V_{y,z_i}\}_{i=1}^n$. For each of these
+  $V_{y,z_i}$, let $U_{y, z_i} \in N(y)$ denote the corresponding disjoint
+  neighborhood of $y$ and consider
   \[
-    m(E \cap A) + m(E \setminus A) = m(E)
+    U'_y = \bigcap_{i=1}^n U_{y, z_i} \in N(y)
   \]
-  Let $\fM_m$ denote class of all Carath\'eodory $m$-measurable sets.
+  $U'_y$ is open because it is the intersection of finitely many open sets.
+  It is also disjoint from
+  \[
+    V'_y \coloneqq \bigcup_{i=1}^n V_{y, z_i}
+  \]
+  which contains $B$ and is also open.
+
+  Now consider the open cover $\{U'_y : y \in Y\}$,
+  let $\{U'_{y_i}\}_{i=1}^n$ be a finite subcover,
+  and let $U = \cup_{i=1}^n U'_{y_i}$. Analogously,
+  let $V = \cap_{i=1}^n V'_{y_i}$ where $V'_y$ is
+  given above (open cover of $B$ and disjoint from $U'_y$).
+  Then $U \supset Y$ and $V \supset Z$ provide two disjoint
+  separating open sets.
+\end{proof}
+
+\begin{lemma}
+  \label{lem:completely-regular-equals-initial-topo-cts}
+  A topological space $(X, \tau)$ is completely regular (i.e.\ Tychonoff) space
+  iff the original topology coincides with the initial topology $\sigma(X,
+  \cC(X))$ i.e.\ the smallest topology that makes every function in $\cC(X)$
+  continuous.
+\end{lemma}
+
+\begin{proof}
+  We only show $\Rightarrow$. Let $U$ be $\tau$-open and for $x \in U$
+  pick an Urysohn function $f \in \cC(X)$ such that $f(x) = 0$
+  and $f(U^c) = 1$. Then $V_x = \{y : f(y) < 1\} = f^{-1}((-\infty, 1))$
+  is a $\sigma(X, \cC(X))$-open neighborhood of $x$ contained
+  in $U$, so $U = \cup_{x \in U} V_x$ is $\sigma(X, \cC(X))$-open.
+  Since $\sigma(X, \cC(X))$ is minimal, we have $\tau = \sigma(X, \cC(X))$.
+\end{proof}
+
+\subsection{Radon, Borel, and Baire measures}
+
+\begin{definition}
+  A non-negative set function $m : 2^X \to [0, +\infty]$ on $X$
+  is an \emph{outer measure on $X$} (or Carath\'eodory outer measure)
+  if:
+  \begin{enumerate}
+    \item $m(\emptyset) = 0$
+    \item $A \subset B \implies m(A) \leq m(B)$ (monotone)
+    \item $m\left( \cup_{n=1}^\infty A_n\right) \leq \sum_{n=1}^\infty m(A_n)$
+      for all $A_n \subset X$. (countable subadditivity)
+  \end{enumerate}
 \end{definition}
 
-\begin{theorem}
+\begin{definition}
+  Let $m : 2^X \to [0, +\infty]$ be a non-negative set function
+  satisfying $m(\emptyset) = 0$.
+  A set $A \subset X$ is \emph{Carath\'eodory measurable wrt
+  $m$} (Carath\'eodory $m$-measurable) if for any $E \subset X$
+  \[
+    m(E) = m(E \cap A) + m(E \setminus A)
+  \]
+  We use $\fM_m$ to denote the class of all Carath\'eodory $m$-measurable sets.
+\end{definition}
+
+\begin{theorem}[Carth\'eodory construction]
   \begin{enumerate}
     \item $\fM_m$ is an algebra, $m$ is additive on $\fM_m$
-    \item For all sequences of pairwise disjoint $A_i \in \fM_m$: ???
+    \item (Finite additivity) For all sequences of pairwise disjoint
+      $A_i \in \fM_m$ and any $E \subset X$
+      \begin{align*}
+        m\left(E \cap \bigcup_{i=1}^n A_i\right) &= \sum_{i=1}^n m(E \cap A_i) \\
+        m\left(E \cap \bigcup_{i=1}^\infty A_i\right)
+        &= \sum_{i=1}^\infty m(E \cap A_i) + \lim_{n \to \infty} m\left(E \cap \bigcup_{i=n}^\infty A_i\right)
+      \end{align*}
     \item If $m$ is an outer measure on $X$, then $\fM_m$ is a $\sigma$-algebra,
       $m$ is countably additive on $\fM_m$, and
       $m$ is complete on $\fM_m$
   \end{enumerate}
 \end{theorem}
 
+\begin{remark}
+  The outer measure is constructed such that it satisfies
+  countable additivity on the measurable sets $\fM_m$.
+\end{remark}
+
 \begin{example}
   Let $\fX$ be a family of subsets of $X$ such that $\emptyset \in \fX$.
   Given $\tau : \fX \to [0,+\infty]$ with $\tau(\emptyset) = 0$, set
   \[
-    \fm(A) = \inf\left\{
+    m(A) = \inf\left\{
       \sum_{n=1}^\infty \tau(X_n) : X_n \in \fX, A \subset \cup_{n=1}^\infty X_n
     \right\}
   \]
   where $\fM(A) = \infty$ in the absence of such sets $X_n$.
-  Then $\fm$ is an outer measure, denoted $\tau^*$.
+  Then $m$ is an outer measure, denoted $\tau^*$.
+
+  This is where the ``outer'' comes from: $\cup_n X_n \supset A$
+  is an outer approximation to $A$ using (potentially overlapping)
+  sets from $\fX$ hence $\sum_{n=1}^\infty \tau(X_n)$ is an overapproximation
+  to the ``size'' of $A$. $m(A)$ is the best (i.e. smallest) overapproximation.
 \end{example}
 
-The \emph{Borel $\sigma$-algebra}, $\cB(X)$, is generated by all
+Recall the \emph{Borel $\sigma$-algebra}, denoted $\cB(X)$, is generated by all
 open sets.
+\begin{definition}
+  The \emph{Baire $\sigma$-algebra}, denoted by $\Ba(X)$,
+  is generated by sets of the form
+  \begin{align}
+    \label{eq:functionally-open}
+    \{x \in X : f(x) > 0 \}
+  \end{align}
+  where $f \in \cC(X)$ (called \emph{functionally open sets}).
+\end{definition}
 
-Let $\cB a(x)$ denote the \emph{Baire $\sigma$-algebra}, generated by
-\begin{align}
-  \label{eq:functionally-open}
-  \{x \in X : f(x) > 0 \}
-\end{align}
-where $f$ is a continuous function on $X$.
-It is the smallest $\sigma$-algebra where all continuous
-functions are measurable.
+\begin{remark}
+  $\Ba(X)$ is the smallest $\sigma$-algebra where every $f \in \cC(X)$ is
+  measurable. It coincides (via a truncation and monotonicity argument) to
+  the smallest one making every $f \in \cC_b(X)$ measurable.
+  Contrast this to \cref{lem:completely-regular-equals-initial-topo-cts}, which
+  shows that completely regular spaces are those with the smallest topology
+  where every $f \in \cC(X)$ is continuous.
+\end{remark}
 
-The sets of the form \cref{eq:functionally-open} are called
-\emph{functionally open}.
+\begin{remark}
+  Since the functionally open sets can be written as $f^{-1}((0, \infty))$
+  for continuous $f$, they are also Borel sets. Therefore,
+  the class of Baire sets are contained in the class of Borel sets.
+\end{remark}
 
 \begin{lemma}
-  In a metric space $X$, any closed set is the set of zeros of a continuous
-  function. Hence, $\cB(X) = \cB a(X)$.
+  \label{lem:metric-space-closed-set-variety}
+  In a metric space $(X, d)$, any closed set $S$ is the set of zeros of a continuous
+  function (namely $d_S(x) = \inf_{s \in S} d(x,s)$).
+  Hence, $\cB(X) = \Ba(X)$.
 \end{lemma}
 
 \begin{lemma}[Baire sets are countably determined]
-  Every Baire set is determined by some countable
-  family of functions, i.e. has the form
+  Every $A \in \Ba(X)$ is determined by some countable family of functions,
+  i.e. has the form
   \[
-    \{x : (f_i(x))_i : i < \infty, f_i \in \cC(X) \}
+  A = \{x : (f_i(x))_{i=1}^\infty \in B \}
+  \quad\text{for some}~f_i \in \cC(X), B \in \cB(\bR^{\aleph_0})
   \]
+  Moreover, every set of this form is Baire and
+  we can take $f_i \in \cC_b(X)$.
 \end{lemma}
+
+\begin{proof}
+  We first show every set of the same form as $A$ is Baire.
+  True if $B$ is closed, since \cref{lem:metric-space-closed-set-variety}
+  allows us to write $B = \phi^{-1}(0)$ for some continuous function $\phi :
+  \bR^{\aleph_0} \to \bR$ so $\psi = x \mapsto \phi((f_n(x))_{n \geq 1})$ is
+  continuous hence $A = \psi^{-1}(0)$ is also closed. But this is the converse.
+
+  For any fixed $\{f_n\}_{n \geq 1}$, the class of
+  sets $B \in \cB(\bR^{\aleph_0})$ satisfying
+  \[
+    \{ x : (f_i(x))_{i \geq 1} \in B \} \in \Ba(X)
+  \]
+  is a $\sigma$-algebra containing
+  $B = \prod_{i} (-\infty, a_i)$
+  where $a_i \neq \infty$ for only finitely many $i$.
+  This is a basis for $\cB(\bR^{\aleph_0})$, thus $\Ba(X)$
+  contains it and the two coincide (recall $\Ba \subset \cB$ since
+  functionally determined sets are $\cB$-open).
+
+  On the other hand???
+\end{proof}
 
 A consequence of the monotone class theorem ???
 
@@ -307,6 +477,7 @@ Theorem 27 implies any Borel measure on $\bR_n$ is regular, and the
 same proof works to show any Borel measure on metric space is regular.
 
 \begin{corollary}[Baire measures are regular]
+  \label{corr:baire-measure-regular}
   Every Baire measure $\mu$ on topological space $X$ is regular.
   Moreover, for every Baire set $E$ and $\eps > 0$,
   there exists a continuous function $f$ on $X$ such that

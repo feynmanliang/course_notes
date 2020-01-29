@@ -1,6 +1,12 @@
 % Some basic packages
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
+
+% TODO
+\usepackage{stmaryrd}
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
 \usepackage[margin=1in]{geometry}
 \usepackage{textcomp}
 \usepackage{url}
@@ -57,12 +63,13 @@
 \newcommand{\cK}{\mathcal{K}}
 \newcommand{\cS}{\mathcal{S}}
 \newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
 \newcommand{\cX}{\mathcal{X}}
 
 % fraktur shortcuts
 \newcommand{\fG}{\mathfrak{G}}
 \newcommand{\fm}{\mathfrak{m}}
-\newcommand{\fM}{\mathfrak{m}}
+\newcommand{\fM}{\mathfrak{M}}
 \newcommand{\fX}{\mathfrak{X}}
 
 % vector and matrix shortcuts
@@ -160,6 +167,11 @@
 % Environments
 \makeatother
 
+
+% hide remreset package warning, https://tex.stackexchange.com/questions/438543/what-to-do-when-an-actively-maintained-package-requires-an-obsolete-package
+\RequirePackage{silence}
+\WarningFilter{remreset}{The remreset package}
+
 % load thmtools but fix "proof proof" bug with thmbox
 \usepackage{letltxmacro}
 \LetLtxMacro\amsproof\proof
@@ -169,6 +181,8 @@
   \LetLtxMacro\proof\amsproof
   \LetLtxMacro\endproof\amsendproof
 }
+
+
 \declaretheorem[thmbox=M]{theorem}
 \declaretheorem[thmbox=M,sibling=theorem]{proposition}
 \declaretheorem[thmbox=M,sibling=theorem]{lemma}
@@ -221,7 +235,7 @@
 % \incfig{} to import from figures/*.pdf_latex
 \usepackage{import}
 \usepackage{pdfpages}
-\usepackage{transparent}
+% \usepackage{transparent}
 \newcommand{\incfig}[2][1]{%
     \def\svgwidth{#1\columnwidth}
     \import{./figures/}{#2.pdf_tex}
@@ -276,7 +290,7 @@
 
 % Fix some stuff
 % %http://tex.stackexchange.com/questions/76273/multiple-pdfs-with-page-group-included-in-a-single-page-warning
-\pdfsuppresswarningpagegroup=1
+% \pdfsuppresswarningpagegroup=1
 
 \author{Feynman Liang\thanks{\texttt{feynman@berkeley.edu}} \\ Department of Statistics, UC Berkeley}
 \date{Last updated: \today}
@@ -299,8 +313,13 @@
 }
 \makeatother
 
-\usepackage{natbib}
-\bibliographystyle{humannat}
+\usepackage{csquotes}
+\usepackage[
+backend=biber,
+style=alphabetic,
+natbib=true
+]{biblatex}
+
 \usepackage[nottoc]{tocbibind}
 \usepackage[toc,page]{appendix}
 
@@ -314,9 +333,3 @@
 % if you want to keep a plain space at space characters
 \StrSubstitute{\(\{\)#1\(\}\)}{ }{\textvisiblespace}[\TEMP]%
 \parbox[t]{\marginparwidth}{\raggedright\normalfont\small\ttfamily\expandafter\seqsplit\expandafter{\TEMP}}}
-
-
-% bold \emph
-\let\emph\relax
-\DeclareTextFontCommand{\emph}{\bfseries\em}
-

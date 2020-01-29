@@ -1,0 +1,214 @@
+\lecture{3}{2020-01-28}{More on Markov chains}
+
+A few more things about Markov chains which we can do with little cost,
+with general state space $(S, \cS)$, discrete time $n = 0, 1, \ldots$.
+
+General view of how to construct a sequence of RVs $(X_i)_{i \geq 0}$:
+\begin{enumerate}
+  \item Make $X_0 \sim \lambda$, $\Pr(X_0 \in A) = \lambda(A)$
+    where $\lambda = \delta_x = \text{Dirac unit mass at $x$}$.
+  \item Given $X_0 = x$, we have a Markov transition kernel
+    \[
+      P(x_0, \cdot) = \Pr(X_1 \in \cdot \mid X_0 = x_0)
+    \]
+    Construct $(X_0, X_1)$ using Fubini
+    \[
+      \bE g(X_0, X_1)
+      = \int_S \lambda (dx_0) \int_S P(x_0, dx_1) g(x_0, x_1)
+    \]
+  \item Given $X_0 = x_0$ and $X_1 = x_1$, make $X_2$ according to
+    \[
+      P(x_0, x_1, \cdot) = \Pr(X_2 \in \cdot \mid X_0 = x_0, X_1 = x_1)
+    \]
+    We can do that! Nothing new required since
+    \[
+      X_0 \mapsto (X_0, X_1), \qquad \lambda \mapsto \lambda \otimes P~\text{on}~S \times S
+    \]
+    Now
+    \[
+      \bE g(X_0, X_1, X_2) = \underbrace{\int_S \lambda(dx_0) \int_S P(x_0, dx_1)}_{\int_{S \times S} (\lambda \otimes P)(dx_0, dx_1)}
+      \int_S P(x_0, x_1, dx_2) g(x_0, x_1, x_2)
+    \]
+\end{enumerate}
+if $S$ is nice, every stochastic process $(X_i)_{i \geq 0}$ is
+``like'' (i.e. FDDs are equal in distribution) the above construction.
+
+\begin{definition}
+  Such a process is called \emph{Markov} iff it is equal in distribution
+  to a process made with a kernel
+  \[
+    P(dx_{n+1} \mid x_0, \ldots, x_n)
+    = P_n(dx_{n+1} \mid x_n)
+  \]
+  If $P_n \equiv P$, then the process is called \emph{homogeneous}.
+\end{definition}
+
+\begin{itemize}
+  \item Not mmuch general theory of inhomogeneous
+  \item We will always henceforth assume homogeneous
+  \item Mostly, discrete $S$
+  \item Techniques for general $S$
+    \begin{itemize}
+      \item Figure it out for finite/countable $S$
+      \item Write the args so they wrook more generally
+    \end{itemize}
+  \item Note: if you upgrade $X_n = Y_n \coloneqq (X_0, \ldots, X_n)$
+  \item Technical point: can only use Fubini to prescribe FDDs.
+    From our schemme, we create consistent FDDs and are left with
+    two options:
+    \begin{enumerate}
+      \item Make the chain explicitly as $X_n =$ some measurable
+        function on $(\Omega, \cF, \Pr)$. For example,
+        for IID uniforms take $X_n = F^{-1}(U_n)$ for an
+        IID sequence $U_n$. Then you have RVs $(X_i)_{i \geq 0}$
+        on $(\Omega, \cF, \Pr)$ which implies a law on
+        $\prod_{i \geq 0} S$ given by
+        \[
+          \omega \mapsto (X_0(\omega), X_1(\omega), \ldots)
+        \]
+      \item If not, we need Kolmogorov consistency
+        or better (Ionescu-Tulcea Theorem, which says the
+        infinite process exists with no regularity on $(S, \cS)$).
+    \end{enumerate}
+\end{itemize}
+
+
+Fix $(S, \cS)$ and Markov kernel $P$. For $f \geq 0$ bounded measurable
+\[
+  (Pf)(x)
+  \coloneqq \int_S P(x, \cdot) f(\cdot)
+  = \bE[ f(X_1) \mid X_0 = x]
+\]
+\textbf{Convention}: We write $\bE[f(X_1) \mid X_0 = x] = \bE_x f(X_1)$,
+or more generally $\bE[f(X_1) \mid X_0 \sim \lambda] = \bE_\lambda f(X_1)$.
+
+\begin{example}
+  $\bE_\lambda f(X_0, X_1, X_2) = \int_S \lambda(dx) \bE_x f(x, X_1, X_2)$ by the Fubini theorem.
+  This is an example with a regular conditional
+  distribution (RCD) for $(X_0, X_1, X_2 \mid X_0 = x)$.
+
+  More generally, anytime we see an expectation involving
+  an integral we are really just doing conditioning. Most
+  things in Markov chains are obvious by writing down
+  Fubini.
+\end{example}
+
+A special case: $\bE_x f(X_1) = f(x)$ for all
+$x \in S$ means that $(P - I) f = 0$ which means
+that $(f(X_0), f(X_1))$ is a martingale
+pair relative to $\sigma(X_0)$, $\sigma(X_0, X_1)$.
+More generally, for any initial distribution $\lambda$ the collection $(f(X_i))_{i \geq 0}$
+is
+a martingale relative to $\cF_n = \sigma(X_i : i \leq n)$. For a martingale
+\[
+  \bE[f(X_{n+1} \mid X_0, \ldots, X_n] = g(X_n)
+\]
+by the time homogeneous markov property, we must
+have $g = P f$. So if $P f = f$, then
+$\bE[\cdot] = f(X_n)$. This is the definition
+of a MG.
+
+\begin{example}[Gambler's Ruin]
+  \label{eg:gamblers-ruin}
+
+  $0 \leq a \leq b$, Gambler starts with $a$ dollars
+  and at each turn moves $+1$ with probability $p$
+  and $-1$ with probability $q$. Continue until
+  reach $0$ or $b$ and then stop.
+
+  \begin{figure}[H]
+    \centering
+    \incfig{gamblers-ruin}
+    \caption{Gambler's ruin}
+    \label{fig:gamblers-ruin}
+  \end{figure}
+
+  We can write this as $S_0 = a$ and $S_n = a + \sum_i X_i$ where $X_i$ are $\pm 1$ with probabilities
+  $p/q$. Define (the stopping time)
+  \[
+    T_{0b} = \min\{n \geq 1 : S_n \in \{0,b\}\}
+  \]
+  Our MC is then $(S_{n \land T_{0b}} : n \geq 0)$.
+  Viewed as a MC, we have an absorbing chain and are interested
+  in $\Pr_a[\text{absorbed at $b$}]$.
+
+  Alternatively, viewed as a RW we are interested in
+  \[
+    \Pr_a[S_{T_{0b}} = b]
+  \]
+  By Wald's identity
+  \[
+    \bE[S_{T_{0b}} - a]
+    = \bE[X] \bE[T_{0b}]
+  \]
+  For fair case, $p = q = 1/2$ and $\bE X = 0$.
+  \begin{align*}
+    (b-a) \Pr_a[\text{absorb at b}] + (0 - a) \Pr_a[\text{absorb at 0}] + \underbrace{??}_{0} &= 0 \\
+    \Pr_a[\text{absorb at b}] + \Pr_a[\text{absorb at 0}] = 1
+  \end{align*}
+  How do we know it eventually hits and doesn't oscillate forever?
+  Bounded by Geometric RV, so goiing to be finite with probability 1
+  (could have use martingale convergence, but dont need).
+
+  In the unfair case, we need a better martingale (Wald MG). Try an
+  exponential martingale
+  \[
+    Z^{S_n}~\text{for suitable $Z$}
+  \]
+  To find $Z$, we would like
+  \begin{align*}
+    \bE[Z^{\underbrace{S_{n+1}}_{=S_n + X_{n+1}}} \mid S_0, \ldots, S_n] &= Z^{S_n} \\
+    \iff \bE Z^{X_{n+1}} &= 1 \\
+    \implies Z &= q/p
+  \end{align*}
+  Applying Wald's identity again, we solve the system
+  \begin{align*}
+    \left(\frac{q}{p} \right)^a &= \Pr_a[\text{abs at b}] (q/p)^b + \Pr_a[\text{abs at 0}](q/p)^0 \\
+    1 &= \Pr_a[\cdot] + \Pr_a[\cdot]
+  \end{align*}
+  \end{example}
+
+  Within the Markov chain frammework, we say that we seek a harmonic function $h$
+  such that $h = P h$ and $h(0) = 0$, $h(b) = 1$. Then
+  \[
+    \Pr_a[\text{hit b before 0}] = ??
+  \]
+  Notice $h_0(x) = (q/p)^x$ and $h_1(x) \equiv 1$ both solve $h = P h$,
+  so finding the linear combination that satisfies boundary
+  conditions yields
+  \[
+    h(x) &= \frac{(q/p)^x - (q/p)^0}{(q/p)^b - (q/p)^0}
+  \]
+\end{example}
+
+
+\begin{theorem}
+  Suppose you have a MC with absorbing states (i.e.\ boundary states)
+  $B \subset S$ and target states $A \subset B$.
+  \[
+    \Pr_a\left[X_n \in A~\text{for all large $n$}\right]
+  \]
+  Let
+  \[
+    h_A(x)
+    = \Pr_x[\text{absorved in $A$}]
+  \]
+  Argue $h(x) = h_A(x)$ must solve $h = P h$ using a one-step analysis:
+  \begin{align*}
+    h(x) &= \sum_{y \in S} P(x,y) h(y)
+  \end{align*}
+  by conditioning on $X_1 = y$
+
+    Notice $h_A(x) &= \lim_n P^n \ind_A$ and
+    \[
+      (P^n \ind_A)(x) = \Pr_x[X_n \in A]
+    \]
+    Since $A$ is absorbing, $X_n \in A \implies X_{n+1} \in A$ so
+    $\{X_n \in A\}$ is increasing, so $h_A = P h_A$.
+
+    Also, $h_A = \ind_A$ on $B$ because $B$ is absorbing.
+\end{theorem}
+
+Since Dirichlet BVP has unique soution, we hope/expect that there is a
+unique solution of $h = P h$, $h = \ind_A$ on $B$, and that in this
+case $h = h_A$.

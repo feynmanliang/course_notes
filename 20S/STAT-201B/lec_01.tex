@@ -2,8 +2,7 @@
 
 \begin{description}
   \item[Instructor] Jim Pitman, Evans 303
-  \item[Text] Durrett's PTE, Version Jan 2019,
-    \url{https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf}
+  \item[Text] Durrett's PTE \citep{durrett2019probability}, Version Jan 2019\footnote{\url{https://services.math.duke.edu/~rtd/PTE/PTE5_011119.pdf}}
   \item[Topics]~
     \begin{itemize}
       \item Mainly chapters 5--9 of Durrett's
@@ -16,189 +15,189 @@
 \end{description}
 
 
-\subsection{What is a stochastic process?}
+% \subsection{What is a stochastic process?}
 
-\textbf{Answers}
+% \textbf{Answers}
 
-\begin{itemize}
-  \item Distribution with time
-  \item Family of r.v.s indexed by some index set $I$, often
-    $I = \text{time}, \text{space}, \text{space-time}$.
-  \item Usually some structure on $I$
-    \begin{itemize}
-      \item Metric space
-      \item $I = \{1,\ldots,n\} = [n]$ (Julia and MATLAB's choice)
-        \begin{itemize}
-          \item Sometimes $I = \{0, 1,\ldots,n\}$ (Python's choice), be careful
-        \end{itemize}
-      \item Semi-group: $i,j \in I \implies i+j \in I$
-        \begin{itemize}
-          \item Sometimes want a group, e.g. $I = \bZ$
-        \end{itemize}
-    \end{itemize}
-  \item A random function $I \to (\text{some space})$
-\end{itemize}
+% \begin{itemize}
+%   \item Distribution with time
+%   \item Family of r.v.s indexed by some index set $I$, often
+%     $I = \text{time}, \text{space}, \text{space-time}$.
+%   \item Usually some structure on $I$
+%     \begin{itemize}
+%       \item Metric space
+%       \item $I = \{1,\ldots,n\} = [n]$ (Julia and MATLAB's choice)
+%         \begin{itemize}
+%           \item Sometimes $I = \{0, 1,\ldots,n\}$ (Python's choice), be careful
+%         \end{itemize}
+%       \item Semi-group: $i,j \in I \implies i+j \in I$
+%         \begin{itemize}
+%           \item Sometimes want a group, e.g. $I = \bZ$
+%         \end{itemize}
+%     \end{itemize}
+%   \item A random function $I \to (\text{some space})$
+% \end{itemize}
 
-Let's unpack that last answer a bit more.
-Here and elsewhere, let $(\Omega, \cF, \Pr)$ be a (background) probability space.
-For fixed $\omega \in \Omega$, the \emph{sample path}
-$(X_i(\omega), i \in I)$ is a deterministic function
-from $I$ to some space. To define a random function
-taking values in the sample paths, we must be ensure that
-\[
-  \Omega \ni \omega \mapsto (X_i(\omega), i \in I)
-\]
-is measurable.
+% Let's unpack that last answer a bit more.
+% Here and elsewhere, let $(\Omega, \cF, \Pr)$ be a (background) probability space.
+% For fixed $\omega \in \Omega$, the \emph{sample path}
+% $(X_i(\omega), i \in I)$ is a deterministic function
+% from $I$ to some space. To define a random function
+% taking values in the sample paths, we must be ensure that
+% \[
+%   \Omega \ni \omega \mapsto (X_i(\omega), i \in I)
+% \]
+% is measurable.
 
-\begin{figure}[ht]
-  \centering
-  \incfig[0.5]{1-21-1}
-  \caption{One sample path $(B_t(\omega))_{t \in I}$}
-  \label{fig:1-21-1}
-\end{figure}
+% \begin{figure}[ht]
+%   \centering
+%   \incfig[0.5]{1-21-1}
+%   \caption{One sample path $(B_t(\omega))_{t \in I}$}
+%   \label{fig:1-21-1}
+% \end{figure}
 
-\begin{example}
-  Let $I = [n]$ and suppose $(X_i, i \in I)$ are real-valued.
-  Is
-  $\Pr(X_i, i \in I \text{ is increasing}) = \Pr(X_1 \leq \cdots \leq X_n)$
-  the $\Pr$ of a measurable set?
+% \begin{example}
+%   Let $I = [n]$ and suppose $(X_i, i \in I)$ are real-valued.
+%   Is
+%   $\Pr(X_i, i \in I \text{ is increasing}) = \Pr(X_1 \leq \cdots \leq X_n)$
+%   the $\Pr$ of a measurable set?
 
-  Notice
-  \begin{align*}
-    \Pr(X_1 \leq \ldots \leq X_n)
-    &= \Pr(X_{i+1} - X_i \geq 0, i \in [n-1]) \\
-    &= \Pr\left(
-      \bigcap_{i \in [n-1]}
-      \underbrace{\{X_{i+1} - X_i \geq 0\}}_{\eqqcolon E_i}
-    \right)
-  \end{align*}
-  Why is $E_i$ measurable?
-  $E_i$ is the preimage of $[0, \infty)$ under
-  $\omega \mapsto X_2(\omega) - X_1(\omega)$,
-  so it suffices to show measurability of this function.
-  But this is true because the subtraction function $(x,y) \mapsto y - x$ is
-  measurable (because it is continuous) and composition of measurable functions
-  remain measurable.
+%   Notice
+%   \begin{align*}
+%     \Pr(X_1 \leq \ldots \leq X_n)
+%     &= \Pr(X_{i+1} - X_i \geq 0, i \in [n-1]) \\
+%     &= \Pr\left(
+%       \bigcap_{i \in [n-1]}
+%       \underbrace{\{X_{i+1} - X_i \geq 0\}}_{\eqqcolon E_i}
+%     \right)
+%   \end{align*}
+%   Why is $E_i$ measurable?
+%   $E_i$ is the preimage of $[0, \infty)$ under
+%   $\omega \mapsto X_2(\omega) - X_1(\omega)$,
+%   so it suffices to show measurability of this function.
+%   But this is true because the subtraction function $(x,y) \mapsto y - x$ is
+%   measurable (because it is continuous) and composition of measurable functions
+%   remain measurable.
 
-  \begin{figure}[H]
-    \centering
-    \incfig[0.8]{1-21-2}
-    \caption{
-      $\omega \mapsto X_2(\omega) - X_1(\omega)$
-      can be written as a composition of two measurable functions
-    }
-    \label{fig:1-21-2}
-  \end{figure}
-\end{example}
+%   \begin{figure}[H]
+%     \centering
+%     \incfig[0.8]{1-21-2}
+%     \caption{
+%       $\omega \mapsto X_2(\omega) - X_1(\omega)$
+%       can be written as a composition of two measurable functions
+%     }
+%     \label{fig:1-21-2}
+%   \end{figure}
+% \end{example}
 
-For yet another viewpoint, consider the first half of the composition from the
-previous example and notice that the pair of r.v.s $(X_1, X_2)$ induces a
-product $\sigma$-algebra $\cF_1 \otimes \cF_2$ generated by sets of the form
-\begin{align}
-  F_1 \times F_2
-    &= \{(x_1, x_2) : x_i \in F_i \}
-\end{align}
-for $F_i \in \cF_i$ i.e. $X_i^{-1}(F_i) \in \cF$.
-This is a very convenient generating set since (due to closure under
-intersection of $\sigma$-fields $\cF_i$) it is closed under intersection and
-hence a $\pi$-system, enabling the use of Dynkin's $\pi$-$\lambda$ theorem
-(taking the $\lambda$-system to be all subsets where two candidate
-distributions agree) to conclude the uniqueness of the distribution on the
-product space $\cF_1 \otimes \cF_2$. In this view, a stochastic process
-can be viewed as the unique measure on the product space
-$\prod_{i \in I} \supp X_i$.
+% For yet another viewpoint, consider the first half of the composition from the
+% previous example and notice that the pair of r.v.s $(X_1, X_2)$ induces a
+% product $\sigma$-algebra $\cF_1 \otimes \cF_2$ generated by sets of the form
+% \begin{align}
+%   F_1 \times F_2
+%     &= \{(x_1, x_2) : x_i \in F_i \}
+% \end{align}
+% for $F_i \in \cF_i$ i.e. $X_i^{-1}(F_i) \in \cF$.
+% This is a very convenient generating set since (due to closure under
+% intersection of $\sigma$-fields $\cF_i$) it is closed under intersection and
+% hence a $\pi$-system, enabling the use of Dynkin's $\pi$-$\lambda$ theorem
+% (taking the $\lambda$-system to be all subsets where two candidate
+% distributions agree) to conclude the uniqueness of the distribution on the
+% product space $\cF_1 \otimes \cF_2$. In this view, a stochastic process
+% can be viewed as the unique measure on the product space
+% $\prod_{i \in I} \supp X_i$.
 
-In conclusion, we have seen that a stochastic process can be viewed as:
-\begin{itemize}
-  \item A large collection of r.v.'s $(X_i, i \in I)$
-  \item (With suitable formalism) a random function
-    $\omega \mapsto (X_i(\omega), i \in I)$ from $\Omega$
-    to the product space $\prod_{i \in I} \supp X_i$
-  \item The (unique) probability measure (aka \emph{law}) of the random
-    function on the product space (or a suitable subset,
-    e.g. continuous functions $\subset \{ f : \bR \to \bR \}$)
-    \begin{itemize}
-      \item This is an example of the \emph{push-forward} of $\Pr$
-        under $\omega \mapsto (X_i(\omega), i \in I)$, which induces a
-        probability measure on the product space
-      \item This allows us to forget about the background
-        probability space $(\Omega, \cF, \Pr)$. Instead, take $\Omega$ to be
-        the product space, $\cF$ the product $\sigma$-fields, and $\Pr$ the law
-        of the push-forward measure.
-    \end{itemize}
-\end{itemize}
+% In conclusion, we have seen that a stochastic process can be viewed as:
+% \begin{itemize}
+%   \item A large collection of r.v.'s $(X_i, i \in I)$
+%   \item (With suitable formalism) a random function
+%     $\omega \mapsto (X_i(\omega), i \in I)$ from $\Omega$
+%     to the product space $\prod_{i \in I} \supp X_i$
+%   \item The (unique) probability measure (aka \emph{law}) of the random
+%     function on the product space (or a suitable subset,
+%     e.g. continuous functions $\subset \{ f : \bR \to \bR \}$)
+%     \begin{itemize}
+%       \item This is an example of the \emph{push-forward} of $\Pr$
+%         under $\omega \mapsto (X_i(\omega), i \in I)$, which induces a
+%         probability measure on the product space
+%       \item This allows us to forget about the background
+%         probability space $(\Omega, \cF, \Pr)$. Instead, take $\Omega$ to be
+%         the product space, $\cF$ the product $\sigma$-fields, and $\Pr$ the law
+%         of the push-forward measure.
+%     \end{itemize}
+% \end{itemize}
 
-\textbf{Important advanced idea} (French idea --- Meyer \& school late 1960s):
-You should think of the bivariate function $(\omega, i) \mapsto X(\omega, i)$
-as the stochastic process.
+% \textbf{Important advanced idea} (French idea --- Meyer \& school late 1960s):
+% You should think of the bivariate function $(\omega, i) \mapsto X(\omega, i)$
+% as the stochastic process.
 
-\subsection{Major classes of stochastic processes}
+% \subsection{Major classes of stochastic processes}
 
-\begin{enumerate}
-  \item IID model, $(X_i, i \in I)$ are IID;
-    law is product of identical probability laws.
-  \item Independent, not necessarily identical;
-    law is product of various probability laws.  Notice there's no problem if
-    the laws are defined with respect to different $\sigma$-fields.
-  \item Sums of IID or independent non-identically distributed;
-    random walks with independent increments $S_n = \sum_{i=1}^n X_i$
-  \item Martingales; centering the $X_i$ in the previous example
-    (i.e.\ $\bE X_i = 0$) makes $S_n$ a martingale.
+% \begin{enumerate}
+%   \item IID model, $(X_i, i \in I)$ are IID;
+%     law is product of identical probability laws.
+%   \item Independent, not necessarily identical;
+%     law is product of various probability laws.  Notice there's no problem if
+%     the laws are defined with respect to different $\sigma$-fields.
+%   \item Sums of IID or independent non-identically distributed;
+%     random walks with independent increments $S_n = \sum_{i=1}^n X_i$
+%   \item Martingales; centering the $X_i$ in the previous example
+%     (i.e.\ $\bE X_i = 0$) makes $S_n$ a martingale.
 
-    Recall that a filtration is an ascending chain of $\sigma$-algebras
-    $\cF_n \uparrow \cF$. For absolutely integrable random variable $X$,
-    the conditional expectation (with respect to $\cF_n$) is the
-    (almost surely) unique random variable $X_n = \bE[ X \mid \cF_n ]$
-    which integrates like $X$ over $\cF_n$ (important slogan), i.e.
-    \begin{align*}
-      \bE[Y_n X_n ] &= \bE [ Y_n X ]
-    \end{align*}
-    is true for all $Y_n$ that are $\cF_n$-measurable (and for which the above
-    makes sense i.e.  remains integrable).
+%     Recall that a filtration is an ascending chain of $\sigma$-algebras
+%     $\cF_n \uparrow \cF$. For absolutely integrable random variable $X$,
+%     the conditional expectation (with respect to $\cF_n$) is the
+%     (almost surely) unique random variable $X_n = \bE[ X \mid \cF_n ]$
+%     which integrates like $X$ over $\cF_n$ (important slogan), i.e.
+%     \begin{align*}
+%       \bE[Y_n X_n ] &= \bE [ Y_n X ]
+%     \end{align*}
+%     is true for all $Y_n$ that are $\cF_n$-measurable (and for which the above
+%     makes sense i.e.  remains integrable).
 
-    $(M_n, \cF_n)$ is a martingale $\iff \bE \lvert M_n \rvert < \infty$,
-    $M_n \in \cF_n$, and $\bE[M_{n+1} \mid \cF_n] = M_n$. Iterating, we
-    have for all $i < j$ we have $\bE_{\cF_i} M_j = \bE[M_j \mid \cF_i] = M_i$
+%     $(M_n, \cF_n)$ is a martingale $\iff \bE \lvert M_n \rvert < \infty$,
+%     $M_n \in \cF_n$, and $\bE[M_{n+1} \mid \cF_n] = M_n$. Iterating, we
+%     have for all $i < j$ we have $\bE_{\cF_i} M_j = \bE[M_j \mid \cF_i] = M_i$
 
-    The notation $\bE_{\cF_i}$ for conditional expectation
-    is used to suggest viewing $\bE_{\cF_i}$ as an operator
-    $L^1(\Omega, \cF, \Pr) \to L^1(\Omega, \cF, \Pr)$.
-    In fact, $\bE_{\cG}$ is a partial averaging operator:
-    \[
-      \cG \subset \cH \implies \bE_\cG \bE_\cH = \bE_{\cG} = \bE_{\cH} \bE_\cG
-    \]
-    As a consequence, $\bE_{\cG}$ is a projection:
-    $\bE_{\cG} \bE_{\cG} = \bE_{\cG}$.
+%     The notation $\bE_{\cF_i}$ for conditional expectation
+%     is used to suggest viewing $\bE_{\cF_i}$ as an operator
+%     $L^1(\Omega, \cF, \Pr) \to L^1(\Omega, \cF, \Pr)$.
+%     In fact, $\bE_{\cG}$ is a partial averaging operator:
+%     \[
+%       \cG \subset \cH \implies \bE_\cG \bE_\cH = \bE_{\cG} = \bE_{\cH} \bE_\cG
+%     \]
+%     As a consequence, $\bE_{\cG}$ is a projection:
+%     $\bE_{\cG} \bE_{\cG} = \bE_{\cG}$.
 
-    \begin{figure}[ht]
-      \begin{center}
-        \incfig[0.5]{1-21-3}
-      \end{center}
-      \caption{The conditional expectation $\phi(x) = \bE[Z(X,Y) \mid X=x]$ can
-        be viewed as a function of $x$ partially averages over $Y$ to return
-        $\phi(x) = \bE[Z(x, Y)]$}
-      \label{fig:1-21-3}
-    \end{figure}
+%     \begin{figure}[ht]
+%       \begin{center}
+%         \incfig[0.5]{1-21-3}
+%       \end{center}
+%       \caption{The conditional expectation $\phi(x) = \bE[Z(X,Y) \mid X=x]$ can
+%         be viewed as a function of $x$ partially averages over $Y$ to return
+%         $\phi(x) = \bE[Z(x, Y)]$}
+%       \label{fig:1-21-3}
+%     \end{figure}
 
-    \item Markov Chains / processes; ``chain'' usually implies either
-      the state space $S$ or time set $I$ is discrete, whereas
-      process often implies at least one (often both) $I$ and $S$
-      are continuous (often intervals).
+%     \item Markov Chains / processes; ``chain'' usually implies either
+%       the state space $S$ or time set $I$ is discrete, whereas
+%       process often implies at least one (often both) $I$ and $S$
+%       are continuous (often intervals).
 
-      The key idea for definition of a Markov Process is conditional
-      independence (wortth understanding in detail). Abstractly,
-      discrete r.v.s $(X,Y,Z)$ taking values in $(S_X, S_Y, S_Z)$ respectively
-      is a \emph{Markov triple} iff $X$ and $Z$ are conditionally independent
-      given $Y$, written $X \overset{Y}{\perp} Z$ means:
-      \begin{enumerate}
-        \item $\Pr[X=x, Z=z \mid Y=y] = \Pr[X=x \mid Y=y] \Pr[Z=z \mid Y=y]$
-          for all $x,y,z$ such that this makes sense
-        \item $\Pr[Z=z \mid X=x, Y=y] = \Pr[Z=z \mid Y=y]$
-        \item $\Pr[X=x \mid Z=z, Y=y] = \Pr[X=x \mid Y=y]$
-      \end{enumerate}
+%       The key idea for definition of a Markov Process is conditional
+%       independence (wortth understanding in detail). Abstractly,
+%       discrete r.v.s $(X,Y,Z)$ taking values in $(S_X, S_Y, S_Z)$ respectively
+%       is a \emph{Markov triple} iff $X$ and $Z$ are conditionally independent
+%       given $Y$, written $X \overset{Y}{\perp} Z$ means:
+%       \begin{enumerate}
+%         \item $\Pr[X=x, Z=z \mid Y=y] = \Pr[X=x \mid Y=y] \Pr[Z=z \mid Y=y]$
+%           for all $x,y,z$ such that this makes sense
+%         \item $\Pr[Z=z \mid X=x, Y=y] = \Pr[Z=z \mid Y=y]$
+%         \item $\Pr[X=x \mid Z=z, Y=y] = \Pr[X=x \mid Y=y]$
+%       \end{enumerate}
 
-    \item Brownian motion
-    \item Stationary processes (exchangeable)
-    \item Gaussian processes
-    \item L\'evy processes
-  \end{enumerate}
+%     \item Brownian motion
+%     \item Stationary processes (exchangeable)
+%     \item Gaussian processes
+%     \item L\'evy processes
+%   \end{enumerate}

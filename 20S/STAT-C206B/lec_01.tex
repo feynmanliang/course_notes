@@ -1,4 +1,4 @@
-\lecture{1}{2020-01-21}{Backround material}
+\lecture{1}{2020-01-21}{}
 
 \subsection{Ferguson distributions / Dirichlet processes}
 
@@ -131,7 +131,7 @@ Distributions}~\citep{ferguson1973}.
   A random probability measure $\mu^*$ on $E$ (i.e.\ a stochastic process
   indexed by a $\sigma$-algebra on $E$) has \emph{Ferguson distribution with
   parameter $\mu$} if for every finite partition $(B_i)_{i \in [r]}$ of $E$ the
-  random vector 
+  random vector
   \[
     (\mu^*(B_i))_{i \in [r]} \sim \Dir(\mu(B_1), \ldots, \mu(B_r))
   \]
@@ -157,8 +157,12 @@ Distributions}~\citep{ferguson1973}.
   $\mu \circ \phi^{-1}$.
 \end{proof}
 
-Next, we turn to an important class of a Ferguson distributions
-arising from generalizing the P\'olya urn.
+\subsubsection{Connection to Polya urns}
+
+Next, we turn to an important relation between Ferguson distributions and
+a generalized P\'olya urn.
+Our presentation draws from material originally in
+\cite{blackwell1973}.
 
 \begin{definition}[Polya sequence]
   A sequence $(X_n)_{n \in \bN}$ with values in $E$ is
@@ -257,7 +261,7 @@ divided by their sum.
   $(X_i) \deq (X_{\sigma(i)})$ (see \cref{eq:polya-seq-meas})
 \end{remark}
 
-\subsection{Construction of Haar Measure}
+\subsection{Invariant measures and Kakutani's Theorem}
 
 For a finite group $G$, the measure $\mu(g) = \frac{1}{\# G}$ is
 left and right translation invariant i.e. $\mu(gA) = \mu(A) = \mu(Ag)$.
@@ -279,6 +283,7 @@ on compact group $O(n)$.
 \end{example}
 
 \begin{definition}
+  \label{def:equicontinuous}
   A family $\mathfrak{G}$ of linear transformations on TVS
   $\mathfrak{X}$ is \emph{equicontinuous on subset $K \subset \mathfrak{X}$}
   if for every neighborhood $V$ of the origin, there exists a neighborhood
@@ -367,19 +372,3 @@ theorem due to Kakutani.
   \incfig{1-21-1}
   \caption{Sketch of proof of Kakutani's theorem}
 \end{figure}
-
-\begin{theorem}[Existence of Haar Measure]
-  \label{thm:haar-measure}
-  $G$ compact group, $\cC(G)$ continuous maps $G \to \bR$.
-  Then there is a unique linear form $m : \cC(G) \to \bR$ such that
-  \begin{enumerate}
-    \item $m(f) \geq 0$ for $f \geq 0$ (positive)
-    \item $m(\ind) = 1$ (normalized)
-    \item $m(\prescript{}{s}{f}) = m(f)$ where
-      $\prescript{}{s}{f}(g) = f(s^{-1} g)$
-      for $s,g \in G$ (left invariant)
-    \item $m(f_s) = m(f)$ where $f_s(g) = f(gs)$ (right invariant)
-  \end{enumerate}
-\end{theorem}
-
-
