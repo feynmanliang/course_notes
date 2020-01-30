@@ -1,0 +1,325 @@
+\lecture{4}{2020-01-30}{Daniell integration}
+
+Exists vector lattice $\cF$ containing constants i.e. $\ind \in \cF$.  $\cL^+$
+consists of $f$ such that $0 \leq f_n \uparrow f \leq c$ for $(f_n) \subset
+\cF$. Let $\cG = \{G \subset \Omega : \ind_G \in \cL^+ \}$, $G \in \cG$,
+$\mu(G) = L(\ind_G) = \lim_n L(f_n)$, $\cA \coloneqq \sigma(\cF) = \sigma(\cG)$.
+
+\begin{corollary}
+  Suppose that in the previous theorem
+  the class $\cF$ is closed wrt uniform convergence.
+  Let $\cG_\cF$ be the class of sets of the form $\{f > 0\}$,
+  $f \geq 0$, $f \in \cF$. Then $\cG_\cF$ generates
+  $\cA = \sigma(\cF)$ and we have
+
+  TODO
+\end{corollary}
+
+\begin{proof}
+  Suffices to verify $\cG_\cF$ equals the $\cF$ introduced in theorem's proof.
+  We previously showed $\{f > 0\} \in \cG$ for all $f \geq 0$ in $\cF$
+
+  On the other hand, if $G \in \cG$ then $f_n \uparrow \ind_G$
+  for some $f_n \geq 0$ in $\cF$. Letting $f = \sum_{n=1}^\infty 2^{-n} f_n$,
+  by uniform convergence of the series we have $f \in \cF$.
+  Clearly $f \geq 0$ and $G = \{f > 0\}$.
+\end{proof}
+
+A general fact about vector lattices where signed measures decompose into
+a positive part and negative part. If $\nu$ is a signed measure on $\Omega$,
+then $\nu = \nu_+ - \nu_-$ for $\nu_{\pm}$ unique nonnegative meaasures with
+disjoint supports. Its total variation decomposes as:
+\[
+  \|\nu\| = \nu_+(\Omega) + \nu_-(\Omega)
+\]
+
+
+\begin{theorem}
+  Let $\cF$ be a vector lattice of bounded functions on a set $\Omega$
+  such that $\ind \in \cF$.
+  Suppose that we are given a linear functional $L$ on $\cF$ that is continuous
+  wrt $\|f\| = \sup_{\Omega} \lvert f(x) \rvert$, i.e.
+  \[
+    \|L\| = \inf \{ c : \|L(f)\| \leq c \|f\|~\forall f \in \cF \} < \infty
+  \]
+  Then $L$ can be represented as $L = L^+ - L^-$ where
+  $L^+ \geq 0$, $L^- \geq 0$, and for all nonnegative $f \in \cF$ we have
+  \begin{align*}
+    L^+(f) = \sup_{0 \leq g \leq f} L(g),\qquad
+    L^-(f) = -\inf_{0 \leq g \leq f} L(g)
+  \end{align*}
+  In addition, letting $\lvert L \rvert = L^+ + L^-$, we have for $f \geq 0$
+  \begin{align*}
+    \lvert L \rvert(f) = \sup_{0 \leq \lvert g \rvert \leq f} \lvert L (g) \rvert,
+    \qquad \|L\| = L^+(1) + L^-(1)
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  Given two nonnegative $f,g \in \cF$ and $h \in \cF$ such that
+  $0 \leq h \leq f + g$, can write $h = h_1 + h_2$ where
+  $0 \leq h_1 \leq f$, $0 \leq h_2 \leq g$, $h_1, h_2 \in \cF$.
+  Just let $h_1 = \min(f,g)$ and $h_2 = h - h_1$ and verify.
+
+  Let $L^+$ be defined by the previous theorem. We first
+  show additivity on nonnegative functions.
+  For $f,g \in \cF$ nonnegative, we have
+  \begin{align*}
+    L^+(f+g) = \sup \{L(h) : 0 \leq h \leq f + g\}
+    = \sup\{ L(h_1) + L(h_2) : 0 \leq h_1 \leq f, 0 \leq h_2 \leq g\}
+    = L^+(f) + L^+(g)
+  \end{align*}
+  where we used the previous decomposition.
+
+  Now we show additivity on arbitrary functions.
+  Let $f = f_1 - f_2$, where $f_1, f_2$ non-negative. There might be
+  multiple decompositions for the samae $f$, but still
+  \[
+    L^+(f) = L^+(f_1) - L^+(f_2)
+  \]
+  since $f_1 + f^- = f_2 + f^+$ and we showed $L^+$ is additive on nonnegative
+  functions.
+
+  Define $L^- =  L^+ - L$ and since $L^+(f) \geq L(f)$ for $f \geq 0$
+  we have that $L^-$ is also nonnegative.
+
+  Finally,
+  \begin{align*}
+    \|L\| \leq \|L^+\| + \|L^-\| \\
+    &= L^+(1) + L^-(1) \\
+    &= 2L^+(1) - L^-(1) \\
+    &= \sup\{L(2\psi-1) : 0 \leq \psi \leq 1 \} \\
+    &\leq \sup \{ L(h) : -1 \leq h \leq 1 \} \\
+    &\leq \|L\|
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  \label{corr:lin-ftl-repr-meas}
+  Suppose in addition $L(f_n) \to 0$ for every
+  $f_n \downarrow 0$. Then $L^+$ and $L^-$
+  share this property as well, and are defined by nonnegative
+  countably additive measures on $\sigma(\cF)$
+  and $L$ has representation
+  \[
+    L(f) = \int_\Omega f d\mu, \qquad \forall f \in \cF
+  \]
+  with some signed countably additive measure $\mu$ on $\sigma(\cF)$.
+\end{corollary}
+
+\begin{proof}
+  TODO
+\end{proof}
+
+Here is an analogue of the Riesz representation theorem:
+
+\begin{theorem}
+  Let $X$ be a topological space. The formula
+  \[
+    L(f) = \int_X f d\mu
+  \]
+  establishes a one-to-one correspondence between Baire measures $\mu$
+  on $X$ and continuous linear functionals $L$ on $\cC_b(X)$ with
+  the property
+  \[
+    \lim_n L(f_n) = 0
+  \]
+  for every $f_n \downarrow f$.
+\end{theorem}
+
+\begin{proof}
+  Any measure $\mU$ on $\Ba(X)$ defines a continuous linear functional
+  on $\cC_b(X)$. Converse follows from \cref{thm:daniell-integration}
+  and \cref{corr:lin-ftl-repr-meas}.
+\end{proof}
+
+See ``Banach limit''
+
+Dini theorem.
+
+We get a Riesz representation for compact spaces:
+
+\begin{theorem}
+  $K$ compact. Then every continuous linear functional $L$ on
+  $C(K)$ has a unique Radon measure $\mu$ such that
+  \begin{align*}
+    L(f) = \int_K f d\mu, \qquad \forall f \in \cC(K)
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  TODO
+\end{proof}
+
+From now, we assume $S$ to be locally compact, second countable, and Hausdorff
+(lcscH). Let $\cG, \cF, \cK$ denote open, closed, and compact sets in
+$S$
+and put $\hat{\cG} = \{ G \in \cG, \bar{G} \in \cK\}$.
+Let $\hat{C}_+ = \hat{C}_+(S)$ denote the class of continuous functions
+$f : S \to \bR_+$ with compact support (i.e.
+closure of the set $\{x \in S; f(x) > 0\}$).
+
+We want to extend the idea of invariant (Haar) measure from just groups
+to more general spaces such as the sphere.
+
+\begin{theorem}[Riesz representation]
+  \label{thm:riesz-extend-fts-to-meas}
+  If $S$ is lcscH, then every positive linear functional $\mu$
+  on $\hat{C}_+(S)$ extends uniquely to a measure on $S$ that assigns
+  finite mass to compact sets.
+\end{theorem}
+
+\begin{proof}
+  Kallenberg, ``Foundations of modern probability''
+\end{proof}
+
+\begin{theorem}
+  On every lcscH group $G$ there exists, uniquely up to normalization,
+  a left-invariant measure $\lambda \neq 0$ that assigns finite mass to
+  compact sets.
+  If $G$ is compact, then $\lambda$ is also right-invariant.
+\end{theorem}
+
+\begin{proof}
+  Kallenberg, ``Foundations of modern probability''
+\end{proof}
+
+\begin{definition}
+  Given group $G$ and space $S$, a \emph{left action}
+  of $G$ on $S$ is a mapping $(g,s) \mapsto gs$ such that $es = s$
+  and $(gh)s = g (hs)$ for any $g,h \in G$ and $s \in S$,
+  where $e$ denotes the identity element in $G$.
+
+  Similarly, a \emph{right action} is a mapping $(s,g) \mapsto s g$
+  satisfying similar compatibility conditions.
+
+  The action is \emph{transitive} if for all $s,t \in S$ there
+  exists $g \in G$ such that $g s = t$ or $s g = t$ respectively.
+
+  All actions are assumed left henceforth.
+\end{definition}
+
+When $G$ is a topological group, we assume the action is
+a continuous $G \times S \to S$ map.
+
+\begin{definition}
+  $h : G \to S$ is \emph{proper} if $h^{-1} K$ is
+  compact in $G$ for any compact $K \subset S$.
+
+  If this holds for all $\pi_s(x) = x s$, $s \in S$,
+  we say the group action is proper.
+\end{definition}
+
+\begin{definition}
+  A memasure $\mu$ on $S$ is $G$-invariant if
+  $\mu(xB) = \mu B$ for any $x \in G$
+  and $B \in \cS$. This is clearly equivalent to
+  \[
+    \int f(xs) \mu(ds) = \mu f
+  \]
+  for any measurable $f : S \to \bR_+$ and $x \in G$.
+\end{definition}
+
+\begin{theorem}
+  If we have lcshH group $G$ acting transively and properly on lcscH space $S$.
+  Then there exists a unique (up to normalization) $G$-invariant
+  measure $\mu \neq 0$ on $S$ which assigns finite mass to compact sets.
+\end{theorem}
+
+\begin{proof}
+  We first show existence.
+  Fix $p \in S$ and let $\pi = x \mapsto x p : G \to S$.
+  Letting $\lambda$ be a left Haar measure on $G$, define
+  the pushforward $\mu = \lambda \circ \pi^{-1}$ on $S$.
+  Since $\pi$ is proper and the Haar measure on $G$ assigns finite mass
+  to compact sets, $\mu$ is a measure on $S$ that assigns finite mass to
+  compact sets. To see $G$-invariance, for $f \in \hat{C}_+(S)$ and
+  $x \in G$
+  \[
+    \int_S f(xs) \mu(ds)
+    = \int_G f(xyp) \lambda(dy)
+    = \int_G f(yp) \lambda(dy)
+    = \mu f
+  \]
+  by invariance of $\lambda$.
+
+  Now we consider uniqueness. Let $\mu$ be abitrary $G$-invariant
+  measure on $S$ assigning finite mass to compact sets. Define the subgroup
+  \[
+    K = \{x \in G : x p = p \} = \pi^{-1}\{p\}
+  \]
+  (the stabilizer of $p$, subgroup leaving $p$ fixed) and note $K$ is
+  compact (since $\pi$ is proper). Let $\nu$ be the normalized Haar
+  measure on $K$, and define
+  \[
+    \bar{f}(x) = \int_K f(xk) \nu(dk), \quad x \in G, f \in \hat{C}_+(G)
+  \]
+  At each point $x$, $\bar{f}$ takes $f$
+  and ``smooths things out'' using $K$ translated to $x$.
+
+  If $xp = yp$ then $y^{-1} x p = p$ and so $y^{-1} x \eqqcolon h \in K$
+  which implies $x = y h$. Hence, left invariance of $\nu$ yields
+  \[
+    \bar{f}(x) = \bar{f}(yh)
+    = \int_K f(yhk) \nu(dk)
+    = \int_K f(yk) \nu(dk)
+    = \bar{f}(y)
+  \]
+  So the mapping $f \mapsto f^*$ given by
+  \[
+    f^*(s) = \bar{f}(\pi^{_1}\{s\}) \equiv \bar{f}(x),\quad s = xp \in S, x \in G, f \in \hat{C}_+(G)
+  \]
+  is well defined, and for any $B \subset (0, \infty)$ we have
+  \[
+    (f^*)^{-1} B = \pi (\bar{f}^{-1} B) \subset \pi[(\supp f) \cdot K]
+  \]
+  where $(\supp f) \cdot K$ is the support of $f$ ``convolved with $K$''
+  via the group action. Hence, the RHS is compact (both $\supp f$ and $K$ compact)
+  and since $\pi$ and the action are continuous.
+  Therefore $f^*$ has compact support.
+
+  Also, $\bar{f}$ is continuous (by group operation cts and
+  dominated convergence), so $\bar{f}^{-1}[t,\infty)$
+  is closed and hence compact for every $t > 0$.
+
+  ??? So $f^*$ is something we can integrate against $\mu$.
+
+  We may now define functional $\lambda$ on $\hat{C}_+(G)$
+  by $\lambda f = \mu f^*$ for $f \in \hat{C}_+(G)$.
+  Linearity and positivity of $\lambda$ are clear from the corresponding
+  properties of the mapping $f \mapsto f^*$ and the measure $\mu$.
+  We note that $\lambda$ is finite on $\hat{C}_+(G)$ since $\mu$ is locally
+  finite, so by \cref{thm:riesz-extend-fts-to-meas} we can extend $\lambda$ to a measure
+  on $G$ that assigns fintie mass to compact sets.
+
+  To see $\lambda$ left invariant, for $f \in \hat{C}_+(G)$ and define
+  $f_y(x) = f(yx)$. THen for $s = xp \in S$ and $y \in G$ we have
+  \[
+    f^*_y(s) = \bar{f}_y(x)
+    = \int_K \bar{f}_y(xk) \nu(dk)
+    = \bar{f}(yx)
+    = f^*(ys)
+  \]
+  Hence by invariance of $\mu$ we have
+  \[
+    \int_G f(yx) \lambda(dx) = \lambda f_y = \mu f_y^* = \int_S f^*(ys) \mu(ds) = \mu f^* = \lambda f
+  \]
+  So $\lambda$ is the Haar measure.
+
+  Now fix $g \in \hat{C}_+(S)$ and put $f(x) = g(xp) = g \circ \pi(x)$ for $x \in G$.
+  THen $f \in \hat{C}_+(G)$ because $\{f > 0\} \subset \pi^{-1} \supp g$
+  which is compact since $\pi$ is proper. By definitino of $K$,
+  for $s = xp \in S$ we have
+  \[
+    f^*(s) = \bar{f}(x) = \int_K f(xk) \nu(dk)
+    = \int_K g(xkp) \nu(dk)
+    = \int_K g(xp) \nu(dk)
+    = g(s)
+  \]
+  so we've found an inverse for the $*$ operation, so
+  \[
+    \mu g = \mu f^* = \lambda f = \lambda(g \circ \pi) = (\lambda \circ \pi^{-1}) g
+  \]
+  which shows $\mu = \lambda \circ \pi^{-1}$. Since $\lambda$ is unique up to
+  normalization, the same thing is true for $\mu$.
+\end{proof}
