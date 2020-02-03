@@ -1,24 +1,42 @@
-\lecture{4}{2020-01-30}{Daniell integration}
+\lecture{4}{2020-01-30}{Representation theorems}
 
-Exists vector lattice $\cF$ containing constants i.e. $\ind \in \cF$.  $\cL^+$
-consists of $f$ such that $0 \leq f_n \uparrow f \leq c$ for $(f_n) \subset
-\cF$. Let $\cG = \{G \subset \Omega : \ind_G \in \cL^+ \}$, $G \in \cG$,
-$\mu(G) = L(\ind_G) = \lim_n L(f_n)$, $\cA \coloneqq \sigma(\cF) = \sigma(\cG)$.
+Recall our current setup:
+\begin{itemize}
+  \item $\cF$ is a vector lattice of functions over $\Omega$
+    containing constants, i.e.
+    $\ind \in \cF$
+  \item $\cL^+$ consists of $f$ such that $0 \leq f_n \uparrow f < \infty$
+    for $f_n \in \cF$
+  \item $\cG = \{G \subset \Omega : \ind_G \in \cL^+\}$ are the subsets
+    whose indicators can be realized as monotone limits within $\cF$
+    (i.e. can be well approximated using $\cF$, which we can use $L$ to
+    measure); we use $\cG$ as the approximating set when constructing
+    the Munroe outer measure
+  \item For $G \in \cG$, define $\mu(G) = L(\ind_G) = \lim_n L(f_n)$
+    and extend using \myref{eg:munroe-outer-meas} and
+    \myref{thm:caratheodory-construction}
+    to the class $\fM_{\mu^*} = \cB$ which contains
+    $\cA = \sigma(\cF) = \sigma(\cG)$.
+\end{itemize}
 
 \begin{corollary}
-  Suppose that in the previous theorem
-  the class $\cF$ is closed wrt uniform convergence.
-  Let $\cG_\cF$ be the class of sets of the form $\{f > 0\}$,
-  $f \geq 0$, $f \in \cF$. Then $\cG_\cF$ generates
-  $\cA = \sigma(\cF)$ and we have
-
-  TODO
+  Suppose that in \cref{thm:daniell-integration} the vector lattice $\cF$ is
+  closed wrt uniform convergence.
+  Let $\cG_\cF$ be the class of sets of the form
+  $\{f > 0\}$, $f \geq 0$, $f \in \cF$.
+  Then $\cG_\cF$ generates $\cA = \sigma(\cF)$ and we have
+  \begin{align*}
+    \mu(A) &= \inf\{\mu(G) : A \subset G, G \in \cG_\cF\}, &&\forall A \in \cA \\
+    \mu(G) &= \sup\{L(f) : f \in \cF, 0 \leq f \leq \ind_G\}, &&\forall G \in \cG_\cF
+  \end{align*}
 \end{corollary}
 
-\begin{proof}
-  Suffices to verify $\cG_\cF$ equals the $\cF$ introduced in theorem's proof.
-  We previously showed $\{f > 0\} \in \cG$ for all $f \geq 0$ in $\cF$
 
+\begin{proof}
+  Suffices to verify $\cG_\cF$ equals the $\cG$ introduced during the
+  theorem's proof, since we showed $\sigma(\cG) = \cA$.
+  Taking $c=0$ in \cref{eq:superlevel-set-in-G} shows
+  $\{f > 0\} \in \cG$ for all non-negative $f \in \cF$.
   On the other hand, if $G \in \cG$ then $f_n \uparrow \ind_G$
   for some $f_n \geq 0$ in $\cF$. Letting $f = \sum_{n=1}^\infty 2^{-n} f_n$,
   by uniform convergence of the series we have $f \in \cF$.
@@ -95,7 +113,7 @@ disjoint supports. Its total variation decomposes as:
 \end{proof}
 
 \begin{corollary}
-  \label{corr:lin-ftl-repr-meas}
+  \label{corr:meas-repr-decreasing-clf}
   Suppose in addition $L(f_n) \to 0$ for every
   $f_n \downarrow 0$. Then $L^+$ and $L^-$
   share this property as well, and are defined by nonnegative
@@ -114,6 +132,7 @@ disjoint supports. Its total variation decomposes as:
 Here is an analogue of the Riesz representation theorem:
 
 \begin{theorem}
+  \label{thm:baire-meas-repr-clf}
   Let $X$ be a topological space. The formula
   \[
     L(f) = \int_X f d\mu
@@ -128,27 +147,36 @@ Here is an analogue of the Riesz representation theorem:
 \end{theorem}
 
 \begin{proof}
-  Any measure $\mU$ on $\Ba(X)$ defines a continuous linear functional
-  on $\cC_b(X)$. Converse follows from \cref{thm:daniell-integration}
-  and \cref{corr:lin-ftl-repr-meas}.
+  Any measure $\mu$ on $\Ba(X)$ defines a continuous linear functional
+  on $\cC_b(X)$ through the above formula.
+
+  Converse follows from \cref{corr:meas-repr-decreasing-clf}.
 \end{proof}
 
 See ``Banach limit''
 
-Dini theorem.
+\begin{theorem}[Dini's theorem]
+  \label{thm:dini}
+  On a compact space $K$,
+  if $\{f_n\} \subset \cC(X)$ converges pointwise decreasing to zero,
+  then $\{f_n\}$ converges in the Banach space $\cC(X)$ to $0$, i.e.
+  converges uniformly to zero.
+\end{theorem}
 
 We get a Riesz representation for compact spaces:
 
-\begin{theorem}
-  $K$ compact. Then every continuous linear functional $L$ on
-  $C(K)$ has a unique Radon measure $\mu$ such that
+\begin{theorem}[Riesz representation theorem]
+  On a compact Hausdorff space $K$,
+  every continuous linear functional $L$
+  on the Banach space $C(K)$ has a unique
+  Radon measure $\mu$ such that
   \begin{align*}
     L(f) = \int_K f d\mu, \qquad \forall f \in \cC(K)
   \end{align*}
 \end{theorem}
 
 \begin{proof}
-  TODO
+  By \cref{thm:dini}, TODO
 \end{proof}
 
 From now, we assume $S$ to be locally compact, second countable, and Hausdorff

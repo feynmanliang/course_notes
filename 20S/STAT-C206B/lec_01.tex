@@ -352,12 +352,12 @@ theorem due to Kakutani.
   $K_2 \in P$.
 
   We first exploit equicontinuity to construct a convex $\fG$-invariant
-  open set $U$ which approximates $K_1 - K_1$ (i.e. 
-  $(1+\eps) U \supset K_1 - K_1$ but 
+  open set $U$ which approximates $K_1 - K_1$ (i.e.
+  $(1+\eps) U \supset K_1 - K_1$ but
   $(1 - \eps) \bar{U} \not\supset K_1 - K_1$):
   \begin{itemize}
     \item
-      By assumption $K_1 - K_1$ (as a Minkowski sum) contains a point other 
+      By assumption $K_1 - K_1$ (as a Minkowski sum) contains a point other
       than the origin, so because $\fX$ Hausdorff there exists a neighborhood of
       the origin $V \in N(0)$ such that $\bar{V} \not\supset K_1 - K_1$.
     \item $V$ may not be convex, but since $\fX$ is a LCTVS there is
@@ -365,14 +365,14 @@ theorem due to Kakutani.
     \item $V_1$ is convex, but not $\fG$-invariant.
       Note that $\fG$ is a group so $\fG \fG A = \fG A$. To exploit this idea
       and construct a $\fG$-invariant convex open set,
-      we first use equicontinuity of $\mathfrak{G}$ on $K \supset K_1$ to 
-      obtain $U_1 \in N(0)$ such that 
+      we first use equicontinuity of $\mathfrak{G}$ on $K \supset K_1$ to
+      obtain $U_1 \in N(0)$ such that
       $\fG(U_1 \cap (K_1 - K_1)) \subset \fG(U_1) \subset V_1$.
     \item Taking the convex hull (and exploiting convexity of $V_1$),
       we have
       \[
         U_2
-        \coloneqq \conv(\mathfrak{G}(U_1 \cap (K_1 - K_1))) 
+        \coloneqq \conv(\mathfrak{G}(U_1 \cap (K_1 - K_1)))
         \subset \conv(V_1)
         = V_1
       \]
@@ -381,7 +381,7 @@ theorem due to Kakutani.
       ($T \in \fG$ invertible maps open sets to open sets),
       and $\mathfrak{G} U_2 = U_2$ because:
       \begin{itemize}
-        \item $T$ is linear so $T \conv(A) &= \conv(TA)$
+        \item $T$ is linear so $T \conv(A) = \conv(TA)$
         \item $T \in \mathfrak{G}$ invertible ($\mathfrak{G}$ is a group)
           so $T(A \cap B) = TA \cap TB$ for sets $A, B$.
         \item $\fG \fG A = \fG A$.
