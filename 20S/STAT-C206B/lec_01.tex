@@ -308,6 +308,10 @@ called the Haar measure.
     \forall k_1, k_2 \in K: k_1 - k_2 \in U \implies \mathfrak{G}(k_1 - k_2) \subset V
   \end{align*}
   That is, $T(k_1 - k_2) \in V$ for all $T \in \mathfrak{G}$.
+
+  We only need to verify at the origin because linearity of $\fG$
+  and vector space structure allow us to translate the neighborhoods
+  to any $p \in \fX$.
 \end{definition}
 
 \begin{remark}
@@ -317,13 +321,6 @@ called the Haar measure.
   to generalize from a single $f \in \cC(\fX)$ to a family $\fG \subset
   \cC(\fX)$.
 \end{remark}
-
-\cutthmoff
-\begin{definition}
-  A \emph{locally convex topological vector space} (LCTVS) is a TVS
-  with a local base of absolutely convex absorbing sets at the origin.
-\end{definition}
-\cutthmon
 
 \begin{definition}[In-Class]
   A \emph{locally convex topological vector space} (LCTVS) is a TVS
@@ -345,98 +342,108 @@ theorem due to Kakutani.
 \end{theorem}
 
 \begin{proof}
-  By Zorn's lemma (consider inclusion chains of sets satisfying these
-  properties, exploiting stability under uncountable intersection),
-  there is some minimal compact convex $K_1 \subset K$ such that $K_1 \neq
-  \emptyset$ and $\mathfrak{G}(K_1) \subset K_1$.
+  Let $P$ be the class of all non-empty compact convex subsets of $K$ which are
+  $\fG$-invariant, ordered by containment.  $K \in P$ so $P$ is not empty, and
+  since any descending chain in $P$ is lower bounded by the intersection of all
+  of its elements (which is also in $P$) we may apply Zorn's lemma to conclude
+  there is some minimal compact convex $\fG$-invariant $K_1 \subset K$.  We are
+  done if $K_1 = \{p\}$ is a singleton, so assume otherwise.  We will
+  contradict minimality of $K_1$ by constructing $K_2 \subsetneq K_1$ such that
+  $K_2 \in P$.
 
-  Since we are done if $K_1 = \{p\}$ is a singleton, assume otherwise.
-  We will contradict minimality of $K_1$ by constructing $K_2 \subsetneq K_1$
-  such that $K_2 \neq \emptyset$ and $\fG K_2 \subset K_2$.
-
-  We first exploit equicontinuity to construct
-  a minimal convex cover $U$ of $K_1 - K_1$
-  such that $T(a U) = U$ for $T \in \fG$ and $a \in \bR$
-  as well as $(1 - \eps) \bar{U} \not\supset K_1 - K_1$.
+  We first exploit equicontinuity to construct a convex $\fG$-invariant
+  open set $U$ which approximates $K_1 - K_1$ (i.e. 
+  $(1+\eps) U \supset K_1 - K_1$ but 
+  $(1 - \eps) \bar{U} \not\supset K_1 - K_1$):
   \begin{itemize}
     \item
-      By assumption, $K_1 - K_1$ (Minkowski sum) contains a point other than
-      the origin, so there exists a neighborhood $V \ni 0$ such that
-      $\bar{V} \not\supset K_1 - K_1$.
-    \item Again using $\fX$ LCTVS, for some $\lvert \alpha \rvert \leq 1$,
-      there is a convex neighborhood $V_1 \ni 0$ such that $\alpha V_1
-      \subset V$.
-    \item By equicontinuity of $\mathfrak{G}$ on $K \supset K_1$, there is
-      $U_1 \in N(0)$ such that for $k_1, k_2 \in K$ and
-      $k_1 - k_2 \in U_1$ we have $\mathfrak{G}(k_1 - k_2) \subset V_1$.
-    \item Let
+      By assumption $K_1 - K_1$ (as a Minkowski sum) contains a point other 
+      than the origin, so because $\fX$ Hausdorff there exists a neighborhood of
+      the origin $V \in N(0)$ such that $\bar{V} \not\supset K_1 - K_1$.
+    \item $V$ may not be convex, but since $\fX$ is a LCTVS there is
+      convex $V_1$ in the local base of $0$ such that $0 \in V_1 \subset V$.
+    \item $V_1$ is convex, but not $\fG$-invariant.
+      Note that $\fG$ is a group so $\fG \fG A = \fG A$. To exploit this idea
+      and construct a $\fG$-invariant convex open set,
+      we first use equicontinuity of $\mathfrak{G}$ on $K \supset K_1$ to 
+      obtain $U_1 \in N(0)$ such that 
+      $\fG(U_1 \cap (K_1 - K_1)) \subset \fG(U_1) \subset V_1$.
+    \item Taking the convex hull (and exploiting convexity of $V_1$),
+      we have
       \[
         U_2
-        \coloneqq \conv(\mathfrak{G} U_1 \cap (K_1 - K_1)) \\
-        = \conv(\mathfrak{G}(U_1 \cap (K_1 - K_1))) \subset V
+        \coloneqq \conv(\mathfrak{G}(U_1 \cap (K_1 - K_1))) 
+        \subset \conv(V_1)
+        = V_1
       \]
-      $U_2$
-      is relatively open in $K_1 - K_1$ and satisfies
-      $\mathfrak{G} U_2 = U_2 \not\supset K_1 - K_1$
-      because:
+      $U_2$ is non-empty ($0 \in U_1 \cap (K_1 - K_1)$),
+      relatively open in $K_1 - K_1$
+      ($T \in \fG$ invertible maps open sets to open sets),
+      and $\mathfrak{G} U_2 = U_2$ because:
       \begin{itemize}
-        \item $T \in \mathfrak{G}$ is invertible ($\mathfrak{G}$ is a group)
-          hence $T$ maps open sets to open sets and $T(A \cap
-          B) = TA \cap TB$ for sets $A, B$.
-        \item Since $T$ is linear, for any $A$
-          \begin{align}
-            T \conv(A) &= \conv(TA)
-          \end{align}
-        \item Since $\fG$ is a group, $\fG \fG A = \fG A$.
+        \item $T$ is linear so $T \conv(A) &= \conv(TA)$
+        \item $T \in \mathfrak{G}$ invertible ($\mathfrak{G}$ is a group)
+          so $T(A \cap B) = TA \cap TB$ for sets $A, B$.
+        \item $\fG \fG A = \fG A$.
       \end{itemize}
-    \item By continuity, $\mathfrak{G} U_2 = \overline{\mathfrak{G} U_2}$.
-    \item Let $\delta = \inf \{ a : a > 0, a U_2 \supset K_1 - K_1 \} \geq 1$,
-      by compactness $\delta < \infty$. Let $U \coloneqq \delta U_2$.
-    \item For any $\eps \in (0,1)$, note
+      % Additionally, $U_2 \not\supset K_1 - K_1$ because
+      % $U_2 \subset V_1 \subset V \subset \bar{V} \not\supset K_1 - K_1$.
+      By continuity, $\mathfrak{G} U_2 = \overline{\mathfrak{G} U_2}$.
+    \item Let $U \coloneqq \delta U_2$ where
+      $\delta = \inf \{ a : a > 0, a U_2 \supset K_1 - K_1 \}$,
+      by compactness of $K_1 - K_1$ we have $\delta < \infty$.
+      With this definition, for any $\eps \in (0,1)$
       \[
         (1+\eps) U \supset K_1 - K_1 \not\subset (1-\eps) \overline{U}
       \]
   \end{itemize}
+  Note that equicontinuity was required to bound
+  $U_2 \subset V_1$.
 
-  Next, we use compactness of $K_1$ to get a center $p$ which is within
-  $(1 - \eps) \bar{U}$ of all of $K_1$. Combined with
-  $(1 - \eps) \bar{U} \not\supset K_1 - K_1$, we can define
-  $K_2 \subset\neq K_1$ with the desired properties.
+  Next, we will exploit $(1-\eps) \bar{U} \not\subset K_1 - K_1$ to
+  construct a proper subset $K_2 \subsetneq K_1$ and use
+  relative openness of $U$ and compactness of $K_1$ to argue non-emptiness
+  by constructing $p \in K_2$, contradicting minimality.
   \begin{itemize}
     \item For the relatively open cover $\{2^{-1} U + k\}_{k \in K_1}$ of
       $K_1$, let $\{k_i\}_{i=1}^n$ index a finite subcover and define (the
       center)
       $p = \frac{1}{n} \sum_{i=1}^n k_i$.
-      Then for all $k \in K_1$, $k_i - k \in 2^{-1} U$ for some $i \in [n]$ and
-      since $k_j - k \in (1 + \eps) U$ for all $j \neq i$ we have
+      Notice $p \in K_1$ (by convexity of $K_1$) and
+      every $k \in K_1$
+      satisfies $k \in k_i + 2^{-1} U$ for some $i \in [n]$.
+      Additionally, $k \in k_j + (1 + \eps) U$ for all $j$
+      (since $K_1 - K_1 \subset (1+\eps) U$) so we have
       \[
-        p \in \frac{1}{n} (2^{-1} U + (n-1) (1+\eps) U) + k
+        p \in \frac{1}{n} \left(2^{-1} U + (n-1) (1+\eps) U \right) + k
       \]
       Setting $\eps = \frac{1}{4(n-1)}$ we get $p \in (1 - \frac{1}{4n}) U + k$
       for each $k \in K_1$, i.e. every point in $K_1$ is within $(1 - \frac{1}{4 n} )U$
       of the ``center'' $p$.
-    \item Let
+    \item As $p$ is within a $(1-1/4n)\bar{U}$ ball of every $k \in K_1$
+      we can define the non-empty set
       \[
         K_2 = K_1 \cap \bigcap_{k \in K_1} \left(
           \left(
             1 - \frac{1}{4n}
           \right) \bar{U} + k
-        \right) \neq \emptyset
+        \right) \supset \{p\} \neq \emptyset
       \]
-    \item Because $(1 - \frac{1}{4n} ) \bar{U} \not\supset K_1 - K_1$, we have
-      $K_2 \subsetneq K_1$.
-    \item $K_2$ is closed and convex
-    \item Further, since $T(a \bar{U}) \subset a \bar{U}$ for $T \in
+      Because $(1 - \frac{1}{4n} ) \bar{U} \not\supset K_1 - K_1$, we have
+      $K_2 \subsetneq K_1$ is a proper subset.
+    \item To contradict minimality of $K_1$, it remains to verify
+      $K_2$ satisfies the desired properties.
+      $K_2$ is closed and convex because (due to how we constructed $\bar{U}$)
+      it is the intersection of closed convex sets.
+      Further, since $T(a \bar{U}) \subset a \bar{U}$ for $T \in
       \mathfrak{G}$, we have
       \[
         T(a\bar{U} + k)
         \subset a \bar{U} + T k
-        \qquad \mathrm{for all}~T \in \mathfrak{G}, k \in K_1
+        \qquad \text{for all}~T \in \mathfrak{G}, k \in K_1
       \]
-    \item Recalling $T K_1 \subset K_1$ for $T \in \mathfrak{G}$
-      and that $\mathfrak{G}$ is a group, we find that
-      $T K_1 = K_1$ and $\mathfrak{G} K_2 \subset K_2$,
-      contradicting minimality of $K_1$.
-      a contradiction
+      Combined with $\fG K_1 \subset K_1$
+      and $T k \in K_1$ for all $k \in K_1$, we
+      have that $\fG K_2 \subset K_2$.
   \end{itemize}
 \end{proof}

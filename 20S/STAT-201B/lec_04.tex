@@ -1,0 +1,33 @@
+\lecture{4}{2020-01-30}{}
+
+\begin{proposition}[Simple Markov property]
+  For any fixed time $n$
+  \[
+    (X_n, X_{n+1}, \ldots \mid X_n = x) \deq (X_0, X_1, \ldots \mid X_0 = x)
+  \]
+\end{proposition}
+
+\begin{proof}
+  To show $X \deq Y$, show $\Pr(X \in A) = \Pr(Y \in A)$
+  for all $A$ in a $\pi$-system. Here $\pi$-system
+  is FDDs, so (by Kolmogorov) its enough to take
+  \[
+    A = (X_0 = x_0, X_1 = x_1, \ldots, X_m = x_m)
+  \]
+  for any choice of $x_0, \ldots, x_m$.
+  We need
+  \begin{align*}
+    \Pr[X_n = x_0, X_{n+1} = x_1, \ldots, X_{n+m} = x_m \mid X_n = x]
+    &= \Pr[X_0 = x_0, X_1 = x_1, \ldots, X_m = x_m \mid X_0 = x]
+  \end{align*}
+\end{proof}
+
+Recall $\cF_T$ where $T$ is a stopping time:
+\[
+  A \in \cF_T \iff A \cap \{T \leq n \} \in \cF_n
+\]
+\begin{proof}
+  Key fact: $\{T=n\} \in \cF_n$.
+  Given $\{T = n \}$ and the $\cF_T$ info, you basically know some
+  $\cF_n$ fact.
+\end{proof}
