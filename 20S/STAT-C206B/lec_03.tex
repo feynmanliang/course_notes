@@ -220,7 +220,7 @@
   Let $U_c = \{\ind - f_n > c\}$ for $n \in \bN$ and $c \in (0,1)$,
   so $U_c \supset \Omega \setminus G$
   (by monotonicity we must have $(\ind - f_n)(x) \equiv 1$ for $x \not\in G$)
-  and $\ind_{U_c} &\leq c^{-1}(\ind - f_n)$ by definition.
+  and $\ind_{U_c} \leq c^{-1}(\ind - f_n)$ by definition.
   We also have $U_c \in \cG$ by \cref{eq:superlevel-set-in-G},
   so altogether
   \begin{align*}
@@ -237,7 +237,7 @@
     L(f_n) &= \sum_{j=1}^{2^n - 1} j 2^{-n} \mu\{j 2^{-n} < f < (j+1) 2^{-n}\}
     = \int_\Omega f_n d\mu
   \end{align*}
-  By property (4) and properties of the integral on 
+  By property (4) and properties of the integral on
   increasing sequences $\{f_n\}$, taking $n \to \infty$ yields
   the desired formula $L(f) = \int_\Omega f d\mu$.
   By considering truncations $\cL^+ \ni \min(f,n) \to f$,
@@ -250,5 +250,3 @@
   which is closed wrt finite intersections and generates $\cA$ as a
   $\sigma$-algebra.
 \end{proof}
-
-
