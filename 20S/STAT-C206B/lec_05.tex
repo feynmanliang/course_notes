@@ -1,0 +1,240 @@
+\lecture{5}{2020-02-04}{Extreme point representation of measures}
+
+Throughout, let $E$ be a real TVS.
+
+\begin{definition}
+  For convex $A \subset E$, an \emph{open segment} is
+  a subset of type
+  \[
+    \{(1-\lambda) a + \lambda b : \lambda \in (0,1) \},\qquad a\neq b \in A
+  \]
+  $x_0 \in A$ is an \emph{extreme point} of $A$ if it belongs to no open segment
+  of $A$, i.e.
+  \begin{align*}
+    &(\exists \lambda \in [0,1] : x_0 = (1-\lambda) a + \lambda b) \\
+    &\implies x_0 = a \text{ or } x_0 = b
+  \end{align*}
+  Closed $B \subset A$ is an \emph{extreme subset} of $A$ if
+  \begin{align*}
+    &(\exists \lambda \in (0,1) : (1-\lambda) a + \lambda b) \in B) \\
+    &\implies \{a,b\} \subset B
+  \end{align*}
+\end{definition}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{extreme-points}
+    \caption{On a triangle, the extreme points are the vertices and the extreme subsets are the sides}
+    \label{fig:extreme-points}
+\end{figure}
+
+\begin{lemma}
+  \label{lem:cvx-subset-has-extreme-subset}
+  Let $E$ real Hausdorff TVS, $A \subset E$ nonempty compact convex,
+  $f$ continuous linear functional on $E$, $\beta = \inf_{x \in A} f(x)$.
+  Then $B = A \cap f^{-1}(\beta)$ is nonempty, compact, extreme subset of $A$.
+\end{lemma}
+
+\begin{proof}
+  $\beta$ exists because $A$ is compact.
+
+  Continuity and linearity of $f$ ensure $B$ is closed and convex.
+  Check nonempty and compact.
+
+  To show $B$ extreme, suppose $(1-\lambda)a + \lambda b \in B$
+  for $a,b \in A$ and $\lambda \in (0,1)$.
+  If, for example, $a \not\in B$, then $f(a) > \beta$ by definition
+  of $B$ and so by linearity
+  \[
+    f((1-\lambda) a + \lambda b)
+    = (1 - \lambda) f(a) + \lambda f(b) > (1 - \lambda) \beta + \lambda \beta
+    = \beta
+  \]
+  contradicting $(1-\lambda)a + \lambda b \in B$
+
+  TODO: finish
+\end{proof}
+
+\begin{theorem}
+  $E$ real Hausdorff LCTVS, $A$ nonempty compact convex subset of $E$, then
+  $A$ is the closed convex hull in $E$ of the set of extreme points of $A$.
+\end{theorem}
+
+This is saying something along the same lines as Caratheodory's theorem
+for convex things.
+
+\begin{proof}
+  We first show each nonempty extreme subset $X \subset A$ contains an extreme
+  point of $A$. Let $\fX$ consist of extreme subsets of $A$ contained in $X$.
+  $\fX$ is nonempty (by \cref{lem:cvx-subset-has-extreme-subset}),
+  so partially order $\fX$ by inclusion.
+  Notice the intersection of any chain is a non-empty compact set $\in \fX$
+  because it is
+  the intersection of nonempty compact sets (c.f. Hausdorff's theorem), hence
+  by Zorn's lemma $\fX$ possesses a minimal element, say $Y$.
+
+  It remains to show $Y$ is a singleton. Otherwise, $Y$ would contain $x \neq y$
+  and since $E$ is Hausdorff and LC, (by Hahn-Banach separating hyperplane version)
+  there exists continuous linear function $f$ on $E$ such that $f(x) < f(y)$.
+  By \cref{lem:cvx-subset-has-extreme-subset}, $Z = Y \cap f^{-1}(\inf f(Y))$
+  is a nonempty extreme subset of $A$ that does not contain $y$.
+  Thus $Z \subsetneq Y$, contradicting minimality of $Y$.
+
+  In the second step, let $B$ be the closed convex hull in $E$ of the set of all extreme points of $A$.
+  $B$ is compact, convex, and contained in $A$.
+  To show $B = A$, it suffices to show $A \subset B$ is empty.
+  Suppose towards contradiction $x_0 \in A \setminus B$, then by Hahn-Banach
+  theorem there exists (separating) continuous linear functional
+  $f$ on $E$ such that $\inf_B f(x) > f(x_0)$.
+  Then by \cref{lem:cvx-subset-has-extreme-subset} $W = A \cap f^{-1}(\inf_A f(x))$
+  is a nonemmpty extreme subset of $A$ disjoint from $B$.
+  However, by the previous part $W$ would contain an exterme point of $A$,
+  which is a contradiction since $W \cap B = \emptyset$.
+\end{proof}
+
+\begin{proposition}
+  Suppose $E$ is Hausdorff real LCTVS, $K \subset E$ compact whose closed
+  convex hull $A$ is compact. THen each extreme point of $A$ belongs to $K$
+\end{proposition}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{cvx-hull-contains-extreme-pts}
+    \caption{cvx-hull-contains-extreme-pts}
+    \label{fig:cvx-hull-contains-extreme-pts}
+\end{figure}
+
+\begin{figure}[ht]
+    \centering
+    \incfig{higher-dim-extreme-pt}
+    \caption{higher-dim-extreme-pt}
+    \label{fig:higher-dim-extreme-pt}
+\end{figure}
+
+\begin{proof}
+  Let $x \in A$ be extreme point. For any closed convex nbd $0 \in U \subset E$,
+  by compactness of $K$
+  there exists fintely many $a_i \in K$ such that $a_i + U$ cover $K$.
+  Let $A_i = \overline{\conv(K \cap (a_i + U))}$, each $A_i$ is compact
+  because $A_i \subset K$ and $K$ is compact. 
+  Then $\conv(\cup_i^n A_i)$ is compact and
+  $K \subset \conv(\cup_i^n A_i) \subset A$, so we must have
+  $A = \conv(\cup_i^n A_i)$.
+
+  Hence, $x = \sum_i^n \lambda_i x_i$ with $x_i \in A_i$, $\lambda_i \geq 0$,
+  $\sum_i \lambda_i = 1$. As $x \in A$ is extreme point, $x$ must
+  coincide with some $x_i$. Thus, $x \in A_i \subset a_i + U$,
+  so $x \in K + U$.
+  Since $K$ is closed and $U$ is an arbitrary nbd of $0$, $x \in K$
+  as desired.
+\end{proof}
+
+\begin{example}
+  A compact convex set $A$ need not be the convex hull of its extreme points.
+  Take $E = \ell^\infty$, $e_n = \delta_n \in E$, $A$ the closed
+  convex hull in $E$ of $e_n / n$ for $n \in \bN$.
+  By (TODO: prop), the extreme points
+  of $A$ are $0$ and the points $\{e_n / n\}$.
+  $A$ is compact and contains all points $x = \sum_{n \geq 1} \lambda_n e_n / n$,
+  $\lambda_n$ a convex combinations.
+
+  TODO: finish
+\end{example}
+
+\begin{definition}
+  For a Banach space $(X, \|\cdot\|_X)$, let $X'$ be the set of bounded
+  linear functionals $L : X \to \bR$, i.e.
+  $\sup_{x \in X} \lvert L(x) \rvert / \|x\| \leq c$ for some $c \geq 0$
+  $\iff$ $L$ is linear and continuous.
+
+  Given $L \in X'$, write $\|L\|_{X'}$ for smallest $c$
+  that works $\|L\|_{X'} = \inf \{\lvert l(x) \rvert : \|x\| = 1\}$.
+
+  FACT: $(X', \|\cdot\|_{X'})$ is a Banach space.
+  Each $x \in X$ defines a linear map $X' \to \bR$ via evaluation
+  \[
+    e_x = L \mapsto L(x)
+  \]
+  The \emph{weak-$\ast$ topology} on $X'$ is the weakest/coarsest
+  (i.e. initial topology) $\tau(X', \{e_x\}_{x \in X})$ that makes all of these 
+  maps continuous.
+\end{definition}
+
+\begin{example}[Riesz representation theorem]
+  Let $S$ be a compact Hausdorff space,
+  $X = \cC(S)$ continuous functions from $S$ to $\bR$.
+  $X$ is a Banach space with the $\sup$-norm $\|x\| = \sup_{s \in S} \lvert x(s) \rvert$.
+  Then $X'$ finite signed memasures on $S$.
+  associated with any finite signed measure $\mu$.
+  is the continuous linear functional $L(x) = \int_S x(s) \mu(ds)$.
+
+  We want to know what is $\|\cdot\|_{X'} = \|\cdot\|_{\mu(S)}$?
+  If $L(x) = \int_S x(s) \mu(ds)$ then by definition
+  \begin{align*}
+    \|L\|_{X'} 
+  &= \sup\{ \lvert L(x) \rvert : \|x\|_X = 1 \} \\
+  &= \sup\left\{ \left\lvert \int_S x(s) \mu(ds) \right\rvert : \sup_{s \in S} \lvert x(s) \rvert = 1 \right\} \\
+  &= \sup\left\{ \left\lvert \int_S x(s) \mu^+(ds)  - \int_S x(s) \mu^-(ds) \right\rvert : -1 \leq \lvert x(s) \rvert \leq 1 \right\}
+\end{align*}
+We know $\mu^+$ and $\mu^-$ are perpendicular; their supports are disjoint, so
+\begin{align*}
+  \|L\|_{X'} 
+  &= \sup\left\{ \left\lvert 
+      \int_{S^+} x(s) \mu^+(ds)  - \int_{S^-} x(s) \mu^-(ds)
+  \right\rvert : -1 \leq \lvert x(s) \rvert \leq 1 \right\}
+\end{align*}
+Take $x = \ind_{S^+} - \ind_{S^-}$ to conclude
+$\|L\|_{X'} = \mu^+(S^+) + \mu^-(S^-) = \mu^+(S) + \mu^-(S) = \lvert \mu \rvert(S) = \|\mu\|_{TV}$
+Hence, $(\cC(S), \|\cdot\|_{\infty})$ has dual
+$(M(S), \|\cdot\|_{TV})$ and the weak-$\ast$ topology on $M(S)$
+is the weakest/coarsest/smallest topology that makes continuous
+all maps $\mu \mapsto \int_S x(s) \mu(ds)$ for $x \in \cC(S)$.
+Notice that this is strictly weaker than the TV topology, because for example
+two unit point masses have TV norm 2 but
+$\int x(s) \delta_{s'}(ds) = x(s') \approx x(s'') = \int x(s) \delta_{s''}(ds)$
+when $s' \approx s''$.
+\end{example}
+
+This is the story for compact spaces. What about for only locally compact spaces?
+
+Let $T$ Hausdorff LC, $M(T)$ real bounded signed Radon measures on $T$.
+\begin{definition}
+  $\cC_0(T)$ are the continuous functions vanishing at infinity, i.e.
+  $f \in cC(T)$ such that $\lim_{x \to \infty} f(\pm x) = 0$.
+\end{definition}
+
+View $M(T)$ as the (Banach) dual of $C_0(T)$ equipped with weak-$\ast$
+topology.
+The set $M_+^1(T)$ of positive measures in $M(T)$ having total mass at most one
+is compact and convex, because:
+
+\begin{theorem}[Banach-Alaoglu]
+  The unit ball in $(X', \|\cdot\|_{X'})$ is compact
+  in the weak-$\ast$ topology.
+\end{theorem}
+
+We will show that the extreme points of $M_+^1(T)$ of are $0$ and the
+Dirac measures $\delta_t$ for $t \in T$.
+
+It is clear that $0$ is an extreme point of $M_+^1(T)$.
+
+Suppose $\mu \neq 0$ is another element in $M_+^1((T)$, then it suffices
+show $K = \supp \mu$ is a single point. If $t_1 \neq t_2 \in K$, then
+by Hausdorffness choose $U_1 \ni t_1$ and $U_2 \ni t_2$ disjoint.
+Then $m = \mu(U_1)$ satisfies $0 < m < 1$.
+
+Define two measures $\alpha = (\mu \vert U_1) / m$ ($\mu$ restricted and renormalized)
+and $\beta = (\mu - m \alpha) / (1 - m)$ what's left over after subtracting $m \alpha$.
+Then $\alpha, \beta \in M_+^1(T)$, $\alpha \neq \beta$, and $\mu = m \alpha + (1 - m) \beta$,
+contradicting $\mu$ extremal. Hence, $K$ is a single point.
+
+A similar argument shows that if $T$ is compact, then the set of positive
+measures of unit total mass is compact and convex, and that its extreme points
+are the Dirac measures $\delta_t$.
+
+\begin{theorem}[Stone-Weierstrass]
+  Let $E$ be a subalgebra of $C(S)$. Suppose
+  $E$ separates points and contains constants, then $E$ is dense in $C(S)$.
+\end{theorem}
+
+
