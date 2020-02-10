@@ -1,0 +1,87 @@
+\lecture{5}{2020-02-04}{}
+
+\textbf{Done}: 5.1 and 5.2
+
+\textbf{Today}: More on 5.2
+
+Skip 5.4 [Done in 205A], start 5.5.
+
+\subsection{Remaining issues of 5.2}
+
+Fix countable state space $S$, transition matrix $P$ on $S$ a $S \times $ matrix
+row stochastic. Recall definition of transient / recurrent states:
+\begin{align*}
+  \text{$x$ is recurrent } &\iff \Pr_x[N_x = \infty] = 1 \\
+  \text{$x$ is transient} &\iff \Pr_x[N_x < \infty] = 1
+\end{align*}
+where $N_x = \sum_{n=0}^\infty \ind\{X_n = x\}$.
+No other option is possible.
+
+\begin{theorem}[Theorem 5.3.2]
+  If $x$ is recurrent and $\rho_{xy} > 0$, then $Y$
+  is recurrent and $\rho_{yx} = 1$ (and $\rho_{xy} = 1$).
+\end{theorem}
+
+\begin{proof}
+  \begin{figure}[H]
+    \centering
+    \incfig[0.75]{revisiting-recurrent-state}
+    \caption{Revisiting recurrent state, the chain goes on excursions
+      between visits to $x$. We can regard the whole chain $(X_i)$ with $X_0 = x$
+      as a succession of $x$-blocks
+    }
+    \label{fig:revisiting-recurrent-state}
+  \end{figure}
+
+  $0 < \rho_{xy} \implies \Pr_X[\text{hit $y$ before $T_x$}] > 0$
+
+  By the strong Markov property, the $x$-blocks
+  are IID copies of the first $x$-block.
+  So suppose $\Pr_x[\text{hit $y$ before $T_x$}] = 0$.
+  Then $\Pr[\text{$x$ block contains a $y$}] = 0$,
+  so $\Pr[\text{any of first 19 $x$ blocks contain a $y$}] = 0$,
+  so $\Pr[\text{some $y$ before $T_x$ hit}] = 0$.
+\end{proof}
+
+Can we do it without contradiction? Write
+\[
+  \rho_{xy} = \sum_{n \geq 1} \Pr_x[T_y = n]
+\]
+Notice
+\[
+  \Pr_x[T_y = n] = \sum_{x = (x_i)_{i=1}^n, x_n = y, x_i \neq y~\forall i < n}
+  \underbrace{\prod_{i=1}^n P(x_{i-1}, x_i)}_{\Pr[\text{path}]}
+\]
+whereas
+\[
+  \Pr_x[T_y < T_x] = \sum_{n=1}^\infty \sum_{x = (x_i)_{i=1}^n, x_n = y, x_i \neq x~\forall i < n} \Pr[\text{path}]
+\]
+\textbf{Claim}: each of the two above sums is $> 0$ iff the other is.
+Suppose the first sum $> 0$.
+Then exists $n$ and some path $(x_i)_1^n$ with all $x_i \neq y$.
+So $\Pr[(x_i)_1^n] > 0$.
+
+In general, most things involving Markov chains are just questions about
+sums over paths. The hard part is identifying which paths we are talking about.
+
+\textbf{Formalities}: What is an $x$-block? An $x$-block is an element of
+$\cup_{n \geq 1} S^n$ such that $x_0 = x$, $x \not \in x_{1:n}$
+
+\subsection{Key classes of SPs defined by symmetries}
+
+\begin{enumerate}
+  \item Independent, IID
+  \item $(X_i)_{i}$ is \emph{exchangeable} $\iff (X_{\pi(i)})^n_i \deq (X_i)^n_i$.
+    for all $n$ and $\pi \in S_n$ a permutation of $[n]$.
+  \item $(X_i)$ is \emph{reversible}
+    $\iff (X_n, X_{n-1}, \ldots, X_1) \deq (X_1, \ldots, X_n)$ for all $n$. Obviously exchangeable $\implies$ reversible, but reversible is much weaker.
+  \item $(X_1, X_2, \ldots)$ is \emph{stationary},
+
+    $\iff (X_2, \ldots, X_{n_1}) \deq (X_1, \ldots, X_n)$ for all $n$ on $S^n$,
+
+    (by $\pi$-$\lambda$) $\iff (X_2, X_3, \ldots) \deq (X_1, X_2, \ldots)$ on $S^\infty$
+\end{enumerate}
+
+\begin{exercise}
+  Exchangeable $\implies$ Reversible $\implies$ Stationary
+\end{exercise}
