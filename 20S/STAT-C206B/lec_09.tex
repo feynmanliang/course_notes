@@ -1,0 +1,293 @@
+\lecture{9}{2020-02-18}{}
+
+Notation from Kallenberg ``Foundations of Modern Probability.''
+
+Underlying probability space $(\Omega, A, P)$.
+
+$E^\cF[\cdot] = E[\cdot \mid \cF]$ conditional probability given
+$\cF$ a sub-$\sigma$-field of $\cA$
+
+
+\begin{definition}
+  The \emph{conditional probability} of an event $A \in \cA$ given
+    $\sigma$-field $\cF$ is
+    \[
+      P^{\cF}A = E^{\cF} \ind_A
+    \]
+    Equivalently
+    \[
+      P[A \mid \cF] = E[\ind_A \mid \cF],\quad A \in \cA
+    \]
+\end{definition}
+
+Thus $P^\cF A$ is the almost surely unique random variable in $L^1(\cF)$ satisfying
+\[
+  E[P^\cF A; B] = P(A \cap B) \quad \forall B \in \cF
+\]
+$E[X \mid \cF]$ is the a.s. unique $\cF$-measurable RV $Y$
+such that $E[X \ind_B] = E[Y \ind_B]$ for all $B \in \cF$.
+
+\begin{itemize}
+  \item $P^\cF A = P A$ a.s. iff $A \perp \cF$ (denoting independent)
+  \item $P^\cF A = \ind_A$ a.s. if $A$ agrees a.s. with a set in $\cF$, i.e.
+    $P(A \Delta B) = 0$ for $B \in \cF$
+  \item Positivity of $E^\cF$ implies $0 \leq P^\cF A \leq 1$ a.s.
+  \item Monotone convergence property gives
+    \[
+      P^\cF \bigcup_n A_n = \sum_n P^\cF A_n
+    \]
+    a.s., for $A_i \in \cA$ disjoint
+\end{itemize}
+
+We would like to have an assignment $A \mapsto (P^\cF A)(\omega)$
+that for each fixed $\omega$ is a probability measure
+(c.f. regular conditional distributions).
+
+\begin{definition}
+  A \emph{kernel} between two measurable spaces $(T, \cT)$
+  and $(S, \cS)$ is a function $\mu : T \times S \to \overline{\bR_+}$
+  such that $\mu(t, B)$ is $\cT$-measurable in $t \in T$ for fixed $B \in \cS$
+  and a measure in $B \in \cS$ for fixed $t \in T$.
+
+  $\mu$ is a \emph{probability kernel} if $\mu(t, S) = 1$ for all $t$
+
+  Kernels on the basic probability space $\Omega$ are called
+  \emph{random measures}.
+\end{definition}
+
+For fixed $B \in \cS$, $t \mapsto \mu(t, B)$ as a function
+$(T, \cT) \to (\overline{\bR_+}, \cB)$ is measurable.
+For fixed $t \in T$, the set function $B \mapsto \mu(t, B)$
+is a measure on $(S, \cS)$.
+
+A random measure on $(S, \cS)$ is a map $\nu : \Omega \times \cS \to \overline{\bR_+}$
+such that for each $B \in \cS$, $\omega \mapsto \nu(\omega, B)$ is $\cA$-measurable
+(i.e. $\nu(\cdot, B)$ is a random variable) and for each $\omega \in \Omega$,
+$B \mapsto \nu(\omega, B)$ is a measure on $(S, \cS)$ (i.e. $\nu(\omega, \cdot)$
+is a measure).
+
+Fix a $\sigma$-field $\cF \subset \cA$ and random element $\xi$ in some measurable
+space $(S, \cS)$.
+\begin{definition}
+  A \emph{regular conditional distribution} of $\xi$, given $\cF$,
+  we mean a version of the function $P[\xi \in \cdot \mid \cF]$ on
+  $\Omega \times \cS$ which is a probability kernel from $(\Omega, \cF)$
+  to $(S, \cS)$, hence an $\cF$-measurable random probability measure
+  on $S$.
+\end{definition}
+
+If $\eta \in (T, \cT)$, we can talk about the rcd of $\xi$ given $\eta$
+as a random measure of the form
+\[
+  \mu(\eta, B) = P[\xi \in B \mid \eta]~\text{a.s.},\quad Bb \in \cS
+\]
+where $\mu$ is a probability kernel $T \to S$.
+
+In the extreme cases $\xi$ is $\cF$-measurable or independent of $\cF$,
+$P[\xi \in B \mid \cF]$ has the regular version $\ind\{\xi \in B\}$
+or $P\{\xi \in B\}$ respectively.
+
+\begin{definition}
+  $(S, \cS)$ is a \emph{Borel space} if there exists
+  a Borel subset $B \subset \bR$ such that if we equip $B$ with the trace
+  $\sigma$-field
+  \[
+    \cB(B) = \{ B \cap C : C \in \cB(\bR)\} = \{ A \in \cB(\bR) : A \subset B \}
+  \]
+  then there is a bijection $f : S \to B$ that is measurable with a measurable
+  inverse.
+\end{definition}
+
+\begin{example}
+  Any complete seperable metric space (with its Borel $\sigma$-field)
+  is a Borel space. For example, $\bN^\infty$.
+\end{example}
+
+\begin{theorem}
+  For any Borel space $S$ and measurable space $T$, let $\xi \in S$
+  and $\eta \in T$ be random elements. Then there exists a unique
+  probability kernel $\mu$ from $T$ to $S$ satisfying
+  $P[\xi \in \cdot \mid \eta] = \mu(\eta, \cdot)$ a.s.,
+  and $\mu$ is unique a.e. $\cL(\eta)$.
+\end{theorem}
+
+\begin{proof}
+  By assumption of Borelness, wlog assume $S \in \cB(\bR)$.
+  For every $r \in \bQ$ we may choose some measurable
+  $f_r = f(\cdot, r) : T \to [0,1]$ such that
+  \[
+    f(\eta, r) = P[\eta \leq r \mid \eta]~\text{a.s.}
+  \]
+  \todo{Finish with Lebesgue-Stieltjes measures}
+\end{proof}
+
+\begin{theorem}[Disintegration]
+  Fix measurable spaces $S$ and $T$, $\sigma$-field $\cF \subset \cA$,
+  random $\xi \in S$ such that $P[\xi \in \cdot \mid \cF]$ has a regular
+  version $\nu$.
+  Further consider $\cF$-measurable random $\eta \in T$ and
+  measurable $f : S \times T \to \overline{\bR}$
+  with $\bE \lvert f(\xi, \eta) \rvert < \infty$. Then
+  \[
+    \bE[f(\xi, \eta) \mid \cF] \aseq \int \nu(ds) f(s, \eta)
+  \]
+\end{theorem}
+
+\begin{proof}
+  In the case when $\cF = \sigma(\eta)$ and
+  $P[\xi \in \cdot \mid \eta] = \mu(\eta, \cdot)$
+  for some probability kernel $\mu$
+  from $T$ to $S$, then this becomes
+  \[
+    E[f(\xi, \eta) \mid \eta] \aseq \int \mu(\eta, ds) f(s, \eta)
+  \]
+  Integrating, we get the commonly used formula
+  \[
+    E f(\xi, \eta) = E\int\nu(ds) f(s, \eta) = E \int \mu(\eta, ds) f(s, \eta)
+  \]
+  If $\xi \perp \eta$, we can take $\mu(\eta, \cdot) \equiv \cL(\xi)$
+  deterministic and the above reduces to the relation to previous lemma.
+
+
+  To prove the theorem, let $B \in \cS$ and $C \in \cT$. Use averaging property of conditional
+  expectations to get
+  \todo{?????}
+\end{proof}
+
+\begin{definition}[Conditional independence]
+  $\cF_i, \ldots, \cF_n, \cG \subset \cA$ sub-$\sigma$-fields are
+  \emph{conditionally indepenent} given $\cG$ if
+  \[
+    P^\cG \bigcap_{k \leq n} B_k \aseq \prod_{k \leq n} P^\cG B_k
+  \]
+  wehre $B_k \in \cF_k$.
+
+  For infinite collections $\{\cF_t\}_{t \in T}$, require the same
+  property for every finite subcollection
+  $\{\cF_{t_i}\}_{i=1}^n$ with distinct indices.
+
+  Use $\perp_\cG$ to denote pairwise conditional independence
+  given $\cG$.
+\end{definition}
+
+\begin{proposition}[Conditional independence, Doob]
+  For $\cF, \cG, \cH$ $\sigma$-fields, $\cF \perp_{\cG} \cH$
+  iff
+  \[
+    P[H \mid \cF, \cG] \aseq P[H \mid \cG]
+  \]
+  for all $H \in \cH$.
+\end{proposition}
+
+\begin{proof}
+  Assuming above and using the chain and pull-out properties of
+  conditional expectations, we get for $F \in \cF$, $H \in \cH$
+  \begin{align*}
+    P^\cG(F \cap H)
+    &= E^\cG P^{\cF \lor \cG}(F \cap H) = E^\cG[ P^{\cF \lor \cG} H; F] \\
+    &= E^\cG[ P^\cG H; F] = (P^\cG F)(P^\cG H)
+  \end{align*}
+  where $\cF \lor \cG$ is the smallest $\sigma$-field containing
+  both $\cF$ and $\cG$. This shows $\cF \perp_\cG \cH$.
+
+  Conversely, assume $\cF \perp_\cG \cH$ and using the chain and
+  pull-out properties, we get for any $F \in \cF$, $G \in \cG$,
+  and $H \in \cH$
+  \[
+    E[P^\cG H; F \cap G]
+    = E[(P^\cG F)(P^\cG H); G]
+    = E[P^\cG(F \cap H); G]
+    = P(F \cap G \cap H)
+  \]
+  By a monotone class argument, this extends to
+  \[
+    E[P^\cG H; A] = P(H \cap A), \qquad A \in \cF \lor \cG
+  \]
+  and the result follows by the averaging characterizataion of
+  $P^{\cF \lor \cG} H$.
+\end{proof}
+
+From this result, we can conclude some further useful properties.
+Let $\bar{\cG}$ denote the completion of $\cG$ wrt
+$\cA$, generated by $\cG$ and $\cN = \{ N \subset A \}$ \todo{??}.
+
+\begin{corollary}
+  For any $\sigma$-fields $\cF$, $\cG$, and $\cH$, we have
+  \begin{itemize}
+    \item $\cF \perp_{\cG} \cH$ iff $F \perp_\cG (\cG, \cH)$
+    \item $\cF \perp_\cG \cF$ iff $\cF \subset \overline{\cG}$
+  \end{itemize}
+\end{corollary}
+
+\begin{proof}
+  By proposition ??, both relations are equivalent to
+  \[
+    P[F \mid \cG, \cH] \aseq P[F \mid \cG],\quad F \in \cF
+  \]
+\end{proof}
+
+\begin{proposition}[Chain rule]
+  For any $\cG$, $\cH$, and $\cF_i$, $i \in [n]$, TFAE
+  \begin{itemize}
+    \item $H \perp_{\cG} (\cF_i)_{i}$
+    \item $\cH \perp_{\cG, \cF_1, \ldots, \cF_n} \cF_{n+1}$ for all $n \geq 0$
+  \end{itemize}
+\end{proposition}
+
+In particular, we have the commonly used equivalence
+\[
+  \cH \perp_{\cG} (\cF, \cF') \iff \cH \perp_{\cG} \cF, \cH \perp_{\cG, \cF} \cF'
+\]
+
+\begin{definition}
+  An \emph{extension} of $(\Omega, \cA, P)$ is a product space
+  $(\hat{\Omega}, \hat{\cA}) = (\Omega \times S, \cA \otimes \cS)$
+  equipped with a probability measure $\hat{P}$ satisfying
+  $\hat{P}(\cdot \times S) = P$.
+\end{definition}
+
+Any random element $\xi \in \Omega$ can be regarded as a function on
+$\hat\Omega$, so we can replace $\xi$ with $\hat\xi(\omega,s) = \xi(\omega)$
+which clearly has the same distribution.
+
+For extensions of this type, we can retain our original notation
+and write $P$ and $\xi$ instead of $\hat{P}$ and $\hat\xi$.
+
+\begin{lemma}[Extension]
+  Fix probability kernel $\mu$ between measurable $S$ and $T$.
+  let $\xi \in S$ be random element.
+  Then there exists random $\eta \in T$ defined on some extension of
+  $\Omega$ such that 
+  $P[\eta \in \cdot \mid \xi] \aseq \mu(\xi, \cdot)$
+  and also $\eta \perp_\xi \zeta$ for all $\zeta$ on $\Omega$.
+\end{lemma}
+
+\begin{proof}
+  Let $(\hat\Omega, \hat\cA) = (\Omega \times T, \cA \otimes \cT)$.
+  Define $\hat{P}$ by
+  \[
+    \hat{P} A 
+    = \int_\Omega P(d\omega) \int_T \ind_A(\omega, t) \mu(\xi(\omega), dt)
+    = E \int \ind_A(\cdot, t) \mu(\xi, dt), \qquad A \in \hat\cA
+  \]
+  Clearly $\hat{P}(\cdot \times T) = P$ and $\eta(\omega, t) \equiv t$
+  on $\hat\Omega$ satisfies
+  $\hat{P}[\eta \in \cdot \mid \cA] \aseqe \mu(\xi, \cdot)$.
+  In particular, $\eta \perp_\xi \cA$ by
+  Proposition ?? hence $\eta \perp_\xi \zeta$.
+\end{proof}
+
+\begin{lemma}
+  $\mu$ probability kernel $S$ to Borel space $T$.
+  Then exists measurable $f : S \times [0,1] \to T$ such that
+  if $\theta \sim U(0,1)$ then
+  $f(s,\theta)$ has distribution $\mu(s,\cdot)$ for every $s \in S$.
+\end{lemma}
+
+Will use this to prove the transfer principle:
+
+\begin{theorem}
+  $\xi \deq \tilde{\xi}$, $\eta$ random elements in $S$ and $$ resp.
+  THen exists $\tilde{\eta} \in T$ with
+  $(\tilde\xi, \tilde{\eta}) \deq (\xi,\eta)$.
+\end{theorem}

@@ -1,6 +1,6 @@
 %% Creator: Inkscape inkscape 0.92.4, www.inkscape.org
 %% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
-%% Accompanies image file 'cvx-hull-contains-extreme-pts.pdf' (pdf, eps, ps)
+%% Accompanies image file 'as-in-wedge.pdf' (pdf, eps, ps)
 %%
 %% To include the image in your LaTeX document, write
 %%   \input{<filename>.pdf_tex}
@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{550.74103889bp}%
+    \setlength{\unitlength}{680.31496063bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,14 +50,12 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.4537556)%
+  \begin{picture}(1,0.5)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
-    \put(0,0){\includegraphics[width=\unitlength,page=1]{cvx-hull-contains-extreme-pts.pdf}}%
-    \put(0.42958971,0.28036464){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$K$\end{tabular}}}}%
-    \put(0.32965385,0.42050755){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$A = \overline{\conv(K)}$\end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=2]{cvx-hull-contains-extreme-pts.pdf}}%
-    \put(0.47609473,0.05765701){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$A_i$\end{tabular}}}}%
-    \put(0,0){\includegraphics[width=\unitlength,page=3]{cvx-hull-contains-extreme-pts.pdf}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{as-in-wedge.pdf}}%
+    \put(0.85035756,0.09379756){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$n$\end{tabular}}}}%
+    \put(0.6507822,0.26786264){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$(\mathbb{E}_x T_x)(1-\eps)$\end{tabular}}}}%
+    \put(0.57371216,0.3677187){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$(\mathbb{E}_x T_x)(1+\eps)$\end{tabular}}}}%
   \end{picture}%
 \endgroup%

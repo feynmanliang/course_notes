@@ -1,0 +1,254 @@
+\lecture{7}{2020-02-11}{}
+
+\begin{theorem}[Bernstein's Theorem]
+  If $f$ is bounded and completely monotonic on $(0, \infty)$,
+  then there exists a unique nonnegative Borel measure
+  $\mu$ on $[0, \infty]$ such that
+  $\mu([0,\infty]) = f(0^+)$ and for all $x > 0$
+  \[
+    f(x) = \int_0^\infty e^{-\alpha x} \mu(d\alpha)
+  \]
+\end{theorem}
+
+Completely monotonic functions $(-1)^n f^{(n)}(x) \geq 0$ for all
+$x \in (0, \infty)$.
+
+$f$ bounded $|implies f(x) \leq f(0^+) < \infty$
+
+$K$ completely monotonic functions with $f(0^+) \leq 1$.
+
+\begin{proof}
+  Let $CM$ be the cone of all completely monotonic functions $f$
+  such that $f(0^+) < \infty$ (this right-hand limit always exists
+  since $f$ is completely monotonic, but it may be infinite).
+  Let $K  = \{f \in CM : f(0^+) \leq 1 \}$.
+  If $0 \neq f \in CM$ then $f / f(0^+) \in K$ so it suffices to
+  prove the theorem over $K$.
+
+  We first show $K$ is a compact subset of $E$. The topology on $E$ is the
+  same as that given by the countable family of seminorms
+  \[
+    p_{m,n}(f) = \sup\left\{ \lvert f^{(k)}(x) \rvert : m^{-1} \leq x \leq m, 0 \leq k \leq k \right\}
+    \qquad m,n \in \bN
+  \]
+  Thus $E$ is metrizable: a general recipe to obtain a metric from a collection
+  of seminorms is to let
+  \[
+    d(f,g) = \sum_{m,n} c_{m,n} \left( p_{m,n}(f - g) \land 1 \right)
+    \qquad c_{m,n} > 0, \sum_{m,n} c_{m,n} < \infty
+  \]
+  Furthermore, every closed and bounded subset of $E$ is compact
+  (Arz\`ela-Ascoli theorem with repeated use of the diagonal procedure).
+  To verify equicontinuity,
+  let $c = \sup p_{m,n}(f) < \infty$ and
+  note $\lvert f(x) - f(y) \rvert$ for $\lvert x - y \rvert < \delta$
+  is less thaan $c \lvert x - y \rvert$ for all $x,y \in [m^{-1}, m]$ and
+  $f \in K$ so we have equicontinuity of $K$.
+
+  \begin{lemma}
+    $K_n = \{(-1)^n f^{(n)} : f \in K\}$, $n \in \bN^*$.
+    Then for all $a > 0$ and $n \geq 0$, the
+    nonnegative functions in $K_n$ are bounded above
+    on $[a, \infty)$ by $a^{-n} 2^{(n+1)(n/2)}$.
+  \end{lemma}
+  \begin{proof}
+    Induction, $K_0$ bounded above by $1$.
+    Since $f \in K_{n+1}$ are nonincreasing, suffices to establish bound at
+    $a$.  By mean-value theorem, there exists $c \in (a/2,a)$ such that
+    $(a/2) f^{(n+1)}(c) = f^{(n)}(a) - f^{(n)}(a/2)$. We have
+    \begin{align*}
+      a^{-n} 2^{(n+1)(n/2)}
+      &\geq (-1)^n f^{(n)}(a/2)  &&\text{Ind. Hyp.}\\
+      &\geq (-1)^n f^{(n)} (a/2) - (-1)^n f^{(n)}(a) &&\text{Monotonicity}\\
+      &= (-1)^{n+1} (a/2) f^{(n+1)}(c) &&\text{MVT} \\
+      &\geq (a/2) (-1)^{n+1} f^{(n+1)}(a) &&\text{Monotonicity}
+    \end{align*}
+  \end{proof}
+
+  Our next step is to identify the extreme points of $K$.
+  \begin{lemma}
+    \[
+      \ex K = \{ x \mapsto e^{-\alpha x} : 0 \leq \alpha \leq \infty \}
+    \]
+  \end{lemma}
+
+  \begin{proof}
+    Suppose $f$ is an extreme point
+    and $x_0 > 0$. For $x > 0$, let $u(x) = f(x + x_0) - f(x) f(x_0)$.
+    Suppose we shown $f \pm u \in K$. Since $f$ is extreme, this
+    implies $u = 0$ so $f(x + x_0) = f(x) f(x_0)$ whenever $x, x_0 > 0$.
+    Since $f$ is continuous on $(0, \infty)$, this impliies that either $f = 0$
+    ($a = \infty$) or $f(x) = e^{-\alpha x}$ for some $\alpha$.
+    Some algebra \todo{} shows that $f \pm u \in K$.
+
+    For the reverse inclusion, let $T_r : K \to K$ be defined by
+    $(T_r f)(x) = f(r x)$ for $r > 0$. $T$ is a bijection preserving
+    convex combinations, so it carries $\ex K$ onto itself.
+    Since $K$ is compact, by Krien-Milman
+    it is the closed convex hull of its extreme points and therefore has at least
+    one which is non-constant. By what we just showed, this nontrivial
+    extreme point is $x \mapsto e^{-\alpha x}$ for some $\alpha > 0$, hence the
+    image under $T$, $e^{-\alpha r x}$, are extreme. Since $r > 0$,
+    all exponentials are extreme.
+  \end{proof}
+
+  The map $T = \alpha \mapsto e^{-\alpha(\cdot)}$ from $[0, \infty]$ to $K$
+  is continuous, and since $[0, \infty]$ is compact so is its image $\ex K$.
+  By Krien-Milman, each $f \in K$ is the limit of points of the form
+  \[
+    f_n = \sum_{k=1}^{N_n} p_{nk} g_{nk}
+    \quad\text{where}~p_{nk} \geq 0, k \in [N_n],
+    \sum_{k=1}^{N_n} p_{nk} = 1, g_{nk} \in \ex K, k \in [N_n]
+  \]
+  By Alaoglu's theorem and Riesz representation theorem, and
+  passing to subsequence if necessary, we may assume that
+  $m_n = \sum_{k=1}^{N_n} p_{nk} \delta_{g_{nk}}$ converges in the
+  weak-$\ast$ sense as $n \to \infty$ to a Borel probability
+  measure $m$ on $\ex K$. Consequently, for each $L \in E'$
+  \[
+    L(f) = \lim_{n} L(f_n) = \lim_n \sum_{k=1}^{N_n} p_{nk} L(g_{nk})
+    = \lim_n \int_{\ex K} L(g) m_n(dg)
+    = \int_{\ex K} L(g) m(dg)
+  \]
+  Applying this to the evaluation functional $L_x(f) = f(x)$ for $x > 0$,
+  we have that $L_x$ is continuous on $E$ so $f(x) = \int_{\ex K} L_x(g) m(dg)
+  = \int_{\ex K} g(x) m(dg)$ for each $x > 0$.
+  Define $\mu$ on each Borel subset $B$ of $[0,\infty]$ by $\mu(B) = m(TB)$.
+  $T$ is a continuous bijection, so in fact it is a homeomorphism
+  and everything stays measurable even when we pull $\mu$ back
+  to $[0,\infty]$ (usually we push things forwards).
+  Since $L_x(T\alpha) = e^{-\alpha x}$, we have
+  \[
+    f(x)
+    = \int_{\ex K} L_x dm
+    = \int_{T^{-1}(\ex K)} L_x \circ T d(m \circ T)
+    = \int_0^\infty e^{-\alpha x} \mu(d\alpha)
+  \]
+
+  It remains to prove uniqueness. Suppose $\nu$ on $[0,\infty]$
+  also satisfied
+  \[
+    f(x) = \int_0^\infty  e^{-\alpha x} \nu(d\alpha) \qquad \nu([0,\infty]) = f(0^+)
+  \]
+  Then $\alpha \mapsto e^{-\alpha x}$ for $x > 0$ is continuous on $[0,\infty]$.
+  Let $A \subset C([0,\infty])$ be the subalgebra
+  (because $e^{-\alpha x} e^{-\alpha y} = e^{-\alpha (x + y)}$)
+  generated by these functions
+  and constants, i.e. functions of the form
+  \[
+    \sum_{k=1}^n c_k e^{-\alpha x_k} + c_0
+  \]
+  If $\alpha \neq \beta \in [0, \infty]$, then
+  $e^{-\alpha x} \neq e^{-\beta x}$ for any $x > 0$ and so $A$ separates points
+  of $[0, \infty]$. As linear functions on $C[0,\infty]$,
+  $\mu$ and $\nu$ coincide on $A$.
+  But since $A$ contains constants and searates points of $[0,\infty]$,
+  by Stone-Weierstrass it is dense in $C([0,\infty])$ so $\mu = \nu$
+  on all of $C([0,\infty])$.
+\end{proof}
+
+\subsection{Exchangeable probability measures}
+
+Recall in the first lecture, we saw that Polya sequences were exchangeable,
+i.e.
+\[
+  (X_{i})_{i=1}^n \deq (X_{\pi(i)})_{i=1}^n\qquad \forall \pi \in S_n
+\]
+Additionally, we saw that any Polya sequence is a mixture of iid sequences.
+That is, if $\mu$ be the distribution of our Polya sequence (i.e. a probability
+measure on $E^{\bN}$), then there is a probability measure $\nu$ on $M_1(E)$
+(the set of probability measures on $E$) such that
+\[
+  \mu = \int_{M_1(E)} \pi^{\otimes \infty} \nu(d\pi)
+\]
+(De Finetti's theorem says that ??)
+
+We want to show that the infinite product measures are the extreme points of
+exchangeable probability measures. Our presentation comes from
+\cite{hewitt1955symmetric}.
+
+
+Let $\cX$ be a $\sigma$-algebra of subsets of a set $X$,
+$\tilde{X}$ the Cartesian product of a countably infintie sequence of replicas
+of $X$. For every finite sequence $(i_j)_{j=1}^p$ of distinct
+positive integers and finite sequence of sets $(E_i)_{i=1}^p$,
+let $C(E_1^{(i_1)}, \cdots, E_p^{(i_p)})$
+denote the cylinder set of all $a \in \cX$ such that $a_{i_r} \in E_i$
+for $r \in [p]$, i.e.
+\[
+  C(E_1^{(i_1)}, \cdots, E_p^{(i_p)})
+  = X \times \cdots \times X \times \underbrace{E_1}_{i_1} \times
+  X \times \cdots \times X \times \underbrace{E_2}_{i_2} \times \cdots
+  \times X \times \underbrace{E_p}_{i_p} \times X \times \cdots \times X
+\]
+Let $P$ be the set of all probability measures $\pi$ on $\cX$
+and $\tilde{P}$ the set of product measures $\tilde{\pi}$ on $\tilde{\cX}$.
+$\pi \mapsto \tilde{\pi}$ is clearly a bijection.
+
+The set $\tilde{S}$ of exchangeable probability measures on $\tilde{\cX}$
+is defined as follows. For a probability measure $\sigma$ on $\tilde{\cX}$,
+let $n \in \bN$ and $(E_i)_{i=1}^n$ any sets in $\cX$.
+$\sigma$ is \emph{exchangeable} iff
+\[
+  \sigma C(E_1^{(i_1)},\ldots, E_n^{(i_n)}) = \sigma C( E_{\tau(1)}, \ldots, E_{\tau(n)} )
+  \qquad \forall \tau \in S_n
+\]
+The class $\tilde{S}$ of exchangeable probability measures on $\tilde{\cX}$ is
+convex in the linear space of all finite measures in the sense that the set
+function $\sigma$ defined by
+\[
+  \sigma = \alpha \sigma' + (1 - \alpha) \sigma''
+\]
+is an element of $\tilde{S}$ provided $\sigma', \sigma'' \in \tilde{S}$.
+
+\begin{theorem}
+  The set $\tilde{P}$ of product measures is the set of extreme points of the
+  set $\tilde{S}$ of exchangeable probability measures.
+\end{theorem}
+
+The first step is to show:
+\begin{theorem}
+  \label{thm:positive-corr-cylinders}
+  For $n \in \bN$, $(E_i)_{i=1}^n \subset \cX$, $\sigma \in \tilde{S}$,
+  \[
+    \sigma C(E_1, \ldots, E_n, E_1, \ldots, E_n)
+    \geq [\sigma C(E_1, \ldots E_n)]^2
+  \]
+\end{theorem}
+This is a statement about positive correlation; letting
+$F = \left(\prod_{i=1}^n E_i \right) \times X^n$
+and $G = X^n \times \left(\prod_{i=1}^n E_i \right)$,
+this statement is saying $\sigma(F \cap G) \geq \sigma(F) \sigma(G)$
+i.e. $\ind_{F}$ and $\ind_{G}$ are positively correlated.
+\begin{proof}
+  Let $A = C(E_1, \ldots, E_n, E_1, \ldots, E_n)$
+  and $B = C(E_1, \ldots, E_n)$.
+  Let $\chi_r$ for $r \in \bN$ be the indicator function of the cylinder
+  \[
+    \left\{
+      a \in \tilde{X} : a_{i + (r-1)n} \in E_i, i \in [n]
+    \right\}
+  \]
+  so $\chi_1 = F$ and $\chi_2 = G$ for $F,G$ defined above.
+  By exchangeability of $\sigma$, for $m \in \bN$
+  \[
+    \int_{\tilde{\cX}} \left[ \sum_{r=1}^m \chi_r(a) \right] \sigma(da) = m \sigma B
+  \]
+  Considering the second moment
+  \begin{align*}
+    \int_{\tilde{\cX}} \left[ \sum_{r=1}^m m\chi_r(a) \right]^2 \sigma(da)
+    &= \sum_{r=1}^m \sum_{s=1}^m \int_{\tilde{\cX}} \chi_r(a) \chi_s(a) \sigma(da) \\
+    &= m \int_{\tilde{\cX}} \chi_1(a) d\sigma(a) + \underbrace{m (m-1) \int_{\tilde{\cX}} \chi_1(a) \chi_2(a)}_{\text{off diag}} \\
+    &= m \sigma B + m (m-1) \sigma A
+  \end{align*}
+  Thus
+  \[
+  \int \left[ \sum_r^m \chi_r(a) \right]^2 \sigma(da) = m \sigma B
+  \]
+  By Jensen's inequality (i.e. variance non-negative) \todo{missing stuff}
+  \begin{align*}
+    (m \sigma B)^2 &\leq m \sigma B + m (m-1) \sigma A \\
+    \frac{1}{m^2} (m \sigma B)^2 &\leq \frac{1}{m^2} \left(m \sigma B + m (m-1) \sigma A\right) \\
+    (\sigma B)^2 &\leq \sigma A
+  \end{align*}
+\end{proof}

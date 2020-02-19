@@ -9,15 +9,50 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="192.36697mm"
-   height="91.036537mm"
-   viewBox="0 0 192.36697 91.036537"
+   width="121.4936mm"
+   height="70.802513mm"
+   viewBox="0 0 121.49359 70.802513"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
    sodipodi:docname="extreme-points.svg">
   <defs
-     id="defs2" />
+     id="defs2">
+    <marker
+       markerWidth="0.91100001"
+       markerHeight="1.6900001"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       id="marker-arrow-0.5308">
+      <g
+         id="g27"
+         transform="scale(2.1535293)">
+        <path
+           id="path25"
+           inkscape:connector-curvature="0"
+           style="fill:none;stroke:#000000;stroke-width:0.60000002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           d="M -1.55415,2.0722 C -1.42464,1.29512 0,0.1295 0.38852,0 0,-0.1295 -1.42464,-1.29512 -1.55415,-2.0722" />
+      </g>
+    </marker>
+    <marker
+       markerWidth="0.91100001"
+       markerHeight="1.6900001"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       id="marker-arrow-0.5308-3">
+      <g
+         id="g44"
+         transform="scale(2.1535293)">
+        <path
+           id="path42"
+           inkscape:connector-curvature="0"
+           style="fill:none;stroke:#000000;stroke-width:0.60000002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+           d="M -1.55415,2.0722 C -1.42464,1.29512 0,0.1295 0.38852,0 0,-0.1295 -1.42464,-1.29512 -1.55415,-2.0722" />
+      </g>
+    </marker>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,9 +60,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.25092"
-     inkscape:cx="206.79751"
-     inkscape:cy="200.79031"
+     inkscape:zoom="0.78034824"
+     inkscape:cx="479.76141"
+     inkscape:cy="182.78554"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,15 +70,16 @@
      width="200mm"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1024"
-     inkscape:window-x="0"
-     inkscape:window-y="30"
-     inkscape:window-maximized="1"
+     inkscape:window-width="1320"
+     inkscape:window-height="887"
+     inkscape:window-x="3345"
+     inkscape:window-y="361"
+     inkscape:window-maximized="0"
      fit-margin-top="0"
      fit-margin-left="0"
      fit-margin-right="0"
-     fit-margin-bottom="0">
+     fit-margin-bottom="0"
+     inkscape:snap-global="true">
     <inkscape:grid
        type="xygrid"
        id="grid815"
@@ -52,8 +88,8 @@
        spacingy="10"
        empspacing="4"
        dotted="false"
-       originx="-175.94746"
-       originy="-98.179469" />
+       originx="-192.60209"
+       originy="-112.87238" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -63,7 +99,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -71,7 +107,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-8.0420974,-196.31294)">
+     transform="translate(-24.696739,-201.85405)">
     <path
        style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 29.916601,196.31294 v 91.03654"
@@ -79,23 +115,23 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 8.0420974,275.76886 H 200.40907"
+       d="M 7.7030394,267.29241 H 200.07001"
        id="path10"
        inkscape:connector-curvature="0" />
     <text
        id="text14"
        xml:space="preserve"
        style="font-size:2.64583325px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       y="208.03955"
-       x="167.6599"><tspan
+       y="208.71767"
+       x="127.9901"><tspan
          id="tspan12"
          sodipodi:role="line"
-         x="167.6599"
-         y="208.03955"
+         x="127.9901"
+         y="208.71767"
          style="stroke-width:0.26458332">$\mathbb{R}^2$</tspan></text>
     <path
-       style="fill:#000000;fill-opacity:0.12000002;stroke:#000000;stroke-width:0.14;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none;stroke-miterlimit:4"
-       d="m 53.399525,214.00555 v 45.67912 l 72.528885,-41.87458 z"
+       style="fill:#000000;fill-opacity:0.12000002;stroke:#000000;stroke-width:0.14;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none"
+       d="m 53.399525,214.00555 v 45.67912 l 73.487885,-46.19008 z"
        id="path26"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc" />
@@ -103,46 +139,51 @@
        id="text38"
        xml:space="preserve"
        style="font-size:2.64583325px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       y="229.29201"
-       x="85.706139"><tspan
+       y="230.01126"
+       x="74.797501"><tspan
          id="tspan36"
          sodipodi:role="line"
-         x="85.706139"
-         y="229.29201"
+         x="74.797501"
+         y="230.01126"
          style="stroke-width:0.26458332">$A$</tspan></text>
-    <text
-       id="text68"
-       xml:space="preserve"
-       style="font-size:2.64583325px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       y="220.50562"
-       x="37.39032"><tspan
-         id="tspan66"
-         sodipodi:role="line"
-         x="37.39032"
-         y="220.50562"
-         style="stroke-width:0.26458332">set where $(x,y) \mapsto x$ is minimized</tspan></text>
-    <text
-       id="text82"
-       xml:space="preserve"
-       style="font-size:2.64583325px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       y="262.35913"
-       x="55.485611"><tspan
-         id="tspan80"
-         sodipodi:role="line"
-         x="55.485611"
-         y="262.35913"
-         style="stroke-width:0.26458332">point in $A$ where $(x,y) \mapsto y$ is minimized</tspan></text>
-    <path
-       style="fill:#000000;fill-opacity:0.12000002;stroke:#000000;stroke-width:0.52913386;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none"
-       d="M 0.26456693,0.27880867 V 172.9243 L 274.38949,14.658173 Z"
-       id="path26-3"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccc" />
     <path
        sodipodi:nodetypes="ccc"
        inkscape:connector-curvature="0"
        id="path839"
        d="m 53.399525,214.00555 v 45.67912 z"
        style="fill:#000000;fill-opacity:0.12000002;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:none" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14044084;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:url(#marker-arrow-0.5308)"
+       d="m 46.451788,213.57663 c 0,0 -0.23975,6.83288 5.514255,7.91176"
+       id="path23"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.14044084;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1;marker-start:none;marker-end:url(#marker-arrow-0.5308)"
+       d="m 55.921922,263.92417 c 0,0 -3.846043,1.47063 -2.522397,-4.2395"
+       id="path40"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <text
+       id="text59"
+       xml:space="preserve"
+       style="font-size:2.64583325px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="35.716888"
+       y="210.47057"><tspan
+         id="tspan57"
+         sodipodi:role="line"
+         x="35.716888"
+         y="210.47057"
+         style="stroke-width:0.26458332">extreme set where $(x,y) \mapsto x$ is minimized</tspan></text>
+    <text
+       id="text73"
+       xml:space="preserve"
+       style="font-size:2.64583325px;font-family:monospace;-inkscape-font-specification:'monospace, Normal';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="56.463398"
+       y="264.17462"><tspan
+         id="tspan71"
+         sodipodi:role="line"
+         x="56.463398"
+         y="264.17462"
+         style="stroke-width:0.26458332">extreme point where $(x, y) \mapsto y$ is minimized</tspan></text>
   </g>
 </svg>

@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{545.29220941bp}%
+    \setlength{\unitlength}{344.39130408bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,15 +50,15 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.47324411)%
+  \begin{picture}(1,0.58276744)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{extreme-points.pdf}}%
-    \put(0.82975677,0.41228452){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\mathbb{R}^2$\end{tabular}}}}%
+    \put(0.85019589,0.52627379){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\mathbb{R}^2$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{extreme-points.pdf}}%
-    \put(0.40372856,0.30180581){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$A$\end{tabular}}}}%
-    \put(0.15256373,0.34748097){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}set where $(x,y) \mapsto x$ is minimized\end{tabular}}}}%
-    \put(0.24663024,0.12990975){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}point in $A$ where $(x,y) \mapsto y$ is minimized\end{tabular}}}}%
+    \put(0.41237367,0.35100863){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$A$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{extreme-points.pdf}}%
+    \put(0.0907056,0.51184587){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}extreme set where $(x,y) \mapsto x$ is minimized\end{tabular}}}}%
+    \put(0.26146776,0.0698139){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}extreme point where $(x, y) \mapsto y$ is minimized\end{tabular}}}}%
   \end{picture}%
 \endgroup%

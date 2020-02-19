@@ -1,6 +1,7 @@
 \lecture{5}{2020-02-04}{Extreme point representation of measures}
 
-Throughout, let $E$ be a real TVS.
+Throughout this section, let $E$ be a topological vector space
+over $\bR$.
 
 \begin{definition}
   For convex $A \subset E$, an \emph{open segment} is
@@ -8,133 +9,185 @@ Throughout, let $E$ be a real TVS.
   \[
     \{(1-\lambda) a + \lambda b : \lambda \in (0,1) \},\qquad a\neq b \in A
   \]
+  ``Open'' means that $\lambda \not\in \{0,1\}$.
+
   $x_0 \in A$ is an \emph{extreme point} of $A$ if it belongs to no open segment
   of $A$, i.e.
   \begin{align*}
-    &(\exists \lambda \in [0,1] : x_0 = (1-\lambda) a + \lambda b) \\
-    &\implies x_0 = a \text{ or } x_0 = b
+    (\exists \lambda \in [0,1] : x_0 = (1-\lambda) a + \lambda b)
+    \implies x_0 = a \text{ or } x_0 = b
   \end{align*}
-  Closed $B \subset A$ is an \emph{extreme subset} of $A$ if
+  A closed subet $B \subset A$ is an \emph{extreme subset} of $A$ if
+  for $a,b \in A$
   \begin{align*}
-    &(\exists \lambda \in (0,1) : (1-\lambda) a + \lambda b) \in B) \\
-    &\implies \{a,b\} \subset B
+    (\exists \lambda \in (0,1) : (1-\lambda) a + \lambda b \in B)
+    \implies \{a,b\} \subset B
   \end{align*}
 \end{definition}
 
 \begin{figure}[ht]
     \centering
-    \incfig{extreme-points}
-    \caption{On a triangle, the extreme points are the vertices and the extreme subsets are the sides}
+    \incfig[0.7]{extreme-points}
+    \caption{On a triangle, the extreme points are the vertices and the extreme
+    subsets are the sides}
     \label{fig:extreme-points}
 \end{figure}
 
+In finite dimensions, it is clear that optimizing a linear objective function
+(i.e.\ sliding a hyperplane along its normal vector until it gets to the edge
+of $A$, see \cref{fig:extreme-points}) will always yield an extreme set. The
+following lemma makes this explicit for more general settings.
+
 \begin{lemma}
   \label{lem:cvx-subset-has-extreme-subset}
-  Let $E$ real Hausdorff TVS, $A \subset E$ nonempty compact convex,
-  $f$ continuous linear functional on $E$, $\beta = \inf_{x \in A} f(x)$.
+  Let $E$ be a real Hausdorff TVS, $A \subset E$ nonempty compact convex,
+  $f \in E'$ a continuous linear functional on $E$, $\beta = \inf_{x \in A} f(x)$.
   Then $B = A \cap f^{-1}(\beta)$ is nonempty, compact, extreme subset of $A$.
 \end{lemma}
 
 \begin{proof}
-  $\beta$ exists because $A$ is compact.
+  Since $A$ is compact and $f$ is continuous, $f(A)$ is compact
+  in $\bR$ and $\beta \in f(A)$, so $\beta = f(a)$ for some $a \in A$
+  and thus $B$ is nonempty.
 
-  Continuity and linearity of $f$ ensure $B$ is closed and convex.
-  Check nonempty and compact.
+  Since $f$ is linear continuous and $\{\beta\}$ is convex closed,
+  $f^{-1}(\{\beta\})$ is convex closed and hence
+  $B$ is also convex closed. As a closed subset of compact set $A$,
+  $B$ is also compact.
 
-  To show $B$ extreme, suppose $(1-\lambda)a + \lambda b \in B$
+  To show $B$ is extreme, suppose $(1-\lambda)a + \lambda b \in B$
   for $a,b \in A$ and $\lambda \in (0,1)$.
-  If, for example, $a \not\in B$, then $f(a) > \beta$ by definition
-  of $B$ and so by linearity
+  Suppose towards contradiction $a \not\in B$.
+  Then $f(a) > \beta$ by definition of $B$ and so by linearity
   \[
     f((1-\lambda) a + \lambda b)
     = (1 - \lambda) f(a) + \lambda f(b) > (1 - \lambda) \beta + \lambda \beta
     = \beta
   \]
-  contradicting $(1-\lambda)a + \lambda b \in B$
-
-  TODO: finish
+  contradicting $(1-\lambda)a + \lambda b \in B$.
 \end{proof}
 
-\begin{theorem}
-  $E$ real Hausdorff LCTVS, $A$ nonempty compact convex subset of $E$, then
-  $A$ is the closed convex hull in $E$ of the set of extreme points of $A$.
-\end{theorem}
+The following theorem is our goal for today.
+It says that compact convex sets are equal to the closed convex hulls of their
+extreme points.
+In $\bR^d$, the analogous result is Carath\'eodory's theorem which says
+that every $x \in \conv(P) \subset \bR^d$ for a set $P$ can be written
+as a convex combination of $d+1$ points in $P$.
 
-This is saying something along the same lines as Caratheodory's theorem
-for convex things.
+\begin{theorem}[Krien-Milman]
+  \label{thm:krien-milman}
+  Let $E$ be a real Hausdorff locally convex topological vector space.
+  Then every nonempty compact convex subset $A \subset E$
+  is the closed convex hull in $E$ of the set of extreme points of $A$.
+\end{theorem}
 
 \begin{proof}
   We first show each nonempty extreme subset $X \subset A$ contains an extreme
-  point of $A$. Let $\fX$ consist of extreme subsets of $A$ contained in $X$.
+  point of $A$. Let $\fX$ consist of nonempty extreme subsets of $A$
+  contained in $X$.
   $\fX$ is nonempty (by \cref{lem:cvx-subset-has-extreme-subset}),
   so partially order $\fX$ by inclusion.
-  Notice the intersection of any chain is a non-empty compact set $\in \fX$
-  because it is
-  the intersection of nonempty compact sets (c.f. Hausdorff's theorem), hence
-  by Zorn's lemma $\fX$ possesses a minimal element, say $Y$.
+  The intersection of any descending chain in $\fX$ is a nonempty set because
+  it is the intersection of nonempty compact (extreme sets are closed by
+  definition, closed subsets of compact sets are compact) sets (c.f. Cantor's
+  intersection theorem). It is also still extreme hence in $\fX$,
+  hence by Zorn's lemma $\fX$ possesses a minimal element, say $Y$.
 
-  It remains to show $Y$ is a singleton. Otherwise, $Y$ would contain $x \neq y$
-  and since $E$ is Hausdorff and LC, (by Hahn-Banach separating hyperplane version)
-  there exists continuous linear function $f$ on $E$ such that $f(x) < f(y)$.
+  To see that $Y$ is a singleton, suppose otherwise. Then $Y$ would contain
+  $x$ and $y$ distinct and since $E$ is locally convex, by the
+  Hahn-Banach separation theorem there exists $f \in E'$ such that $f(x) <
+  f(y)$.
   By \cref{lem:cvx-subset-has-extreme-subset}, $Z = Y \cap f^{-1}(\inf f(Y))$
-  is a nonempty extreme subset of $A$ that does not contain $y$.
-  Thus $Z \subsetneq Y$, contradicting minimality of $Y$.
+  is a nonempty extreme subset of $A$ that does not contain $y$,
+  contradicting minimality of $Y$.
 
-  In the second step, let $B$ be the closed convex hull in $E$ of the set of all extreme points of $A$.
-  $B$ is compact, convex, and contained in $A$.
-  To show $B = A$, it suffices to show $A \subset B$ is empty.
-  Suppose towards contradiction $x_0 \in A \setminus B$, then by Hahn-Banach
-  theorem there exists (separating) continuous linear functional
-  $f$ on $E$ such that $\inf_B f(x) > f(x_0)$.
-  Then by \cref{lem:cvx-subset-has-extreme-subset} $W = A \cap f^{-1}(\inf_A f(x))$
-  is a nonemmpty extreme subset of $A$ disjoint from $B$.
-  However, by the previous part $W$ would contain an exterme point of $A$,
+  Next, let $B$ be the closed convex hull in $E$ of the set of all extreme
+  points of $A$.
+  We will show $A = B$ by showing $A \setminus B$ is empty.
+  Suppose towards contradiction $x_0 \in A \setminus B$.
+  Since $B$ is convex non-empty, by the Hahn-Banach separation theorem there
+  exists $f \in E'$ such that $\inf_B f(x) > f(x_0)$.
+  Then by \cref{lem:cvx-subset-has-extreme-subset},
+  $W = A \cap f^{-1}(\inf_A f(x))$ is a nonempty extreme subset of $A$
+  and is disjoint from $B$ since
+  \[
+    \inf_A f(x) \leq f(x_0) < \inf_B f(x)
+  \]
+  However, by the previous part $W$ would contain an extreme point of $A$,
   which is a contradiction since $W \cap B = \emptyset$.
 \end{proof}
 
+Whereas \myref{thm:krien-milman} states that every convex set can be
+represented by its extreme points, the following proposition addresses
+the case where the set $K$ is compact but not necessarily convex.
+
 \begin{proposition}
+  \label{prop:cvx-hull-contains-extreme-pts}
   Suppose $E$ is Hausdorff real LCTVS, $K \subset E$ compact whose closed
-  convex hull $A$ is compact. THen each extreme point of $A$ belongs to $K$
+  convex hull $A = \overline{\conv(K)}$ is also compact.
+  Then each extreme point of $A$ belongs to $K$.
 \end{proposition}
 
 \begin{figure}[ht]
     \centering
     \incfig{cvx-hull-contains-extreme-pts}
-    \caption{cvx-hull-contains-extreme-pts}
+    \caption{Sketch of the proof of \cref{prop:cvx-hull-contains-extreme-pts}}
     \label{fig:cvx-hull-contains-extreme-pts}
 \end{figure}
 
-\begin{figure}[ht]
-    \centering
-    \incfig{higher-dim-extreme-pt}
-    \caption{higher-dim-extreme-pt}
-    \label{fig:higher-dim-extreme-pt}
-\end{figure}
-
 \begin{proof}
-  Let $x \in A$ be extreme point. For any closed convex nbd $0 \in U \subset E$,
-  by compactness of $K$
-  there exists fintely many $a_i \in K$ such that $a_i + U$ cover $K$.
-  Let $A_i = \overline{\conv(K \cap (a_i + U))}$, each $A_i$ is compact
-  because $A_i \subset K$ and $K$ is compact. 
-  Then $\conv(\cup_i^n A_i)$ is compact and
-  $K \subset \conv(\cup_i^n A_i) \subset A$, so we must have
-  $A = \conv(\cup_i^n A_i)$.
+  Let $x \in A$ be an extreme point.
+  For any closed convex neighborhood $U$ of $0 \in E$,
+  by compactness (which implies total boundedness) of $K$,
+  for some $\{a_i\}_1^n \subset K$
+  \[
+    K \subset \cup_{i=1}^n (a_i + U)
+  \]
+  Let $A_i = \overline{\conv(K \cap (a_i + U))}$.
+  Each $A_i$ is compact (because $A_i \subset K$ is closed and $K$ is compact),
+  so $\overline{\conv(\cup_i^n A_i)}$ is compact and since
+  $K \subset \overline{\conv(\cup_i^n A_i)} \subset A = \overline{\conv(K)}$
+  by minimality of convex hull we must have $A = \overline{\conv(\cup_i^n A_i)}$.
 
-  Hence, $x = \sum_i^n \lambda_i x_i$ with $x_i \in A_i$, $\lambda_i \geq 0$,
-  $\sum_i \lambda_i = 1$. As $x \in A$ is extreme point, $x$ must
-  coincide with some $x_i$. Thus, $x \in A_i \subset a_i + U$,
+  Hence, $x = \sum_i^n \lambda_i x_i$ is a convex combination of $x_i \in A_i$.
+  As $x \in A$ is extreme point, $x = x_i$ for some $i$.
+  Thus, $x \in A_i \subset a_i + U$,
   so $x \in K + U$.
-  Since $K$ is closed and $U$ is an arbitrary nbd of $0$, $x \in K$
-  as desired.
+  Since $K$ is closed and $U$ is an arbitrary neighborhood of $0$,
+  $x \in K$ as desired.
 \end{proof}
+
+\begin{example}
+  The set of extreme points of a compact convex set $A$
+  need not be closed (hence why we take closed convex hull),
+  even when $E$ is finite dimensional!
+
+  Let $E = \bR^3$ and
+  \[
+    S = \{ (x,y,z) : z = 0, (x-1)^2 + y^2 = 1\}\qquad
+    \text{and }
+    A
+    = S \cup \{(0,0,1), (0,0,-1)\}
+  \]
+  Then $0$ is not an extreme point, but is the limit of
+  many sequences of extreme points.
+
+  \begin{figure}[H]
+    \centering
+    \incfig{extreme-points-not-closed}
+    \caption{$0$ is not an extreme point, but every point on
+      $S \setminus \{0\}$ is. Hence, the set of extreme points
+      does not contain a limit point and is not closed.
+    }
+  \end{figure}
+\end{example}
 
 \begin{example}
   A compact convex set $A$ need not be the convex hull of its extreme points.
   Take $E = \ell^\infty$, $e_n = \delta_n \in E$, $A$ the closed
   convex hull in $E$ of $e_n / n$ for $n \in \bN$.
-  By (TODO: prop), the extreme points
-  of $A$ are $0$ and the points $\{e_n / n\}$.
+  By \cref{prop:cvx-hull-contains-extreme-pts}, the extreme points
+  of $A$ are $0$ and the points $\{e_n / n\}_{n \in \bN}$.
   $A$ is compact and contains all points $x = \sum_{n \geq 1} \lambda_n e_n / n$,
   $\lambda_n$ a convex combinations.
 
@@ -156,7 +209,7 @@ for convex things.
     e_x = L \mapsto L(x)
   \]
   The \emph{weak-$\ast$ topology} on $X'$ is the weakest/coarsest
-  (i.e. initial topology) $\tau(X', \{e_x\}_{x \in X})$ that makes all of these 
+  (i.e. initial topology) $\tau(X', \{e_x\}_{x \in X})$ that makes all of these
   maps continuous.
 \end{definition}
 
@@ -171,15 +224,15 @@ for convex things.
   We want to know what is $\|\cdot\|_{X'} = \|\cdot\|_{\mu(S)}$?
   If $L(x) = \int_S x(s) \mu(ds)$ then by definition
   \begin{align*}
-    \|L\|_{X'} 
+    \|L\|_{X'}
   &= \sup\{ \lvert L(x) \rvert : \|x\|_X = 1 \} \\
   &= \sup\left\{ \left\lvert \int_S x(s) \mu(ds) \right\rvert : \sup_{s \in S} \lvert x(s) \rvert = 1 \right\} \\
   &= \sup\left\{ \left\lvert \int_S x(s) \mu^+(ds)  - \int_S x(s) \mu^-(ds) \right\rvert : -1 \leq \lvert x(s) \rvert \leq 1 \right\}
 \end{align*}
 We know $\mu^+$ and $\mu^-$ are perpendicular; their supports are disjoint, so
 \begin{align*}
-  \|L\|_{X'} 
-  &= \sup\left\{ \left\lvert 
+  \|L\|_{X'}
+  &= \sup\left\{ \left\lvert
       \int_{S^+} x(s) \mu^+(ds)  - \int_{S^-} x(s) \mu^-(ds)
   \right\rvert : -1 \leq \lvert x(s) \rvert \leq 1 \right\}
 \end{align*}

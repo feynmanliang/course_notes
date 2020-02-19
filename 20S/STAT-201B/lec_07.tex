@@ -1,0 +1,168 @@
+\lecture{7}{2020-02-11}{}
+
+Useful facts should know by heart: $X_i$ IID given $N=n$,
+$S_N = \sum_1^N X_i$, $N \in \bN^*$ random, then if $X_i$ are $\bN^*$-valued
+and $\phi_X(z) = \bE z^X$ its generating function,
+\[
+  \phi_{S_N}(z) = \phi_N(\phi_X(z)) = \bE[\phi_X(z)^N]
+\]
+because sums of RVS becomes products of MGFs.
+
+We saw this in the homework where $X \sim \Bern(p)$
+(so $\phi_X(z) = q + p z$) and $N \sim \Pois(\mu)$ gives
+\[
+  \phi_{S_N}(z) = e^{\mu(q + pz - 1)} = e^{\mu p(z_1)}
+\]
+So a sum of a $\Pois(\mu)$ number of IID $\Bern(p)$ variables
+is $\Pois(\mu p )$. This is \emph{Poissonization of binomial},
+the first step of \emph{Poissonization of multinomial}.
+
+\subsection{Limit theorems for Markov chains}
+
+\begin{itemize}
+  \item Transition probabilities
+  \item Stationary distributions
+  \item Ergodic theoremm
+\end{itemize}
+
+Let $S$ be a countable state space, $P$ a fixed transition matrix
+(row-stochastic) on $S$, $x,y \in S$ states.
+Assume $P$ is irreducible, i.e. single communication class.
+
+Either all states are transient, which occurs iff $G = \sum_n^\infty P^n$
+has finite entries. $G(x,y) = \bE_x N_y = \bE_x \sum_0^\infty \ind\{X_n=y\}$.
+Or, all states are recurrent $\iff$ $G(x,y) = \infty$.
+
+Assume $P$ irreducible recurrent (so all $x$ are recurrent).
+Look at iterates of $P$, $P^n$ being the $n$ step transition matrix.
+Ask: what happens to $P^n(x,y)$ as $n \to \infty$?
+
+\subsubsection{Stationary measures}%
+
+Nice to allow globally infinite, locally finite $\mu = (\mu(x), x \in S)$.
+$\mu$ is a probability row vector, and we write
+\[
+  (\mu P)(y) = \sum_x \mu(x) P(x,y)
+\]
+Say $\mu$ is \emph{invariant measure} if $0 \leq \mu(x) < \infty$ for all $x \in S$
+and $\mu P = P$.
+
+The existence of a stationary $\mu$ tells you very little.
+
+\begin{example}
+  Nearest neighbor RW on $\bZ$, $p + q = 1$.
+  We know $p \neq q \implies$ transient (LLN) and $p=q \implies$ recurrent.
+  Also $P^{2n}(0,0) = \binom{2n}{n} 2^{-2n} \sim c / \sqrt{n}$.
+
+  But, if there exists a finite stationary distribution, then $P$ is recurrent.
+
+  Proof: Kac identity (TODO).
+  Consider MC $(\pi, P)$ with $X_0, X_1 \to \pi(y)$. This is a strictly stationary
+  process
+  \[
+    (X_1, X_2, \ldots) \deq (X_0, X-1, \ldots)
+  \]
+  Apply Kac identity to $0/1$ process $\ind\{X_n = x\}$ for some $x$ to conclude $x$ is recurrent.
+\end{example}
+
+Now go the other way.
+\begin{theorem}
+  Assume $P$ is ?? on $S$. TFAE
+  \begin{itemize}
+    \item $\exists$ a stationary probability vector $\pi$
+    \item For some $x \in S$, $\bE_x T_x = \bE_x \min\{n \geq 1 : X_n = x\} < \infty$
+    \item For all $x \in S$< $\bE_x T_x < \infty$
+  \end{itemize}
+  When all these hold (and $P$ is recurrent), $\pi_x = (\bE_x T_x)^{-1}$ is unique.
+  Also, the expected number of hits on $y$ before you come back
+  \[
+    \bE_x \sum_{n=0}^\infty \ind\{X_n = y, T_x > n\}
+    = \text{mean number of $y$s in an $x$ block}
+    = \pi_y / \pi_x
+  \]
+\end{theorem}
+
+Let $T_x^{(n)}$ denote the time of the $n$th return to $x$. This is a sum
+of IID copies of $T_x$. $T_x^{(n)} / n \asto \bE_x T_x$.
+\begin{figure}[ht]
+    \centering
+    \incfig{as-in-wedge}
+    \caption{Eventually it will stay between any $\pm \eps$ wedge.}
+    \label{fig:as-in-wedge}
+\end{figure}
+$\implies \frac{1}{n} \sum_{k=0}^{n-1} \ind\{X_n = x\} \asto \frac{1}{\bE_x T_x}$
+
+The $\bE_x T_x$ is from the LLN, the $\cdot^{-1}$  from inverting.
+
+This is the basics of \emph{ergodic theory of MCs}, driven by some extension of SLLN.
+APply SLLN to $x$-cycles to learn in the long run if $\bE_x T_x < \infty$ then
+the expected number of visits to $x$ within unit time converges to $(\bE_x T_x)^{-1}$.
+Also, letting $\mu_x(y)$ be the mean number of $y$s in a $x$ block we have
+that $\mu_x(y) < \infty$ even without $\bE_x T_x < \infty$.
+
+Notice the \emph{fundamental relation}
+\[
+  \bE_x T_x = \sum_{y \in S} \mu_x(y)
+\]
+Also, can apply SLLN to $y$ to conclude in the long run
+\begin{align*}
+  \frac{\text{number of $y$s up to $n$}{\text{number of $x$s up to $n$} \to ???
+\end{align*}
+This is a useful idea; breaking the MC up into successive returns to a state $x$.
+
+Notice, we get $\mu_x(y) = \frac{1}{\mu_y(x)}$ by LLN.
+Hence, it's plausible that $\mu_x(y) = \frac{\mu(y)}{\mu(x)}$ for some
+(hence every) stationary measure $\mu$.
+Also, if $\bE_x T_x < \infty$ then $\sum_y \mu_x(y) = \bE_x T_x$
+which implies
+\[
+  \frac{\mu_x(x)}{\bE_x T_x} = \pi_x = \text{?? prob of $x$}
+\]
+because $\mu_x(x) = 1$ by definition.
+This is motivation for guessing that $y \mampsto \mu_x(y)$ is the unique
+invariant probability measure with mass $1$ at $x$.
+THis is true for any recurrent chain: for a positive recurrent chaing $\bE_x T_x < \infty
+\iff \sum_y \mu_x(y) < \infty$ which implies $\pi_x = (\bE_x T_x)^{-1}$.
+\begin{itemize}
+  \item Easy: $\sum_y \mu_x(y) = \bE_x T_x$
+  \item (to be shown) $y \mapsto \mu_x(y)$ is stationary:
+    $\mu_x(\cdot) P = \mu_x(\cdot)$ and $\mu_x(x) = 1$.
+\end{itemize}
+
+A stationary \emph{probability} measure, if it exists, is unique.
+Renormalize $\mu_x(y)$ by $\bE_x T_x$ so $\pi_y = \frac{\mu_x(y)}{\bE_x T_x}$,
+then $\sum_y \pi_y = 1$.
+
+Sketch of why $\mu_x(\cdot) P = \mu_x(\cdot)$. Basic idea is to sum
+a geometric progression:
+\[
+  (I + P + \cdots + P^{n-1}) + P^n
+  = I + (I + P + \cdots + P^{n-1})P
+\]
+Probability interprpetation: take an initial distribution $\lambda$.
+\begin{align*}
+  \lambda P^n &= \Pr_\lambda(X_n \in \cdot) \\
+  \lambda (I + P + \cdots + P^{n-1})
+  = \sum_{k=0}^{n-1} \lambda P^k(\cdot)
+  = \bE_\lambda \text{num hits on $\cdot$ in times $[0,n-1]$}
+\end{align*}
+Now we do this with $n$ a stopping time $T$.
+
+\textbf{Claim}: Let $(X_n)$ be a time-homogeneous MC with TM $P$,
+$X_0 \sim \lambda$, $\Pr_x(T < \infty) = 1$, and
+\[
+  \Pr_\lambda(X_T \in \dot) = \lambda_T(\cdot) = \text{distn of $X_T$}
+\]
+Define the Green measure
+\[
+  \lambda G_T(\cdot) \coloneqq \bE_\lambda \sum_{n=0}^{T-1} \ind\{X_n \in \cdot\}
+\]
+Then 
+\[
+  \lambda G_T + \lambda_T = \lambda + (\lambda G_T)P
+\]
+This works when $T$ is a fixed time, and the claim is that it holds for
+a stopping time $T$.
+This is called an \emph{occupation measure identity}, and notice
+if $\lambda_T = \lambda$ we have that the occupation measure
+$\lambda G_T$ is stationary.
