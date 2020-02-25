@@ -257,7 +257,7 @@ and write $P$ and $\xi$ instead of $\hat{P}$ and $\hat\xi$.
   Fix probability kernel $\mu$ between measurable $S$ and $T$.
   let $\xi \in S$ be random element.
   Then there exists random $\eta \in T$ defined on some extension of
-  $\Omega$ such that 
+  $\Omega$ such that
   $P[\eta \in \cdot \mid \xi] \aseq \mu(\xi, \cdot)$
   and also $\eta \perp_\xi \zeta$ for all $\zeta$ on $\Omega$.
 \end{lemma}
@@ -266,13 +266,13 @@ and write $P$ and $\xi$ instead of $\hat{P}$ and $\hat\xi$.
   Let $(\hat\Omega, \hat\cA) = (\Omega \times T, \cA \otimes \cT)$.
   Define $\hat{P}$ by
   \[
-    \hat{P} A 
+    \hat{P} A
     = \int_\Omega P(d\omega) \int_T \ind_A(\omega, t) \mu(\xi(\omega), dt)
     = E \int \ind_A(\cdot, t) \mu(\xi, dt), \qquad A \in \hat\cA
   \]
   Clearly $\hat{P}(\cdot \times T) = P$ and $\eta(\omega, t) \equiv t$
   on $\hat\Omega$ satisfies
-  $\hat{P}[\eta \in \cdot \mid \cA] \aseqe \mu(\xi, \cdot)$.
+  $\hat{P}[\eta \in \cdot \mid \cA] \aseq \mu(\xi, \cdot)$.
   In particular, $\eta \perp_\xi \cA$ by
   Proposition ?? hence $\eta \perp_\xi \zeta$.
 \end{proof}
@@ -287,7 +287,7 @@ and write $P$ and $\xi$ instead of $\hat{P}$ and $\hat\xi$.
 Will use this to prove the transfer principle:
 
 \begin{theorem}
-  $\xi \deq \tilde{\xi}$, $\eta$ random elements in $S$ and $$ resp.
+  $\xi \deq \tilde{\xi}$, $\eta$ random elements in $S$ and $T$ resp.
   THen exists $\tilde{\eta} \in T$ with
   $(\tilde\xi, \tilde{\eta}) \deq (\xi,\eta)$.
 \end{theorem}
